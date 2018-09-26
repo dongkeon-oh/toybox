@@ -5,6 +5,6 @@
 		<title>COMMON LIST</title>
 	</head>
 	<body>
-${resultRes }
+${checksum }
 	</body>
 </html>

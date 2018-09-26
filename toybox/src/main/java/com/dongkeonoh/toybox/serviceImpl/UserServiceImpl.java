@@ -19,27 +19,32 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public int addUser(UserVo userVo) {
-		
-		int resultRes = userDao.addUser(userVo);
-		return resultRes;
+		int checksum = userDao.addUser(userVo);
+		return checksum;
 	}
 
 	@Override
-	public String deleteUser(UserVo userVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserVo viewUser(String userId) {
+		UserVo result = userDao.viewUser(userId);
+		return result;
 	}
 
 	@Override
-	public String modifyUser(UserVo userVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int modifyUser(UserVo userVo) {
+		int checksum = userDao.modifyUser(userVo);
+		return checksum;
 	}
 
 	@Override
-	public UserVo viewUser(UserVo userVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int deleteUser(UserVo userVo) {
+		int checksum = userDao.deleteUser(userVo);
+		return checksum;
+	}
+
+	@Override
+	public int activeUser(UserVo userVo) {
+		int checksum = userDao.activeUser(userVo);
+		return checksum;
 	}
 
 	@Override

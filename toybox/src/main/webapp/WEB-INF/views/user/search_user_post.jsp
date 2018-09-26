@@ -4,6 +4,7 @@
 	<head>
 		<script src="${pageContext.request.contextPath}/js/common.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/user_js/searchUser.js" type="text/javascript"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>COMMON LIST</title>
 	</head>
 	<body>

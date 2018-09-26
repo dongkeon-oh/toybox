@@ -33,13 +33,34 @@
      	</selectKey>
 	</insert>
 	
+	<!-- 유저 보기 -->
+	<select id="viewUser" resultType="com.dongkeonoh.toybox.vo.UserVo" parameterType="String">
+		SELECT USR_ID, USR_NAME, USR_IMAGE, USR_SMS, USR_KAKAO, USR_ACTIVE
+		  FROM TB_USER
+		 WHERE USR_ID = #{usr_id}
+	</select>	
+	
 	<!-- 유저 수정 -->
-	<update id='updateUser'>
+	<update id='modifyUser' parameterType="com.dongkeonoh.toybox.vo.UserVo">
 		UPDATE tb_user 
-		   SET USR_PASSWORD = #{usr_password}
-    		   USR_IMAGE = #{usr_image}
-    		   USR_SMS = #{usr_sms}
+		   SET USR_PASSWORD = #{usr_password},
+    		   USR_IMAGE = #{usr_image},
+    		   USR_SMS = #{usr_sms},
     	 	   USR_KAKAO = #{usr_kakao}
+    	 WHERE USR_ID = #{usr_id}
+	</update>
+	
+	<!-- 유저 삭제 -->
+	<update id='deleteUser' parameterType="com.dongkeonoh.toybox.vo.UserVo">
+		UPDATE tb_user 
+		   SET USR_USEYN = 'N'
+    	 WHERE USR_ID = #{usr_id}
+	</update>
+	
+	<!-- 유저 active -->
+	<update id='activeUser' parameterType="com.dongkeonoh.toybox.vo.UserVo">
+		UPDATE tb_user 
+		   SET USR_ACTIVE = #{usr_active}
     	 WHERE USR_ID = #{usr_id}
 	</update>
 	
@@ -47,7 +68,7 @@
 	<select id="searchUser" resultType="com.dongkeonoh.toybox.vo.UserVo" parameterType="com.dongkeonoh.toybox.vo.UserVo">
 		SELECT USR_ID, USR_NAME, USR_IMAGE, USR_SMS, USR_KAKAO 
 		  FROM TB_USER
-		 WHERE 1=1
+		 WHERE USR_USEYN = 'Y'
 		<if test='usr_id != null and usr_id != ""'>
 		   AND USR_ID LIKE '%'||#{usr_id}||'%'
 		</if>
