@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userSql">
+
+	<!-- 유저 추가 -->
+	<insert id="addUser" parameterType="com.dongkeonoh.toybox.vo.UserVo">
+		INSERT INTO TB_USER 
+        VALUES 
+     		 (
+       		   #{usr_id},
+       		   #{usr_password},
+       		   #{usr_name},
+		<choose>
+			<when test='usr_image != null and usr_image != ""'>
+       		   #{usr_image},
+			</when>
+			<otherwise>
+				DEFAULT
+			</otherwise>
+		</choose>
+       		   #{usr_sms},
+       		   #{usr_kakao},
+       		   'Y',
+       		   'N'
+     		 )
+     	<selectKey resultType="int" keyProperty="usr_checksum" order="AFTER">
+     	SELECT COUNT(USR_ID) AS USR_CHECKSUM
+     	  FROM tb_user
+		 WHERE USR_ID = #{usr_id}
+     	</selectKey>
+	</insert>
+	
+	<!-- 유저 수정 -->
+	<update id='updateUser'>
+		UPDATE tb_user 
+		   SET USR_PASSWORD = #{usr_password}
+    		   USR_IMAGE = #{usr_image}
+    		   USR_SMS = #{usr_sms}
+    	 	   USR_KAKAO = #{usr_kakao}
+    	 WHERE USR_ID = #{usr_id}
+	</update>
+	
+	<!-- 유저 검색 -->
+	<select id="searchUser" resultType="com.dongkeonoh.toybox.vo.UserVo" parameterType="com.dongkeonoh.toybox.vo.UserVo">
+		SELECT USR_ID, USR_NAME, USR_IMAGE, USR_SMS, USR_KAKAO 
+		  FROM TB_USER
+		 WHERE 1=1
+		<if test='usr_id != null and usr_id != ""'>
+		   AND USR_ID LIKE '%'||#{usr_id}||'%'
+		</if>
+		<if test='usr_name != null and usr_name != ""'>
+		   AND USR_NAME LIKE '%'||#{usr_name}||'%'
+		</if>
+		<if test='usr_sms != null and usr_sms != ""'>
+		   AND USR_SMS LIKE '%'||#{usr_sms}||'%'
+		</if>
+		<if test='usr_kakao != null and usr_kakao != ""'>
+		   AND USR_KAKAO LIKE '%'||#{usr_kakao}||'%'
+		</if>
+	</select>	
+</mapper>
+

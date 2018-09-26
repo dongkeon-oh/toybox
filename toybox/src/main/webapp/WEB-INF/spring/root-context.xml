@@ -8,12 +8,33 @@
 			
 	<!-- 추가 : mybatis에서 사용할 oracle의 정보와 sqlsession을 맺어준다.  -->
 	<!-- begin -->
-	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+	
+	<!-- mybatis log -->
+	<!-- begin -->
+<!-- 	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" > -->
+<!-- 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" /> -->
+<!-- 		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" /> -->
+<!-- 		<beans:property name="username" value="toybox" /> -->
+<!-- 		<beans:property name="password" value="xobyot" /> -->
+<!-- 	</beans:bean> -->
+
+	<beans:bean name="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
 		<beans:property name="username" value="toybox" />
 		<beans:property name="password" value="xobyot" />
 	</beans:bean>
+	
+    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+        <constructor-arg ref="dataSourceSpied" />
+        <property name="logFormatter">
+            <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+                <property name="loggingType" value="MULTI_LINE" />
+                <property name="sqlPrefix" value="SQL         :  "/>
+            </bean>
+        </property>
+    </bean>
+	<!-- end -->
 		
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"></beans:property>

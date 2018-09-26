@@ -7,15 +7,11 @@
 		<title>회원가입</title>
 	</head>
 	<body>
-		<form action="add_user" method="post">
+		<form action="search_user" method="post">
 			<table>
 				<tr>
 					<td>ID</td>
 					<td><input type="text" name="usr_id" id="usr_id" ></td>
-				</tr>
-				<tr>
-					<td>Password</td>
-					<td><input type="password" name="usr_password" id="usr_password" ></td>
 				</tr>
 				<tr>
 					<td>이름</td>
@@ -26,15 +22,11 @@
 					<td><input type="text" name="usr_sms" id="usr_sms" ></td>
 				</tr>
 				<tr>
-					<td>image</td>
-					<td><input type="text" name="usr_image" id="usr_image" ></td>
-				</tr>
-				<tr>
 					<td>kakao</td>
 					<td><input type="text" name="usr_kakao" id="usr_kakao" ></td>
 				</tr>
 			</table>
-			<input type="submit" value="가입">
+			<input type="submit" value="검색">
 		</form>
 	</body>
 </html>

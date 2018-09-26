@@ -76,7 +76,16 @@
 		    <version>12.1.0.1-atlassian-hosted</version>
 		</dependency>
 		<!-- end -->
-				
+		
+		<!-- mybatis log -->
+		<!-- begin -->
+		<dependency> 
+		    <groupId>org.lazyluke</groupId> 
+		    <artifactId>log4jdbc-remix</artifactId> 
+		    <version>0.2.7</version>
+		</dependency>	
+		<!-- end -->
+		
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>

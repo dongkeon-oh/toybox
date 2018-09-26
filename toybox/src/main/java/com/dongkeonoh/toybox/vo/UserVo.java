@@ -10,6 +10,7 @@ public class UserVo {
 	private String usr_kakao;	
 	private String usr_useyn;	
 	private String usr_active;
+	private int usr_checksum;
 	
 	public String getUsr_id() {
 		return usr_id;
@@ -58,5 +59,11 @@ public class UserVo {
 	}
 	public void setUsr_active(String usr_active) {
 		this.usr_active = usr_active;
+	}	
+	public int getUsr_checksum() {
+		return usr_checksum;
+	}
+	public void setUsr_checksum(int usr_checksum) {
+		this.usr_checksum = usr_checksum;
 	}	
 }
