@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="itemSql">
+
+	<!-- 유저 추가 -->
+	<insert id="addItem" parameterType="com.dongkeonoh.toybox.vo.ItemVo">
+		<selectKey keyProperty="itm_id" resultType="String" order="BEFORE">
+    	SELECT SEQ_ITEM_ID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO TB_ITEM 
+        VALUES 
+     		 (
+       		   #{itm_id},
+       		   #{itm_name},
+       		   #{itm_type},
+       		   #{itm_owner},
+       		   #{itm_mainitem},
+       		   #{itm_note},
+		<choose>
+			<when test='itm_image != null and itm_image != ""'>
+       		   #{itm_image},
+			</when>
+			<otherwise>
+				DEFAULT
+			</otherwise>
+		</choose>
+       		   #{itm_location}
+     		 )
+	</insert>
+</mapper>
+
