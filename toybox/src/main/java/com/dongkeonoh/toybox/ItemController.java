@@ -20,7 +20,7 @@ public class ItemController {
 	@Resource(name="ItemServiceImpl")
 	private ItemService itemService;
 
-	// 유저 추가 get
+	// 아이템 추가 get
 	@RequestMapping(value = "/add_item", method = RequestMethod.GET)
 	public ModelAndView get_addItem(HttpServletRequest httpServletRequest) {
 		
@@ -30,7 +30,7 @@ public class ItemController {
 		return modelAndView;
 	}
 
-	// 유저 추가 post
+	// 아이템 추가 post
 	@RequestMapping(value = "/add_item", method = RequestMethod.POST)
 	public ModelAndView post_addItem(HttpServletRequest httpServletRequest, Model model, ItemVo itemVo) {
 		
@@ -42,7 +42,7 @@ public class ItemController {
 		}
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("user/add_itempost");
+		modelAndView.setViewName("user/add_item_post");
 		modelAndView.addObject("checksum", checksum);
 		
 		return modelAndView;

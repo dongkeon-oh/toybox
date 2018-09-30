@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="commonSql">
+
+	<!-- 공통코드 추가 -->
+	<insert id="addCommon" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+		INSERT INTO TB_COMMON
+        VALUES 
+     		 (
+       		   #{com_id},
+       		   #{com_category1},
+       		   #{com_catenote1},
+       		   #{com_category2},
+       		   #{com_catenote2},
+       		   #{com_category3},
+       		   #{com_catenote3},
+       		   #{com_name},
+       		   'Y'
+     		 )
+	</insert>
+	
+	<!-- 공통코드1 보기 -->
+	<select id="getCat1Common" resultType="com.dongkeonoh.toybox.vo.CommonDetailVo">
+		SELECT CDE_ID, CDE_CODE
+		  FROM TB_COMMON_DETAIL
+		 WHERE CDE_DEPTH = '1'
+	</select>	
+	
+	<!-- 공통코드2 보기 -->
+	<select id="getCat2Common" resultType="com.dongkeonoh.toybox.vo.CommonVo" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+		SELECT COM_CATEGORY2, COM_CATENOTE2
+		  FROM TB_COMMON
+		 WHERE COM_CATEGORY1 = #{com_category1}
+	</select>
+	
+	<!-- 공통코드3 보기 -->
+	<select id="getCat3Common" resultType="com.dongkeonoh.toybox.vo.CommonVo" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+		SELECT COM_CATEGORY3, COM_CATENOTE3
+		  FROM TB_COMMON
+		 WHERE COM_CATEGORY1 = #{com_category1}
+		   AND COM_CATEGORY2 = #{com_category2}
+	</select>	
+	
+	<!-- 공통코드 카테고리 추가 -->
+	<insert id="addCommonDetail" parameterType="com.dongkeonoh.toybox.vo.CommonDetailVo">
+		INSERT INTO TB_COMMON_DETAIL
+			 (
+			   CDE_ID,
+			   CDE_CODE,
+       		   CDE_DETAIL,
+       		   CDE_DEPTH,
+       		   CDE_UPPERID
+       		 )
+        VALUES 
+     		 (
+     		   SEQ_COMMONDETAIL_ID.NEXTVAL,
+       		   #{cde_code},
+       		   #{cde_detail},
+       		   #{cde_depth},
+       		   #{cde_upperid}
+     		 )
+	</insert>	
+	
+	<!-- 유저 수정 -->
+<!-- 	<update id='modifyUser' parameterType="com.dongkeonoh.toybox.vo.UserVo"> -->
+<!-- 		UPDATE tb_user  -->
+<!-- 		   SET USR_PASSWORD = #{usr_password}, -->
+<!--     		   USR_IMAGE = #{usr_image}, -->
+<!--     		   USR_SMS = #{usr_sms}, -->
+<!--     	 	   USR_KAKAO = #{usr_kakao} -->
+<!--     	 WHERE USR_ID = #{usr_id} -->
+<!-- 	</update> -->
+	
+	<!-- 유저 삭제 -->
+<!-- 	<update id='deleteUser' parameterType="com.dongkeonoh.toybox.vo.UserVo"> -->
+<!-- 		UPDATE tb_user  -->
+<!-- 		   SET USR_USEYN = 'N' -->
+<!--     	 WHERE USR_ID = #{usr_id} -->
+<!-- 	</update> -->
+	
+	<!-- 유저 active -->
+<!-- 	<update id='activeUser' parameterType="com.dongkeonoh.toybox.vo.UserVo"> -->
+<!-- 		UPDATE tb_user  -->
+<!-- 		   SET USR_ACTIVE = #{usr_active} -->
+<!--     	 WHERE USR_ID = #{usr_id} -->
+<!-- 	</update> -->
+	
+	<!-- 유저 검색 -->
+<!-- 	<select id="searchUser" resultType="com.dongkeonoh.toybox.vo.UserVo" parameterType="com.dongkeonoh.toybox.vo.UserVo"> -->
+<!-- 		SELECT USR_ID, USR_NAME, USR_IMAGE, USR_SMS, USR_KAKAO  -->
+<!-- 		  FROM TB_USER -->
+<!-- 		 WHERE USR_USEYN = 'Y' -->
+<!-- 		<if test='usr_id != null and usr_id != ""'> -->
+<!-- 		   AND USR_ID LIKE '%'||#{usr_id}||'%' -->
+<!-- 		</if> -->
+<!-- 		<if test='usr_name != null and usr_name != ""'> -->
+<!-- 		   AND USR_NAME LIKE '%'||#{usr_name}||'%' -->
+<!-- 		</if> -->
+<!-- 		<if test='usr_sms != null and usr_sms != ""'> -->
+<!-- 		   AND USR_SMS LIKE '%'||#{usr_sms}||'%' -->
+<!-- 		</if> -->
+<!-- 		<if test='usr_kakao != null and usr_kakao != ""'> -->
+<!-- 		   AND USR_KAKAO LIKE '%'||#{usr_kakao}||'%' -->
+<!-- 		</if> -->
+<!-- 	</select>	 -->
+</mapper>
+
