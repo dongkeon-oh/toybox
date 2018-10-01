@@ -4,7 +4,7 @@
 function add_category(category_id) {
 	$('#category_id').val(category_id);
 	
-	var cat_code = $('<input type="text" id="'+category_id+'_code"><br>');
+	var cat_code = $('<input type="text" id="'+category_id+'_code" onKeyup="valid_category()"><br>');
 	var cat_detail = $('<textarea id="'+category_id+'_detail">');
 	
 	$("#"+category_id+"_sel").hide();
@@ -76,4 +76,22 @@ function save_category(){
     });
 
 	cancel_category();
+}
+
+function valid_category(){
+	var category_id = $('#category_id').val();
+	var category_type = category_id.replace("category","");
+	var regexr = /[a-z0-9]$/;
+	
+	if(category_type == 3){
+		regexr.replace("4","3");
+	}
+	
+	var category_code = $('#'+category_id+'_code').val()
+	var category_length = category_code.length -1;
+	var category_valid = category_code.substring(category_length);
+
+	if(!regexr.test(category_valid)){
+		$('#'+category_id+'_code').val(category_code.substring(0, category_length));
+	}
 }
