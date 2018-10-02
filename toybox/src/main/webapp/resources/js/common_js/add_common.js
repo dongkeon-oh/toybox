@@ -4,7 +4,12 @@
 function add_category(category_id) {
 	$('#category_id').val(category_id);
 	
-	var cat_code = $('<input type="text" id="'+category_id+'_code" onKeyup="valid_category()"><br>');
+	var maxlen = 4;
+	var category_code = category_id.replace("category",""); 
+	if(category_code == 3){
+		maxlen = 3;
+	}
+	var cat_code = $('<input type="text" id="'+category_id+'_code" maxlength="'+maxlen+'"><br>');
 	var cat_detail = $('<textarea id="'+category_id+'_detail">');
 	
 	$("#"+category_id+"_sel").hide();
@@ -37,61 +42,69 @@ function cancel_category() {
 }
 
 function save_category(){
-	// validation check.
-
 	var category_id = $('#category_id').val();
 	var param_code = $("#"+category_id+"_code").val();
 	var param_detail = $("#"+category_id+"_detail").val();
 	var param_depth = category_id.replace("category",""); 
 	var param_upperid = '0';
 	
-	if(param_depth == 2){
-		param_upperid = $("#"+category_id+"_sel").val();
-	}else if(param_depth == 3){
-		param_upperid = $("#"+category_id+"_sel").val();
-	}
+	// validation check here.
+	var category_validation = valid_category(param_code, param_detail, param_depth);
 	
-	$.ajax({
-        method:"POST",
-        url:"search_common_detail",
-        data:{
-        	cde_code : param_code, 
-        	cde_detail : param_detail, 
-        	cde_depth : param_depth , 
-        	cde_upperid : param_upperid 
-        },
-        async:false,
-        success:function(response){
-        	var result = response;
-            $("#"+category_id+"_sel").empty();            
-        	for(var i = 0; i < result.length; i++){
-        		var opt = $('<option value="'+result[i].cde_id+'">'+result[i].cde_code+'</option>');
-        		$("#"+category_id+"_sel").append(opt);
-        	}
-        	$("#"+category_id+"_sel option:eq("+(result.length-1)+")").prop("selected", true);
-        },
-        error:function(request,status,error){
-            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
-    });
-
-	cancel_category();
+	if(category_validation){
+		if(param_depth == 2){
+			param_upperid = $("#"+category_id+"_sel").val();
+		}else if(param_depth == 3){
+			param_upperid = $("#"+category_id+"_sel").val();
+		}
+	
+		$.ajax({
+	        method:"POST",
+	        url:"search_common_detail",
+	        data:{
+	        	cde_code : param_code, 
+	        	cde_detail : param_detail, 
+	        	cde_depth : param_depth , 
+	        	cde_upperid : param_upperid 
+	        },
+	        async:false,
+	        success:function(response){
+	        	var result = response;
+	            $("#"+category_id+"_sel").empty();   
+	        	for(var i = 0; i < result.length; i++){
+	        		var opt = $('<option value="'+result[i].cde_id+'">'+result[i].cde_code+'</option>');
+	        		if(result[i].cde_code == $("#"+category_id+"_code").val()){
+	        			opt = $('<option value="'+result[i].cde_id+'" selected="true">'+result[i].cde_code+'</option>');
+	        		}
+	        		$("#"+category_id+"_sel").append(opt);
+	        	}
+	        },
+	        error:function(request,status,error){
+	            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	        }
+	    });
+	
+		cancel_category();
+	}
 }
 
-function valid_category(){
-	var category_id = $('#category_id').val();
-	var category_type = category_id.replace("category","");
-	var regexr = /[a-z0-9]$/;
+function valid_category(code, detail, depth){
+	var result = true;
 	
-	if(category_type == 3){
-		regexr.replace("4","3");
+	var digit = 4;
+	var regexr = /[a-z0-9]{4}$/;
+	if(depth == 3){
+		digit = 3;
+		regexr = /[a-z0-9]{3}$/;
 	}
-	
-	var category_code = $('#'+category_id+'_code').val()
-	var category_length = category_code.length -1;
-	var category_valid = category_code.substring(category_length);
 
-	if(!regexr.test(category_valid)){
-		$('#'+category_id+'_code').val(category_code.substring(0, category_length));
+	if(!regexr.test(code)){
+		alert('카테고리 코드는 '+digit+'자리 영문 소문자와 숫자만 사용이 가능합니다.');
+		result = false;
+	}else if(detail == ""){
+		alert('카테고리 설명는 반드시 작성해야 합니다.');
+		result = false;
 	}
+	
+	return result;
 }
