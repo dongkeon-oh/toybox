@@ -101,7 +101,7 @@ function save_category(){
 }
 
 function change_category(category_id){
-	var param_depth = category_id.replace("category","");
+	var param_depth = category_id.replace("category","")*1;
 	
 	reflesh("category"+(param_depth+2));
 	if(param_depth == 1){
