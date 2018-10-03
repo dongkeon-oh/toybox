@@ -25,21 +25,10 @@ public class CommonServiceImpl implements CommonService{
 	}
 
 	@Override
-	public List<CommonDetailVo> getCat1Common() {
-		List<CommonDetailVo> result = commonDao.getCat1Common();
+	public List<CommonDetailVo> getCategoryCommon(CommonDetailVo commonDetailVo) {
+		List<CommonDetailVo> result = commonDao.getCategoryCommon(commonDetailVo);
+		
 		return result;
-	}
-
-	@Override
-	public List<CommonVo> getCat2Common(CommonVo commonVo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<CommonVo> getCat3Common(CommonVo commonVo) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	@Override
@@ -47,7 +36,9 @@ public class CommonServiceImpl implements CommonService{
 		int checksum = commonDao.addCommonDetail(commonDetailVo);
 		List<CommonDetailVo> result = new ArrayList<CommonDetailVo>();
 		if(checksum > 0) {
-			result = commonDao.getCat1Common();
+			result = commonDao.getCategoryCommon(commonDetailVo);
+		}else {
+			// error control
 		}
 		
 		return result;

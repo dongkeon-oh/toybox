@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dongkeonoh.toybox.service.CommonService;
-import com.dongkeonoh.toybox.service.UserService;
 import com.dongkeonoh.toybox.vo.CommonDetailVo;
 import com.dongkeonoh.toybox.vo.CommonVo;
-import com.dongkeonoh.toybox.vo.UserVo;
 
 @Controller
 public class CommonController {
@@ -26,9 +24,9 @@ public class CommonController {
 
 	// 공통코드 추가 get
 	@RequestMapping(value = "/add_common", method = RequestMethod.GET)
-	public ModelAndView get_addCommon(HttpServletRequest httpServletRequest) {
-
-		List<CommonDetailVo> category = commonService.getCat1Common();
+	public ModelAndView get_addCommon(HttpServletRequest httpServletRequest, CommonDetailVo commonDetailVo) {
+		commonDetailVo.setCde_upperid("0");
+		List<CommonDetailVo> category = commonService.getCategoryCommon(commonDetailVo);
 		if(category == null) {
 			
 		}else {
@@ -61,11 +59,19 @@ public class CommonController {
 	}	
 	
 	// 공통코드 카테고리 post
-	@RequestMapping(value = "/search_common_detail", method = RequestMethod.POST)
+	@RequestMapping(value = "/add_common_category", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommonDetailVo> ajax_saerchCommonDetail(HttpServletRequest httpServletRequest, Model model, CommonDetailVo commonDetailVo) {
-		
+	public List<CommonDetailVo> ajaxAddCommonCategory(HttpServletRequest httpServletRequest, Model model, CommonDetailVo commonDetailVo) {
 		List<CommonDetailVo> result = commonService.addCommonDetail(commonDetailVo);
+		
+		return result;
+	}
+
+	// 공통코드 카테고리 post
+	@RequestMapping(value = "/get_common_category", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CommonDetailVo> ajaxGetCommonCategory(HttpServletRequest httpServletRequest, Model model, CommonDetailVo commonDetailVo) {
+		List<CommonDetailVo> result = commonService.getCategoryCommon(commonDetailVo);
 		
 		return result;
 	}

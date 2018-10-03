@@ -8,12 +8,8 @@ import com.dongkeonoh.toybox.vo.CommonVo;
 public interface CommonService {
 	// 공통코드 추가
 	public int addCommon(CommonVo commonVo);
-	// 공통코드1 보기 
-	public List<CommonDetailVo> getCat1Common();
-	// 공통코드2 보기 
-	public List<CommonVo> getCat2Common(CommonVo commonVo);
-	// 공통코드3 보기 
-	public List<CommonVo> getCat3Common(CommonVo commonVo);
+	// 공통코드 카테고리 보기 
+	public List<CommonDetailVo> getCategoryCommon(CommonDetailVo commonDetailVo);
 	// 공통코드 카테고리 추가
 	public List<CommonDetailVo> addCommonDetail(CommonDetailVo commonDetailVo);
 }

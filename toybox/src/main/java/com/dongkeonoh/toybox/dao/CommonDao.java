@@ -20,18 +20,8 @@ public class CommonDao {
 		return result;
 	}
 	
-	public List<CommonDetailVo> getCat1Common() {
-		List<CommonDetailVo> result = sqlSession.selectList("commonSql.getCat1Common");
-		return result;
-	}
-	
-	public List<CommonVo> getCat2Common(CommonVo commonVo) {
-		List<CommonVo> result = sqlSession.selectList("commonSql.getCat2Common", commonVo);
-		return result;
-	}
-	
-	public List<CommonVo> getCat3Common(CommonVo commonVo) {
-		List<CommonVo> result = sqlSession.selectList("commonSql.getCat3Common", commonVo);
+	public List<CommonDetailVo> getCategoryCommon(CommonDetailVo commonDetailVo) {
+		List<CommonDetailVo> result = sqlSession.selectList("commonSql.getCategoryCommon", commonDetailVo);
 		return result;
 	}
 	

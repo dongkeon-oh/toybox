@@ -23,10 +23,10 @@
 	</insert>
 	
 	<!-- 공통코드1 보기 -->
-	<select id="getCat1Common" resultType="com.dongkeonoh.toybox.vo.CommonDetailVo">
+	<select id="getCategoryCommon" resultType="com.dongkeonoh.toybox.vo.CommonDetailVo"  parameterType="com.dongkeonoh.toybox.vo.CommonDetailVo">
 		SELECT CDE_ID, CDE_CODE
 		  FROM TB_COMMON_DETAIL
-		 WHERE CDE_DEPTH = '1'
+		 WHERE CDE_UPPERID = #{cde_upperid}
 	</select>	
 	
 	<!-- 공통코드2 보기 -->
