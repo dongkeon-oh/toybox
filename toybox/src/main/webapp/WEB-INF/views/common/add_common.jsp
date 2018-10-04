@@ -7,6 +7,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script src="${pageContext.request.contextPath}/js/common.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/common_js/add_common.js" type="text/javascript"></script>
+		<script src="${pageContext.request.contextPath}/js/common_js/add_category.js" type="text/javascript"></script>
 		<title>회원가입</title>
 	</head>
 	<body>
@@ -58,11 +59,11 @@
 				</tr>
 				
 				<tr>
-					<td>코드명</td>
-					<td><input type="text" name="com_name"></td>
+					<td>공통코드명</td>
+					<td><input type="text" id="com_name"></td>
 				</tr>
 				<tr>
-					<td rowspan="2"><input type="submit" value="추가"></td>
+					<td rowspan="2"><input type="button" value="추가" onclick="save_common()"></td>
 				</tr>
 			</table>
 			<input type="hidden" id="cat_id" name="cat_id">

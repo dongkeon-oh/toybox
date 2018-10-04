@@ -75,4 +75,13 @@ public class CommonController {
 		
 		return result;
 	}
+
+	// 공통코드 카테고리 post
+	@RequestMapping(value = "/ajax_add_common", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxAddCommon(HttpServletRequest httpServletRequest, CommonVo commonVo) {
+		int result = commonService.addCommon(commonVo);
+		
+		return result;
+	}
 }

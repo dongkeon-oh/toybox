@@ -19,14 +19,29 @@ public class CommonDao {
 		int result = sqlSession.insert("commonSql.addCommon", commonVo);
 		return result;
 	}
+
+	public String getCommonNumber(CommonVo commonVo) {
+		String result = sqlSession.selectOne("commonSql.getCommonNumber", commonVo);
+		return result;
+	}
+
+	public String getCategoryName(String code) {
+		String result = sqlSession.selectOne("commonSql.getCategoryName", code);
+		return result;
+	}
 	
-	public List<CommonDetailVo> getCategoryCommon(CommonDetailVo commonDetailVo) {
-		List<CommonDetailVo> result = sqlSession.selectList("commonSql.getCategoryCommon", commonDetailVo);
+	public int dupCategoryCommon(CommonDetailVo commonDetailVo) {
+		int result = sqlSession.selectOne("commonSql.dupCategoryCommon", commonDetailVo);
 		return result;
 	}
 	
 	public int addCommonDetail(CommonDetailVo commonDetailVo) {
 		int result = sqlSession.insert("commonSql.addCommonDetail", commonDetailVo);
+		return result;
+	}
+	
+	public List<CommonDetailVo> getCategoryCommon(CommonDetailVo commonDetailVo) {
+		List<CommonDetailVo> result = sqlSession.selectList("commonSql.getCategoryCommon", commonDetailVo);
 		return result;
 	}
 }
