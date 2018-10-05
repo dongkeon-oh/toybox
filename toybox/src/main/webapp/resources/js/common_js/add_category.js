@@ -103,9 +103,9 @@ function save_category(){
 function change_category(category_id){
 	var param_depth = category_id.replace("category","")*1;
 	
-	reflesh("category"+(param_depth+2));
+	reflesh("category3");
 	if(param_depth == 1){
-		reflesh("category"+(param_depth+1));
+		reflesh("category2");
 	}
 	
 	upperid = $("#"+category_id+"_sel").val();

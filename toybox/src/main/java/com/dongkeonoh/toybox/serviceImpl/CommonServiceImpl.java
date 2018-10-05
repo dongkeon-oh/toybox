@@ -21,31 +21,26 @@ public class CommonServiceImpl implements CommonService{
 	@Override
 	public int addCommon(CommonVo commonVo) {
 		int checksum = -1;
-		String code_name = commonDao.getCategoryName(commonVo.getCom_category1());	
+		String code_name = commonDao.getCategoryName(commonVo.getCom_category1()) + "_";	
 		
-		String cat2 = commonVo.getCom_category2();
-		if(cat2 != null) {
-			code_name =  code_name + "_" +commonDao.getCategoryName(commonVo.getCom_category2()) + "_";		
-		}else{
-			code_name = code_name + "_2222_";
+		if(commonVo.getCom_category2().equals("deselected")) {
+			commonVo.setCom_category2("null2");
 		}
-
-		String cat3 = commonVo.getCom_category3();
-		if(cat3 != null) {
-			code_name = code_name + commonDao.getCategoryName(commonVo.getCom_category3()) + "_";		
-		}else{
-			code_name = code_name + "333_";		
+		code_name =  code_name + commonDao.getCategoryName(commonVo.getCom_category2()) + "_";		
+		
+		if(commonVo.getCom_category3().equals("deselected")) {
+			commonVo.setCom_category3("null3");		
 		}
+		code_name = code_name + commonDao.getCategoryName(commonVo.getCom_category3()) + "_";	
 		
 		String newNumber = "01";
 		String codeNumber = commonDao.getCommonNumber(commonVo);		
-		if(codeNumber != null && codeNumber.equals("")) {
-			newNumber = code_name.substring(14);
-		}	
-		
+		if(codeNumber != null) {
+			newNumber = codeNumber.substring(14);
+		}			
 		code_name = code_name + newNumber;
-
 		commonVo.setCom_id(code_name);
+		
 		checksum = commonDao.addCommon(commonVo);
 
 		return checksum;

@@ -21,7 +21,9 @@ function save_common(){
         async:false,
         success:function(response){
         	var result = response;
-        	alert(result);
+        	if(result == 1){
+            	alert("성공적으로 저장되었습니다.");	
+        	}
         },
         error:function(request,status,error){
             console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

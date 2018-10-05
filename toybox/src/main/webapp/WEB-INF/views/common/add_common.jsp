@@ -8,6 +8,7 @@
 		<script src="${pageContext.request.contextPath}/js/common.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/common_js/add_common.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/common_js/add_category.js" type="text/javascript"></script>
+		<link  href="${pageContext.request.contextPath}/css/bootstrap/bootstrap.css" rel="stylesheet">
 		<title>회원가입</title>
 	</head>
 	<body>
@@ -26,7 +27,7 @@
 						</select>
 					</td>
 					<td id="category1_buttomTd">
-						<input type="button" id="category1_addBtn" value="카테고리 추가" onclick="add_category('category1')">
+						<button type="button" id="category1_addBtn" class="btn btn-primary" value="카테고리 추가" onclick="add_category('category1')"></button>
 					</td>
 				</tr>
 				
