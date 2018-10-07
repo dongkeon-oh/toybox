@@ -1,5 +1,6 @@
 package com.dongkeonoh.toybox;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -36,6 +37,15 @@ public class CommonController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("common/add_common");
 		modelAndView.addObject("category", category);
+		
+		return modelAndView;
+	}
+	
+	// 공통코드 추가 get
+	@RequestMapping(value = "/list_common", method = RequestMethod.GET)
+	public ModelAndView getListCommon(HttpServletRequest httpServletRequest, CommonDetailVo commonDetailVo) {		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("common/list_common");
 		
 		return modelAndView;
 	}
@@ -81,6 +91,15 @@ public class CommonController {
 	@ResponseBody
 	public int ajaxAddCommon(HttpServletRequest httpServletRequest, CommonVo commonVo) {
 		int result = commonService.addCommon(commonVo);
+		
+		return result;
+	}
+
+	// 공통코드  post
+	@RequestMapping(value = "/ajax_list_common", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CommonVo> ajaxListCommon(HttpServletRequest httpServletRequest, HashMap<String, String> map) {
+		List<CommonVo> result = commonService.getCommonList(map);
 		
 		return result;
 	}

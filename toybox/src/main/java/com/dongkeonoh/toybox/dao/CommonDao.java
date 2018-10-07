@@ -1,5 +1,6 @@
 package com.dongkeonoh.toybox.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -14,9 +15,14 @@ public class CommonDao {
 
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	public int addCommon(CommonVo commonVo) {
 		int result = sqlSession.insert("commonSql.addCommon", commonVo);
+		return result;
+	}
+	
+	public List<CommonVo> getCommonList(HashMap<String, String> map) {
+		List<CommonVo> result = sqlSession.selectList("commonSql.getCommonList", map);
 		return result;
 	}
 

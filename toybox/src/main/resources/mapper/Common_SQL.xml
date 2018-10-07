@@ -19,6 +19,31 @@
      		 )
 	</insert>
 	
+	<!-- 공통코드 보기 -->
+	<select id="getCommonList" resultType="com.dongkeonoh.toybox.vo.CommonVo"  parameterType="map">
+		SELECT COMM.COM_ID, CAT1.CDE_CODE AS COM_CATEGORY1, CAT2.CDE_CODE AS COM_CATEGORY2, CAT3.CDE_CODE AS COM_CATEGORY3
+		  FROM TB_COMMON COMM,
+		       TB_COMMON_DETAIL CAT1,
+		       TB_COMMON_DETAIL CAT2,
+		       TB_COMMON_DETAIL CAT3
+		 WHERE 1=1
+		   AND COMM.COM_CATEGORY1 = CAT1.CDE_ID
+		   AND COMM.COM_CATEGORY2 = CAT2.CDE_ID
+		   AND COMM.COM_CATEGORY3 = CAT3.CDE_ID
+		<if test='target == "category1"'>
+		   AND CAT1.CDE_ID LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test='target == "category2"'>
+		   AND CAT2.CDE_ID LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test='target == "category3"'>
+		   AND CAT3.CDE_ID LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test='target == "id"'>
+		   AND COMM.COM_ID LIKE '%'||#{keyword}||'%'
+		</if>
+	</select>	
+	
 	<!-- 공통코드 카테고리 보기 -->
 	<select id="getCommonNumber" resultType="String"  parameterType="com.dongkeonoh.toybox.vo.CommonDetailVo">
 		SELECT COM_NAME

@@ -1,6 +1,7 @@
 package com.dongkeonoh.toybox.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,7 +15,6 @@ import com.dongkeonoh.toybox.vo.CommonVo;
 
 @Service("CommonServiceImpl")
 public class CommonServiceImpl implements CommonService{
-
 	@Resource(name="CommonDao")
 	private CommonDao commonDao;
 	
@@ -44,6 +44,12 @@ public class CommonServiceImpl implements CommonService{
 		checksum = commonDao.addCommon(commonVo);
 
 		return checksum;
+	}
+
+	@Override
+	public List<CommonVo> getCommonList(HashMap<String, String> map) {
+		List<CommonVo> result = commonDao.getCommonList(map);
+		return result;
 	}
 
 	@Override
