@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -98,7 +99,11 @@ public class CommonController {
 	// 공통코드  post
 	@RequestMapping(value = "/ajax_list_common", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommonVo> ajaxListCommon(HttpServletRequest httpServletRequest, HashMap<String, String> map) {
+	public List<CommonVo> ajaxListCommon(HttpServletRequest httpServletRequest, @RequestParam("target") String target, @RequestParam("keyword") String keyword) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("target", target);
+		map.put("keyword", keyword);
+		
 		List<CommonVo> result = commonService.getCommonList(map);
 		
 		return result;
