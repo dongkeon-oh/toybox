@@ -3,8 +3,11 @@ package com.dongkeonoh.toybox.vo;
 public class CommonVo {
 	private String com_id;         
 	private String com_category1; 
+	private String com_catename1; 
 	private String com_category2;  
+	private String com_catename2; 
 	private String com_category3; 
+	private String com_catename3; 
 	private String com_name;       
 	private String com_useyn;
 	
@@ -20,17 +23,35 @@ public class CommonVo {
 	public void setCom_category1(String com_category1) {
 		this.com_category1 = com_category1;
 	}
+	public String getCom_catename1() {
+		return com_catename1;
+	}
+	public void setCom_catename1(String com_catename1) {
+		this.com_catename1 = com_catename1;
+	}
 	public String getCom_category2() {
 		return com_category2;
 	}
 	public void setCom_category2(String com_category2) {
 		this.com_category2 = com_category2;
 	}
+	public String getCom_catename2() {
+		return com_catename2;
+	}
+	public void setCom_catename2(String com_catename2) {
+		this.com_catename2 = com_catename2;
+	}
 	public String getCom_category3() {
 		return com_category3;
 	}
 	public void setCom_category3(String com_category3) {
 		this.com_category3 = com_category3;
+	}
+	public String getCom_catename3() {
+		return com_catename3;
+	}
+	public void setCom_catename3(String com_catename3) {
+		this.com_catename3 = com_catename3;
 	}
 	public String getCom_name() {
 		return com_name;
@@ -43,5 +64,5 @@ public class CommonVo {
 	}
 	public void setCom_useyn(String com_useyn) {
 		this.com_useyn = com_useyn;
-	}	
+	}
 }

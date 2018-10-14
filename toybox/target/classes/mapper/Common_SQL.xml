@@ -6,7 +6,7 @@
 <mapper namespace="commonSql">
 
 	<!-- 공통코드 추가 -->
-	<insert id="addCommon" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+	<insert id="putCommon" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
 		INSERT INTO TB_COMMON
         VALUES 
      		 (
@@ -19,13 +19,27 @@
      		 )
 	</insert>
 	
-	<!-- 공통코드 보기 -->
+	<!-- 공통코드 추가시 번호 확인 -->
+	<select id="getCommonNumber" resultType="String"  parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+		SELECT COM_ID
+		  FROM (
+				SELECT COM_ID
+				  FROM TB_COMMON
+				 WHERE COM_CATEGORY1 = #{com_category1}
+				   AND COM_CATEGORY2 = #{com_category2}
+				   AND COM_CATEGORY3 = #{com_category3}
+				 ORDER BY COM_ID DESC
+				)
+		 WHERE ROWNUM = 1
+	</select>
+	
+	<!-- 공통코드 목록 보기 -->
 	<select id="getCommonList" resultType="com.dongkeonoh.toybox.vo.CommonVo"  parameterType="map">
 		SELECT COMM.COM_ID, CAT1.CDE_CODE AS COM_CATEGORY1, CAT2.CDE_CODE AS COM_CATEGORY2, CAT3.CDE_CODE AS COM_CATEGORY3
 		  FROM TB_COMMON COMM,
-		       TB_COMMON_DETAIL CAT1,
-		       TB_COMMON_DETAIL CAT2,
-		       TB_COMMON_DETAIL CAT3
+		       TB_CATEGORY CAT1,
+		       TB_CATEGORY CAT2,
+		       TB_CATEGORY CAT3
 		 WHERE 1=1
 		   AND COMM.COM_CATEGORY1 = CAT1.CDE_ID
 		   AND COMM.COM_CATEGORY2 = CAT2.CDE_ID
@@ -43,61 +57,5 @@
 		   AND COMM.COM_ID LIKE '%'||#{keyword}||'%'
 		</if>
 	</select>	
-	
-	<!-- 공통코드 카테고리 보기 -->
-	<select id="getCommonNumber" resultType="String"  parameterType="com.dongkeonoh.toybox.vo.CommonDetailVo">
-		SELECT COM_NAME
-		  FROM (
-				SELECT COM_NAME
-				  FROM TB_COMMON
-				 WHERE COM_CATEGORY1 = #{com_category1}
-				   AND COM_CATEGORY2 = #{com_category2}
-				   AND COM_CATEGORY3 = #{com_category3}
-				 ORDER BY COM_NAME DESC
-				)
-		 WHERE ROWNUM = 1
-	</select>
-	
-	<!-- 공통코드 카테고리 보기 -->
-	<select id="getCategoryName" resultType="String"  parameterType="String">
-		SELECT CDE_CODE
-		  FROM TB_COMMON_DETAIL
-		 WHERE CDE_ID = #{cde_id}
-	</select>	
-	
-	<!-- 공통코드 카테고리 리스트 -->
-	<select id="getCategoryCommon" resultType="com.dongkeonoh.toybox.vo.CommonDetailVo"  parameterType="com.dongkeonoh.toybox.vo.CommonDetailVo">
-		SELECT CDE_ID, CDE_CODE
-		  FROM TB_COMMON_DETAIL
-		 WHERE CDE_UPPERID = #{cde_upperid}
-	</select>	
-	
-	<!-- 공통코드 카테고리 중복체크 -->
-	<select id="dupCategoryCommon" resultType="int"  parameterType="com.dongkeonoh.toybox.vo.CommonDetailVo">
-		SELECT COUNT(CDE_ID) AS CNT
-		  FROM TB_COMMON_DETAIL
-		 WHERE CDE_DEPTH = #{cde_depth}
-           AND CDE_CODE = #{cde_code}
-	</select>
-	
-	<!-- 공통코드 카테고리 추가 -->
-	<insert id="addCommonDetail" parameterType="com.dongkeonoh.toybox.vo.CommonDetailVo">
-		INSERT INTO TB_COMMON_DETAIL
-			 (
-			   CDE_ID,
-			   CDE_CODE,
-       		   CDE_DETAIL,
-       		   CDE_DEPTH,
-       		   CDE_UPPERID
-       		 )
-        VALUES 
-     		 (
-     		   SEQ_COMMONDETAIL_ID.NEXTVAL,
-       		   #{cde_code},
-       		   #{cde_detail},
-       		   #{cde_depth},
-       		   #{cde_upperid}
-     		 )
-	</insert>	
 </mapper>
 

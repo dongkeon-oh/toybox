@@ -1,6 +1,6 @@
 package com.dongkeonoh.toybox.vo;
 
-public class CommonDetailVo {
+public class CategoryVo {
 	private String cde_id;  
 	private String cde_code;  
 	private String cde_detail;  

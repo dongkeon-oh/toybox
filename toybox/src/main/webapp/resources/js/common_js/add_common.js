@@ -11,7 +11,7 @@ function save_common(){
 	
 	$.ajax({
         method:"POST",
-        url:"ajax_add_common",
+        url:"ajax_put_common",
         data:{
         	com_category1 : cat1,
         	com_category2 : cat2,
@@ -23,6 +23,8 @@ function save_common(){
         	var result = response;
         	if(result == 1){
             	alert("성공적으로 저장되었습니다.");	
+        	}else if(result > 99){
+        		alert("카테고리에 코드가 너무 많습니다. 새로운 카테고리 생성후 저장하시기 바랍니다.");	
         	}
         },
         error:function(request,status,error){
