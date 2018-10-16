@@ -54,10 +54,19 @@ public class CommonController {
 	// 공통코드  post
 	@RequestMapping(value = "/ajax_list_common", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommonVo> ajaxListCommon(HttpServletRequest httpServletRequest, @RequestParam("target") String target, @RequestParam("keyword") String keyword) {
+	public List<CommonVo> ajaxListCommon(HttpServletRequest httpServletRequest
+			, @RequestParam("target") String target
+			, @RequestParam("keyword") String keyword
+			, @RequestParam("order_type") String order_type
+			, @RequestParam("start_idx") String start_idx
+			, @RequestParam("end_idx") String end_idx
+			) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("target", target);
 		map.put("keyword", keyword);
+		map.put("order_type", order_type);
+		map.put("start_idx", start_idx);
+		map.put("end_idx", end_idx);
 		
 		List<CommonVo> result = commonService.getCommonList(map);
 		

@@ -14,7 +14,7 @@
 	</head>
 	<body>
 		<select id="target">
-			<option value="id">공통코드</option>
+			<option value="name">공통코드</option>
 			<option value="category1">카테고리1</option>
 			<option value="category2">카테고리2</option>
 			<option value="category3">카테고리3</option>
@@ -30,6 +30,7 @@
 				<tr>
 					<td>No.</td>
 					<td>공통코드</td>
+					<td>공통코드명</td>
 					<td>카테고리1</td>
 					<td>카테고리2</td>
 					<td>카테고리3</td>
@@ -39,5 +40,15 @@
 			
 			</tbody>
 		</table>	
+		<select id="idx">
+			<option value="10" selected="selected">10</option>
+			<option value="15">15</option>
+		</select>
+		<div class="pagination">
+			<ul id="pagination_area">
+<!-- 				<li class="disabled"><span>&laquo;</span></li> -->
+<!-- 				<li class="active"><span>1</span></li> -->
+			</ul>
+		</div>
 	</body>
 </html>

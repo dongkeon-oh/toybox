@@ -35,26 +35,35 @@
 	
 	<!-- 공통코드 목록 보기 -->
 	<select id="getCommonList" resultType="com.dongkeonoh.toybox.vo.CommonVo"  parameterType="map">
-		SELECT COMM.COM_ID, CAT1.CDE_CODE AS COM_CATEGORY1, CAT2.CDE_CODE AS COM_CATEGORY2, CAT3.CDE_CODE AS COM_CATEGORY3
-		  FROM TB_COMMON COMM,
-		       TB_CATEGORY CAT1,
-		       TB_CATEGORY CAT2,
-		       TB_CATEGORY CAT3
+		SELECT COM_ID
+			 , COM_CATEGORY1
+			 , COM_CATEGORY2
+			 , COM_CATEGORY3
+			 , COM_NAME
+			 , COM_CNT  
+		  FROM (
+				SELECT A.*
+				     , ROW_NUMBER() OVER( ORDER BY #{order_type} DESC) AS COM_ROW 
+				     , COUNT(*) OVER() AS COM_CNT
+				  FROM TB_COMMON A
+			   )
 		 WHERE 1=1
-		   AND COMM.COM_CATEGORY1 = CAT1.CDE_ID
-		   AND COMM.COM_CATEGORY2 = CAT2.CDE_ID
-		   AND COMM.COM_CATEGORY3 = CAT3.CDE_ID
+		   AND COM_USEYN = 'Y'
+	       AND COM_ROW BETWEEN #{start_idx} AND #{end_idx}
+		<if test='target == "id"'>
+		   AND COM_ID LIKE '%'||#{keyword}||'%'
+		</if>
 		<if test='target == "category1"'>
-		   AND CAT1.CDE_ID LIKE '%'||#{keyword}||'%'
+		   AND COM_CATEGORY1 LIKE '%'||#{keyword}||'%'
 		</if>
 		<if test='target == "category2"'>
-		   AND CAT2.CDE_ID LIKE '%'||#{keyword}||'%'
+		   AND COM_CATEGORY2 LIKE '%'||#{keyword}||'%'
 		</if>
 		<if test='target == "category3"'>
-		   AND CAT3.CDE_ID LIKE '%'||#{keyword}||'%'
+		   AND COM_CATEGORY3 LIKE '%'||#{keyword}||'%'
 		</if>
-		<if test='target == "id"'>
-		   AND COMM.COM_ID LIKE '%'||#{keyword}||'%'
+		<if test='target == "name"'>
+		   AND COM_NAME LIKE '%'||#{keyword}||'%'
 		</if>
 	</select>	
 </mapper>

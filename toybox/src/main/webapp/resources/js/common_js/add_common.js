@@ -5,7 +5,6 @@ function save_common(){
 	var cat2 = $("#category2_sel").val();
 	var cat3 = $("#category3_sel").val();
 	var name = $("#com_name").val();
-	var useYn = "Y";
 	
 	valid_common(cat1, name);
 	
