@@ -46,4 +46,10 @@ public class CategoryServiceImpl implements CategoryService{
 		
 		return result;
 	}
+
+	@Override
+	public int delCategory(CategoryVo categoryVo) {
+		int checksum = categoryDao.delCategory(categoryVo);
+		return checksum;
+	}
 }

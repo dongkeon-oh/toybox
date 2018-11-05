@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dongkeonoh.toybox.service.CategoryService;
+import com.dongkeonoh.toybox.service.CommonService;
 import com.dongkeonoh.toybox.vo.CategoryVo;
 
 @Controller
@@ -18,6 +19,9 @@ public class CategoryController {
 
 	@Resource(name="CategoryServiceImpl")
 	private CategoryService categoryService;
+
+	@Resource(name="CommonServiceImpl")
+	private CommonService commonService;
 
 	// 카테고리 리스트
 	@RequestMapping(value = "/ajax_get_category", method = RequestMethod.POST)
@@ -43,6 +47,19 @@ public class CategoryController {
 	@ResponseBody
 	public List<CategoryVo> ajaxPutCategory(HttpServletRequest httpServletRequest, CategoryVo categoryVo) {
 		List<CategoryVo> result = categoryService.putCategory(categoryVo);
+		
+		return result;
+	}
+
+	// 키테고리, 공통코드 삭제
+	@RequestMapping(value = "/ajax_del_category", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxDelCategory(HttpServletRequest httpServletRequest, CategoryVo categoryVo) {
+		int result = -1;
+		int catDel = commonService.delCommon(categoryVo);
+		if(catDel > 0) {
+			result = categoryService.delCategory(categoryVo);
+		}
 		
 		return result;
 	}

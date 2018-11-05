@@ -3,11 +3,12 @@ package com.dongkeonoh.toybox.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.dongkeonoh.toybox.vo.CategoryVo;
 import com.dongkeonoh.toybox.vo.CommonVo;
 
 public interface CommonService {
 	// 공통코드 추가
-	public int putCommon(CommonVo commonVo);
+	public int putCommonGroup(CommonVo commonVo);
 	// 공통코드 추가시 번호 확인
-	public List<CommonVo> getCommonList(HashMap<String, String> map);
+	public List<CommonVo> listCommonGroup(HashMap<String, String> map);
 }

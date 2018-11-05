@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.dongkeonoh.toybox.dao.CategoryDao;
 import com.dongkeonoh.toybox.dao.CommonDao;
 import com.dongkeonoh.toybox.service.CommonService;
+import com.dongkeonoh.toybox.vo.CategoryVo;
 import com.dongkeonoh.toybox.vo.CommonVo;
 
 @Service("CommonServiceImpl")
@@ -20,54 +21,40 @@ public class CommonServiceImpl implements CommonService{
 	@Resource(name="CategoryDao")
 	private CategoryDao categoryDao;
 	
+//	@Override
+//	public int putCommon(CommonVo commonVo) {
+//		// checksum -1 : 실패
+//		int checksum = -1;
+//			
+//		checksum = commonDao.putCommon(commonVo);
+//
+//		return checksum;
+//	}	
+
 	@Override
-	public int putCommon(CommonVo commonVo) {
+	public int putCommonGroup(CommonVo commonVo) {
 		// checksum -1 : 실패
-		int checksum = -1;
-		
-		// code1 조회
-		String code_name = categoryDao.getCategoryCode(commonVo.getCom_category1()) + "_";	
-
-		// code2 조회. 빈값 반환시 null로 세팅
-		if(commonVo.getCom_category2().equals("deselected")) {
-			commonVo.setCom_category2("null2");
-			code_name = code_name + "null_";
-		}else {
-			code_name =  code_name + categoryDao.getCategoryCode(commonVo.getCom_category2()) + "_";	
-		}
-
-		// code3 조회. 빈값 반환시 nul로 세팅
-		if(commonVo.getCom_category3().equals("deselected")) {
-			commonVo.setCom_category3("null3");		
-			code_name = code_name + "nul_";
-		}else {
-			code_name = code_name + categoryDao.getCategoryCode(commonVo.getCom_category3()) + "_";	
-		}
-		
-		// 뒷자리 세팅
-		int newNumber = 1;
-		String codeNumber = commonDao.getCommonNumber(commonVo);		
-		if(codeNumber != null) {
-			newNumber = Integer.parseInt(codeNumber.substring(14));
-			newNumber = newNumber + 1;
-		}
-		
-		if(newNumber > 99) {
-			checksum = newNumber;
-		}else {
-			code_name = code_name + String.format("%02d", newNumber);
-			commonVo.setCom_id(code_name);
-			
-			checksum = commonDao.putCommon(commonVo);
-		}
-
+		int checksum = 1;
+		checksum = commonDao.putCommonGroup(commonVo);
 		return checksum;
 	}
 
 	@Override
-	public List<CommonVo> getCommonList(HashMap<String, String> map) {
-		List<CommonVo> result = commonDao.getCommonList(map);
-		
+	public List<CommonVo> listCommonGroup(HashMap<String, String> map) {
+		List<CommonVo> result = commonDao.listCommonGroup(map);		
 		return result;
 	}
+
+//	@Override
+//	public List<CommonVo> getCommonList(HashMap<String, String> map) {
+//		List<CommonVo> result = commonDao.getCommonList(map);
+//		
+//		return result;
+//	}
+//
+//	@Override
+//	public int delCommon(CategoryVo categoryVo) {
+//		int result = commonDao.delCommon(categoryVo);
+//		return result;
+//	}
 }

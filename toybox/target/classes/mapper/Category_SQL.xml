@@ -47,5 +47,12 @@
 		  FROM TB_CATEGORY
 		 WHERE CDE_ID = #{value}
 	</select>
+	
+	<!-- 카테고리 삭제 -->
+	<delete id="delCategory" parameterType="com.dongkeonoh.toybox.vo.CategoryVo">
+		DELETE 
+		  FROM TB_CATEGORY
+		 WHERE CDE_ID = #{cde_id}
+	</delete>
 </mapper>
 

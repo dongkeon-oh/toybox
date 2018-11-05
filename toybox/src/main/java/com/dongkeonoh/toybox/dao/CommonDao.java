@@ -15,21 +15,14 @@ public class CommonDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public int putCommon(CommonVo commonVo) {
-		int result = sqlSession.insert("commonSql.putCommon", commonVo);
-		
-		return result;
-	}
-
-	public String getCommonNumber(CommonVo commonVo) {
-		String result = sqlSession.selectOne("commonSql.getCommonNumber", commonVo);
-		
+	public int putCommonGroup(CommonVo commonVo) {
+		int result = sqlSession.insert("commonSql.putCommonGroup", commonVo);		
 		return result;
 	}
 	
-	public List<CommonVo> getCommonList(HashMap<String, String> map) {
-		List<CommonVo> result = sqlSession.selectList("commonSql.getCommonList", map);
+	public List<CommonVo> listCommonGroup(HashMap<String, String> map) {
+		List<CommonVo> result = sqlSession.selectList("commonSql.listCommonGroup", map);
 		
 		return result;
-	}
+	} 
 }

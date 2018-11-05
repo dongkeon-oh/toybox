@@ -31,10 +31,16 @@ public class CategoryDao {
 		int result = sqlSession.insert("categorySql.putCategory", CategoryVo);
 		return result;
 	}
-	
+
 	// 카테고리 아이디로 카테고리 코드 조회
 	public String getCategoryCode(String cde_id) {
 		String result = sqlSession.selectOne("categorySql.getCategoryCode", cde_id);
+		return result;
+	}
+	
+	// 카테고리 삭제
+	public int delCategory(CategoryVo CategoryVo) {
+		int result = sqlSession.delete("categorySql.delCategory", CategoryVo);
 		return result;
 	}
 }

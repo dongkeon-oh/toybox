@@ -116,6 +116,40 @@ function save_category(){
 	}
 }
 
+function del_category(cat){
+	var param_id = $("#category"+cat+"_sel").val();
+	
+	if($("#category"+cat+"_sel").val()=="deselected"){
+		alert("카테고리를 선택해야 합니다.");
+		return;
+	}
+	
+	var del_yn = confirm("카테고리를 삭제하는 경우 해당 카테고리의 하위 카테고리와 해당 카테고리로 생성한 모든 공통코드가 삭제됩니다. 삭제하시겠습니까?");
+	
+	
+	if(del_yn){
+		$.ajax({
+	        method:"POST",
+	        url:"ajax_del_category",
+	        data:{
+	        	cde_id : param_id,
+	        	cde_depth : cat
+	        },
+	        async:false,
+	        success:function(response){
+	        	if(response*1 > -1){
+		        	change_category(param_id);
+	        	}else{
+	        		alert("에러");
+	        	}	
+	        },
+	        error:function(request,status,error){
+	            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	        }
+	    });
+	}
+}
+
 
 function duplication_category(){
 	var category_id =  $('#category_id').val();

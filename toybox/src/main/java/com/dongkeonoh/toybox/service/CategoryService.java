@@ -13,4 +13,6 @@ public interface CategoryService {
 	public List<CategoryVo> putCategory(CategoryVo categoryVo);
 	// 카테고리 아이디로 카테고리 코드 조회
 	public String getCategoryCode(String cde_id);
+	// 카테고리 삭제
+	public int delCategory(CategoryVo categoryVo);
 }

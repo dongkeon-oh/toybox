@@ -8,64 +8,79 @@
 		<script src="${pageContext.request.contextPath}/js/common.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/common_js/add_common.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/common_js/add_category.js" type="text/javascript"></script>
-		<link  href="${pageContext.request.contextPath}/css/bootstrap/dist/bootstrap.css" rel="stylesheet">
-		<title>회원가입</title>
+		<link  href="${pageContext.request.contextPath}/css/bootstrap/dist/bootstrap.min.css" rel="stylesheet">
+
+		<title>공통코그 수정</title>
 	</head>
 	<body>
-		<form action="add_common" method="post">
-			<table>
-				<tr>
-					<td rowspan="2">카테고리1</td>
-				</tr>
-				<tr>
-					<td id="category1_topTd">
-						<select id="category1_sel" name="com_category1" onChange="change_category('category1')">
-							<option id="deselected" value="deselected">선택</option>
-						</select>
-					</td>
-					<td id="category1_buttomTd">
-						<input type="button" id="cat1_add" class="btn btn-primary add_btn" value="카테고리 추가" onclick="add_category('category1')">
-					</td>
-				</tr>
-				
-				<tr>
-					<td rowspan="2">카테고리2</td>
-				</tr>
-				<tr>
-					<td id="category2_topTd">
-						<select id="category2_sel" name="com_category2" onChange="change_category('category2')">
-							<option id="deselected" value="deselected">선택</option>
-						</select>
-					</td>
-					<td id="category2_buttomTd">
-						<input type="button" id="cat2_add" class="btn btn-primary add_btn" value="카테고리 추가" onclick="add_category('category2')">
-					</td>
-				</tr>
-				
-				<tr>
-					<td rowspan="2">카테고리3</td>
-				</tr>
-				<tr>
-					<td id="category3_topTd">
-						<select id="category3_sel" name="com_category3">
-							<option id="deselected" value="deselected">선택</option>
-						</select>
-					</td>
-					<td id="category3_buttomTd">
-						<input type="button" id="cat3_add" class="btn btn-primary add_btn" value="카테고리 추가" onclick="add_category('category3')">
-					</td>
-				</tr>
-				
-				<tr>
-					<td>공통코드명</td>
-					<td><input type="text" id="com_name" value="${commonVo.com_name}"></td>
-				</tr>
-				<tr>
-					<td rowspan="2"><input type="button" class="btn btn-primary add_btn" value="추가" onclick="save_common()"></td>
-				</tr>
-			</table>
-			<input type="hidden" id="cat_id" name="cat_id">
-			<input type="hidden" id="category_id">
-		</form>		
+		<table>
+			<tr>
+				<th rowspan="2">공통코드 그룹</th>
+			</tr>
+			<tr>
+				<td>
+					<select id="sel_cat" onChange="change_category('1')">
+						<option id="deselected" value="deselected">선택</option>
+					</select>
+				</td>
+				<td>
+					<input type="button" id="add_cat1" class="btn btn-primary add_btn" value="추가" onclick="add_cat('1')">
+					<input type="button" id="cat_mod1" class="btn btn-inverse mod_btn" value="수정" disabled="disabled" onclick="mod_category('1')">
+					<input type="button" id="cat_del1" class="btn btn-danger del_btn" value="삭제" disabled="disabled" onclick="del_category('1')">
+				</td>
+			</tr>
+			
+			<tr>
+				<th rowspan="2">공통코드</th>
+			</tr>
+			<tr>
+				<td>
+					<select id="sel_code" onChange="change_category('2')">
+						<option id="deselected" value="deselected">선택</option>
+					</select>
+				</td>
+				<td>
+					<input type="button" id="cat_add2" class="btn btn-primary add_btn" value="추가" onclick="add_common('2')">
+					<input type="button" id="cat_mod2" class="btn btn-inverse mod_btn" value="수정" disabled="disabled" onclick="mod_category('2')">
+					<input type="button" id="cat_del2" class="btn btn-danger del_btn" value="삭제" disabled="disabled" onclick="del_category('2')">
+				</td>
+			</tr>
+			
+			<tr>
+				<td rowspan="2">공통코드 명</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" id="cat_add3" class="btn btn-primary add_btn" value="추가" onclick="add_category('3')">
+				</td>
+				<td>
+					<input type="button" id="cat_add2" class="btn btn-primary add_btn" value="추가" onclick="add_common('3')">
+					<input type="button" id="cat_mod2" class="btn btn-inverse mod_btn" value="수정" disabled="disabled" onclick="mod_category('3')">
+					<input type="button" id="cat_del2" class="btn btn-danger del_btn" value="삭제" disabled="disabled" onclick="del_category('3')">
+				</td>
+			</tr>
+			
+			<tr>
+				<td rowspan="2">카테고리3</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" id="cat_add3" class="btn btn-primary add_btn" value="추가" onclick="add_category('category3')">
+				</td>
+				<td>
+				</td>
+			</tr>
+			
+			<tr>
+				<td rowspan="2">카테고리3</td>
+			</tr>
+			<tr>
+				<td id="category3_topTd">
+					<input type="text" id="cat_add3" class="btn btn-primary add_btn" value="추가" onclick="add_category('category3')">
+				</td>
+				<td>
+				</td>
+			</tr>
+		</table>
 	</body>
 </html>

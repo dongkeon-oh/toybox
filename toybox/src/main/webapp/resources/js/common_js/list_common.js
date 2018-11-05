@@ -1,50 +1,28 @@
 $(function() {
-	list_common(1);
+	list_common_group(1, 10, "");
 });
 
-function list_common(page_no){
-	list_common(page_no, $("#idx").val());
-}
-
-function list_common(page_no, order_type){
-	var target = $("#target").val();
-    var	keyword = $("#keyword").val();
-    var	end_idx = $("#idx").val()*1*page_no;
-    var	start_idx = end_idx-(page_no*1)+1;
+function put_common_group(){
+	var cgr_group = $("#grpGroup").val();
+    var	cgr_group_name = $("#grpGroupName").val();
+    var	cgr_note = $("#grpNote").val();
     
-    if(order_type == undefined || order_type == ""){
-    	order_type = "COM_ID";
-    }
-    
-    var param = {
-    	"target" : target,
-    	"keyword" : keyword,
-    	"start_idx" : start_idx,
-    	"end_idx" : end_idx,
-    	"order_type" : order_type
-    }
-    //var paramJson = JSON.stringify(param);
-	
 	$.ajax({
         method:"POST",
-        url:"ajax_list_common",
-//        datatype:"json",
-        data:param,
-//        contentType:"application/json;charset=UTF-8",
+        url:"ajax_put_common_group",
+        data:{
+        	"cgr_group" : cgr_group,
+        	"cgr_group_name" : cgr_group_name,
+        	"cgr_note" : cgr_note,
+        },
         async:false,
         success:function(response){
         	var result = response;
-        	var opt = "";
-        	var cnt = 0;
-        	
-        	$("table").html("");
-        	$.each(result, function(index, item){
-        		cnt++;
-        		opt = opt + "<tr><td>"+(index+1)+"</td><td>"+item.com_id+"</td><td>"+item.com_name+"</td><td>"+item.com_category1+"</td><td>"+item.com_category2+"</td><td>"+item.com_category3+"</td></tr>";
-        	});
-        	$("table").append(opt);
-        	
-        	set_pagination(cnt, order_type, page_no)
+        	if(result > 0){
+        		alert(cgr_group+"그룹을 생성하였습니다.");
+        	}else{
+        		alert(cgr_group+"그룹 생성을 실해하였습니다.");
+        	}
         },
         error:function(request,status,error){
             console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -52,15 +30,78 @@ function list_common(page_no, order_type){
     });
 }
 
-function set_pagination(cnt, order_type, page_no){
+function valid_common_group(code, detail, depth){
+	var action = true;
+	
+	var regexr = /[a-z0-9][-]$/;
+	if(depth == 3){
+		digit = 3;
+		regexr = /[a-z0-9]{3}$/;
+	}
+
+	if(!regexr.test(code)){
+		alert('카테고리 코드는 '+digit+'자리 영문 소문자와 숫자만 사용이 가능합니다.');
+		action = false;
+	}else if(detail == ""){
+		alert('카테고리 설명는 반드시 작성해야 합니다.');
+		action = false;
+	}
+	
+	return action;
+}
+
+function list_common_group(page_no, page_cnt, keyword){
+    
+	if(page_cnt == undefined || page_cnt == ""){
+		page_cnt = "10";
+    }
+    if(keyword == undefined){
+    	keyword = "";
+    }
+    
+    var end_idx = page_cnt * page_no;
+    var start_idx = end_idx - page_cnt + 1;
+    
+	$.ajax({
+        method:"POST",
+        url:"ajax_list_common_group",
+        data:{
+        	"keyword" : keyword,
+        	"start_idx" : start_idx,
+        	"end_idx" : end_idx
+        },
+        async:false,
+        success:function(response){
+        	var result = response;
+        	alert(result);
+        	var opt = "";
+        	var cnt = 1;
+        	
+        	$("tbody").html("");
+        	$.each(result, function(index, item){
+        		cnt = item.com_cnt;
+        		opt = opt + "<tr class='table-success'><td>"+(start_idx+index)+"</td><td>"+item.cgr_group+"</td><td>"+item.cgr_note+"</td></tr>";
+        	});
+        	$("tbody").append(opt);
+        	
+        	//set_pagination(cnt, index, page_no)
+        },
+        error:function(request,status,error){
+            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+    });
+}
+
+function set_pagination(cnt, index, page_no){
 	var total_page = 0;
-	if(cnt%order_type > 0){
+	if(cnt%index > 0){
 		total_page = 1;
 	}
-	total_page = cnt/order_type + total_page;
+	total_page = cnt/index + total_page;
 
 	var page = "";
 	var append = "";
+	$("#pagination_area").html("");
 	for(var i = 1; total_page >= i; i++){
 		if(i == page_no){
 			append = '<li class="disabled"><span onclick="list_common('+i+')">'+i+'</span></li>';
