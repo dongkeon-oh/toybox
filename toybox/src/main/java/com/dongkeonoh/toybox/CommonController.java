@@ -61,6 +61,7 @@ public class CommonController {
 
 	// 공통코드 추가 get
 	@RequestMapping(value = "/ajax_list_common_group", method = RequestMethod.POST)
+	@ResponseBody
 	public List<CommonVo> ajaxListCommonGroup(HttpServletRequest httpServletRequest
 			, @RequestParam("keyword") 		String keyword
 			, @RequestParam("start_idx") 	String start_idx

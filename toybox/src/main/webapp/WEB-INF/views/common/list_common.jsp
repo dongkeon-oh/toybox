@@ -35,6 +35,7 @@
 		
 	
 		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#grpModModal" >공통코드 그룹생성</button>
+		<button type="button" class="btn btn-danger btn-lg" onclick="list_common_group(1, 10, '')">공통코드</button>
 	
 		<div class="modal" id="grpModModal">
 			<div class="modal-dialog" role="document">
@@ -71,30 +72,13 @@
   <thead>
     <tr>
       <th scope="col">No</th>
-      <th scope="col">공콩코드 그룹</th>
-      <th scope="col">공콩코드 그룹명</th>
-      <th scope="col">공통코드 그룹 설명</th>
+      <th scope="col">공통코드 그룹</th>
+      <th scope="col">공통코드 그룹명</th>
+      <th scope="col" colspan="2">공통코드 그룹 설명</th>
     </tr>
   </thead>
   <tbody>
-<!--     <tr class="table-success"> -->
-<!--       <th scope="row">Success</th> -->
-<!--       <td>Column content</td> -->
-<!--       <td>Column content</td> -->
-<!--       <td>Column content</td> -->
-<!--     </tr> -->
-<!--     <tr class="table-danger"> -->
-<!--       <th scope="row">Danger</th> -->
-<!--       <td>Column content</td> -->
-<!--       <td>Column content</td> -->
-<!--       <td>Column content</td> -->
-<!--     </tr> -->
-<!--     <tr class="table-dark"> -->
-<!--       <th scope="row">Dark</th> -->
-<!--       <td>Column content</td> -->
-<!--       <td>Column content</td> -->
-<!--       <td>Column content</td> -->
-<!--     </tr> -->
+  
   </tbody>
 </table> 
 	</body>

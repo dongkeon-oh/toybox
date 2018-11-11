@@ -73,16 +73,28 @@ function list_common_group(page_no, page_cnt, keyword){
         async:false,
         success:function(response){
         	var result = response;
-        	alert(result);
         	var opt = "";
-        	var cnt = 1;
+        	var table_row_type = "table-secondary";
         	
         	$("tbody").html("");
         	$.each(result, function(index, item){
-        		cnt = item.com_cnt;
-        		opt = opt + "<tr class='table-success'><td>"+(start_idx+index)+"</td><td>"+item.cgr_group+"</td><td>"+item.cgr_note+"</td></tr>";
+        		if(index%2==0){
+                	var table_row_type = "table-secondary";
+        		}else{
+        			var table_row_type = "";
+        		}
+        		opt = opt + "<tr class='"+table_row_type+"'>";
+        		opt = opt + "	<td>"+(start_idx+index)+"</td>";
+        		opt = opt + "	<td>"+item.cgr_group+"</td>";
+        		opt = opt + "	<td>"+item.cgr_group_name+"</td>";
+        		opt = opt + "	<td>"+item.cgr_note+"</td>";
+        		opt = opt + "	<td>";
+        		opt = opt + "		<button type='button' class='btn btn-primary' onClick='' >수정</button>";
+        		opt = opt + "		<button type='button' class='btn btn-danger' onClick='' >삭제</button>";
+        		opt = opt + "	</td>";
+        		opt = opt + "</tr>";
         	});
-        	$("tbody").append(opt);
+        	$("tbody").html(opt);
         	
         	//set_pagination(cnt, index, page_no)
         },
