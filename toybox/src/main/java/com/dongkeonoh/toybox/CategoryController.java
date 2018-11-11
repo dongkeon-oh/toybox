@@ -56,10 +56,10 @@ public class CategoryController {
 	@ResponseBody
 	public int ajaxDelCategory(HttpServletRequest httpServletRequest, CategoryVo categoryVo) {
 		int result = -1;
-		int catDel = commonService.delCommon(categoryVo);
-		if(catDel > 0) {
-			result = categoryService.delCategory(categoryVo);
-		}
+//		int catDel = commonService.delCommon(categoryVo);
+//		if(catDel > 0) {
+//			result = categoryService.delCategory(categoryVo);
+//		}
 		
 		return result;
 	}
