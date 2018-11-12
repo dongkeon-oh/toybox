@@ -2,10 +2,12 @@ $(function() {
 	list_common_group(1, 10, "");
 });
 
-function put_common_group(){
+function put_common_group(){	
 	var cgr_group = $("#grpGroup").val();
     var	cgr_group_name = $("#grpGroupName").val();
     var	cgr_note = $("#grpNote").val();
+
+    valid_common_group(cgr_group, cgr_group_name, cgr_note);
     
 	$.ajax({
         method:"POST",
@@ -20,6 +22,7 @@ function put_common_group(){
         	var result = response;
         	if(result > 0){
         		alert(cgr_group+"그룹을 생성하였습니다.");
+        		clear_common_group();
         	}else{
         		alert(cgr_group+"그룹 생성을 실해하였습니다.");
         	}
@@ -30,24 +33,36 @@ function put_common_group(){
     });
 }
 
-function valid_common_group(code, detail, depth){
-	var action = true;
+function valid_common_group(cgr_group, cgr_group_name, cgr_note){
+	var regexr1 = /[a-z0-9]{16}$/;
+	var regexr2 = /[a-z0-9]{16}$/;
+	var regexr3 = /[a-z0-9]{16}$/;
 	
-	var regexr = /[a-z0-9][-]$/;
-	if(depth == 3){
-		digit = 3;
-		regexr = /[a-z0-9]{3}$/;
+	if(!regexr1.test(cgr_group)){
+		alert('공통코드 그룹은 16자리 영문 소문자와 숫자만 사용이 가능합니다.');
+		break;
+	}else if(!regexr2.test(cgr_group_name)){
+		alert('공통코드 그룹명은 16자리 영문 소문자 또는 16바이트 미만의 한글만 사용이 가능합니다.');
+		break;
+	}else if(!regexr3.test(cgr_note)){
+		alert('공통코드 설명은 1000바이트 미만으로 ㅇㅁㅇㅁ가능합니다.');
+		break;
+	}else if(cgr_group == "" || cgr_group_name == ""){
+		alert('공통코드 그룹는 반드시 작성해야 합니다.');
+		break;
 	}
+}
 
-	if(!regexr.test(code)){
-		alert('카테고리 코드는 '+digit+'자리 영문 소문자와 숫자만 사용이 가능합니다.');
-		action = false;
-	}else if(detail == ""){
-		alert('카테고리 설명는 반드시 작성해야 합니다.');
-		action = false;
-	}
-	
-	return action;
+function modify_common_group(idx){
+	$("#grpGroup").val($("#trGrp"+idx).text());
+	$("#grpGroupName").val($("#trGrpNm"+idx).text());
+	$("#grpNote").val($("#trNote"+idx).text());
+}
+
+function clear_common_group(){
+	$("#grpGroup").val("");
+	$("#grpGroupName").val("");
+	$("#grpNote").val("");
 }
 
 function list_common_group(page_no, page_cnt, keyword){
@@ -85,17 +100,17 @@ function list_common_group(page_no, page_cnt, keyword){
         		}
         		opt = opt + "<tr class='"+table_row_type+"'>";
         		opt = opt + "	<td>"+(start_idx+index)+"</td>";
-        		opt = opt + "	<td>"+item.cgr_group+"</td>";
-        		opt = opt + "	<td>"+item.cgr_group_name+"</td>";
-        		opt = opt + "	<td>"+item.cgr_note+"</td>";
+        		opt = opt + "	<td id='trGrp"+(start_idx+index)+"'>"+item.cgr_group+"</td>";
+        		opt = opt + "	<td id='trGrpNm"+(start_idx+index)+"'>"+item.cgr_group_name+"</td>";
+        		opt = opt + "	<td id='trNote"+(start_idx+index)+"'>"+item.cgr_note+"</td>";
         		opt = opt + "	<td>";
-        		opt = opt + "		<button type='button' class='btn btn-primary' onClick='' >수정</button>";
+        		opt = opt + "		<button type='button' class='btn btn-primary'  data-toggle='modal' data-target='#grpModModal' onClick='modify_common_group("+(start_idx+index)+")' >수정</button>";
         		opt = opt + "		<button type='button' class='btn btn-danger' onClick='' >삭제</button>";
         		opt = opt + "	</td>";
         		opt = opt + "</tr>";
         	});
         	$("tbody").html(opt);
-        	
+
         	//set_pagination(cnt, index, page_no)
         },
         error:function(request,status,error){
