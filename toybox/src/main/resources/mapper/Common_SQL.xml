@@ -23,6 +23,13 @@
      		 )
 	</insert>
 
+	<!-- 공통코드 그룹 수정 -->
+	<update id="modifyCommonGroup" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+		UPDATE TB_COMMON_GROUP
+		   SET CGR_GROUP_NAME = #{cgr_group_name},
+			   CGR_NOTE = #{cgr_note}
+		 WHERE CGR_GROUP = #{cgr_group}
+	</update>
 	<!-- 공통코드 그룹 조회 -->
 <!-- 	<select id="getCommonGroup" parameterType="com.dongkeonoh.toybox.vo.CommonVo" resultType="com.dongkeonoh.toybox.vo.CommonVo"> -->
 <!-- 		SELECT CGR_GROUP -->

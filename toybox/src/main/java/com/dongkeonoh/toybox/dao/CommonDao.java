@@ -19,6 +19,11 @@ public class CommonDao {
 		int result = sqlSession.insert("commonSql.putCommonGroup", commonVo);		
 		return result;
 	}
+
+	public int modifyCommonGroup(CommonVo commonVo) {
+		int result = sqlSession.update("commonSql.modifyCommonGroup", commonVo);		
+		return result;
+	}
 	
 	public List<CommonVo> listCommonGroup(HashMap<String, String> map) {
 		List<CommonVo> result = sqlSession.selectList("commonSql.listCommonGroup", map);

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,6 +55,14 @@ public class CommonController {
 	@ResponseBody
 	public int ajaxPutCommonGroup(HttpServletRequest httpServletRequest, CommonVo commonVo) {
 		int result = commonService.putCommonGroup(commonVo);		
+		return result;
+	}
+	
+	// 공통코드 저장
+	@RequestMapping(value = "/ajax_modify_common_group", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxModifyCommonGroup(HttpServletRequest httpServletRequest, CommonVo commonVo) {
+		int result = commonService.modifyCommonGroup(commonVo);		
 		return result;
 	}
 

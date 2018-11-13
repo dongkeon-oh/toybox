@@ -2,16 +2,40 @@ $(function() {
 	list_common_group(1, 10, "");
 });
 
-function put_common_group(){	
+$( "#putGrpBtn" ).on("click",function() {
+	clear_common_group();
+	$("#putModifyGrpBtn").text("생성");
+	$("#putModifyGrpType").val("PUT");
+});
+//$("#image").on("click", "td", function(){
+$( ".modGrpBtn" ).on("click",function() {
+	$("#putModifyGrpBtn").text("수정");
+	$("#putModifyGrpType").val("MODIFY");
+});
+
+
+$( "#putModifyGrpBtn" ).on("click",function() {
+	mod_common_group($("#putModifyGrpType").val());
+});
+
+
+function mod_common_group(actionType){	
 	var cgr_group = $("#grpGroup").val();
     var	cgr_group_name = $("#grpGroupName").val();
     var	cgr_note = $("#grpNote").val();
 
+    var msg = "생성";
+    var url = "ajax_put_common_group";
+    if(actionType == "MODIFY"){
+    	msg = "수정";
+        url = "ajax_modify_common_group";
+    }
+	
     valid_common_group(cgr_group, cgr_group_name, cgr_note);
     
 	$.ajax({
         method:"POST",
-        url:"ajax_put_common_group",
+        url:url,
         data:{
         	"cgr_group" : cgr_group,
         	"cgr_group_name" : cgr_group_name,
@@ -21,10 +45,10 @@ function put_common_group(){
         success:function(response){
         	var result = response;
         	if(result > 0){
-        		alert(cgr_group+"그룹을 생성하였습니다.");
+        		alert(cgr_group+"그룹을 "+msg+"하였습니다.");
         		clear_common_group();
         	}else{
-        		alert(cgr_group+"그룹 생성을 실해하였습니다.");
+        		alert(cgr_group+"그룹 "+msg+"을 실패하였습니다.");
         	}
         },
         error:function(request,status,error){
@@ -33,6 +57,7 @@ function put_common_group(){
     });
 }
 
+// 바이트 계산 필요
 function valid_common_group(cgr_group, cgr_group_name, cgr_note){
 	var regexr1 = /[a-z0-9]{16}$/;
 	var regexr2 = /[a-z0-9]{16}$/;
@@ -53,16 +78,17 @@ function valid_common_group(cgr_group, cgr_group_name, cgr_note){
 	}
 }
 
-function modify_common_group(idx){
-	$("#grpGroup").val($("#trGrp"+idx).text());
-	$("#grpGroupName").val($("#trGrpNm"+idx).text());
-	$("#grpNote").val($("#trNote"+idx).text());
-}
-
 function clear_common_group(){
 	$("#grpGroup").val("");
 	$("#grpGroupName").val("");
 	$("#grpNote").val("");
+}
+
+function modify_common_group(idx){
+	$("#grpGroup").val($("#trGrp"+idx).text());
+	$("#grpGroupName").val($("#trGrpNm"+idx).text());
+	$("#grpNote").val($("#trNote"+idx).text());
+	$("#grpGroup").attr($("#trGrp"+idx).text());
 }
 
 function list_common_group(page_no, page_cnt, keyword){
@@ -104,7 +130,7 @@ function list_common_group(page_no, page_cnt, keyword){
         		opt = opt + "	<td id='trGrpNm"+(start_idx+index)+"'>"+item.cgr_group_name+"</td>";
         		opt = opt + "	<td id='trNote"+(start_idx+index)+"'>"+item.cgr_note+"</td>";
         		opt = opt + "	<td>";
-        		opt = opt + "		<button type='button' class='btn btn-primary'  data-toggle='modal' data-target='#grpModModal' onClick='modify_common_group("+(start_idx+index)+")' >수정</button>";
+        		opt = opt + "		<button type='button' class='btn btn-primary modGrpBtn'  data-toggle='modal' data-target='#grpModModal' onClick='modify_common_group("+(start_idx+index)+")' >수정</button>";
         		opt = opt + "		<button type='button' class='btn btn-danger' onClick='' >삭제</button>";
         		opt = opt + "	</td>";
         		opt = opt + "</tr>";

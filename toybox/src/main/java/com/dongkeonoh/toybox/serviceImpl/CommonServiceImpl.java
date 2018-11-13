@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.dongkeonoh.toybox.dao.CategoryDao;
 import com.dongkeonoh.toybox.dao.CommonDao;
 import com.dongkeonoh.toybox.service.CommonService;
-import com.dongkeonoh.toybox.vo.CategoryVo;
 import com.dongkeonoh.toybox.vo.CommonVo;
 
 @Service("CommonServiceImpl")
@@ -36,6 +35,14 @@ public class CommonServiceImpl implements CommonService{
 		// checksum -1 : 실패
 		int checksum = 1;
 		checksum = commonDao.putCommonGroup(commonVo);
+		return checksum;
+	}
+
+	@Override
+	public int modifyCommonGroup(CommonVo commonVo) {
+		// checksum -1 : 실패
+		int checksum = 1;
+		checksum = commonDao.modifyCommonGroup(commonVo);
 		return checksum;
 	}
 
