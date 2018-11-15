@@ -19,19 +19,23 @@ $( "#putModifyGrpBtn" ).on("click",function() {
 });
 
 
-function mod_common_group(actionType){	
+function mod_common_group(){	
 	var cgr_group = $("#grpGroup").val();
     var	cgr_group_name = $("#grpGroupName").val();
     var	cgr_note = $("#grpNote").val();
 
+    var valid = valid_common_group(cgr_group, cgr_group_name, cgr_note);
+    
+    if(!valid){
+    	return;
+    }
+    
     var msg = "생성";
     var url = "ajax_put_common_group";
-    if(actionType == "MODIFY"){
-    	msg = "수정";
-        url = "ajax_modify_common_group";
-    }
-	
-    valid_common_group(cgr_group, cgr_group_name, cgr_note);
+//    if(actionType == "MODIFY"){
+//    	msg = "수정";
+//        url = "ajax_modify_common_group";
+//    }
     
 	$.ajax({
         method:"POST",
@@ -59,24 +63,58 @@ function mod_common_group(actionType){
 
 // 바이트 계산 필요
 function valid_common_group(cgr_group, cgr_group_name, cgr_note){
-	var regexr1 = /[a-z0-9]{16}$/;
-	var regexr2 = /[a-z0-9]{16}$/;
-	var regexr3 = /[a-z0-9]{16}$/;
+	var validation = true;
+	var regexr = /[a-z0-9_]{8,16}$/;
 	
-	if(!regexr1.test(cgr_group)){
-		alert('공통코드 그룹은 16자리 영문 소문자와 숫자만 사용이 가능합니다.');
-		break;
-	}else if(!regexr2.test(cgr_group_name)){
-		alert('공통코드 그룹명은 16자리 영문 소문자 또는 16바이트 미만의 한글만 사용이 가능합니다.');
-		break;
-	}else if(!regexr3.test(cgr_note)){
-		alert('공통코드 설명은 1000바이트 미만으로 ㅇㅁㅇㅁ가능합니다.');
-		break;
-	}else if(cgr_group == "" || cgr_group_name == ""){
-		alert('공통코드 그룹는 반드시 작성해야 합니다.');
-		break;
+	if(!regexr.test(cgr_group)){
+		alert('공통코드 그룹은 8자리 이상 16자리 이하의 영문 소문자와 숫자만 사용이 가능합니다.');
+		validation = false;
+		return validation;
 	}
+
+	if(cgr_group_name.length < 1){
+		alert('공통코드 그룹명을 입력하시기 바랍니다.');	//25자까지
+		validation = false;
+		return validation;
+	}
+
+	var note_byte = 0;    
+    for(var idx=0; idx < cgr_note.length; idx++) {
+        var note_char = escape(cgr_note.charAt(idx));
+         
+        if( note_char.length==1 ) note_byte++;
+        else if( note_char.indexOf("%u")!=-1 ) note_byte += 2;
+        else if( note_char.indexOf("%")!=-1 ) note_byte += note_char.length/3;
+    }     
+    
+	if(note_byte > 1000){		
+		alert('공통코드 설명은 1000바이트 미만으로 가능합니다.');
+		validation = false;
+		return validation;
+	}
+	
+	if(note_byte == 0){		
+		alert('공통코드 설명을 입력하시기 바랍니다.');
+		validation = false;
+		return validation;
+	}
+	
+	return validation;
 }
+
+function may() {
+    var l= 0;
+     
+    for(var idx=0; idx < this.length; idx++) {
+        var c = escape(this.charAt(idx));
+         
+        if( c.length==1 ) l ++;
+        else if( c.indexOf("%u")!=-1 ) l += 2;
+        else if( c.indexOf("%")!=-1 ) l += c.length/3;
+    }
+     
+    return l;
+};
 
 function clear_common_group(){
 	$("#grpGroup").val("");

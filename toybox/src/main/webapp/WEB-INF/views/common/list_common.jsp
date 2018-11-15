@@ -53,7 +53,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">공통코드 그룹명</label>
-							<input type="text" class="form-control" placeholder="공통코드 그룹명" id="grpGroupName" maxlength="100">
+							<input type="text" class="form-control" placeholder="공통코드 그룹명" id="grpGroupName" maxlength="25">
 						</div>
 					    <div class="form-group">
 					      	<label for="grpNote">설명</label>
@@ -61,7 +61,7 @@
 					    </div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" id="putModifyGrpBtn" class="btn btn-primary">생성</button>
+						<button type="button" id="putModifyGrpBtn" class="btn btn-primary" onClick="mod_common_group()">생성</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 						<input type="hidden" id="putModifyGrpType">
 					</div>
