@@ -5,6 +5,7 @@ public class CommonVo {
 	private String cgr_group_name;
     private String cgr_note;
     private String cgr_useyn;
+    private String cnt;
     
 	public String getCgr_group() {
 		return cgr_group;
@@ -29,5 +30,11 @@ public class CommonVo {
 	}
 	public void setCgr_useyn(String cgr_useyn) {
 		this.cgr_useyn = cgr_useyn;
+	}
+	public String getCnt() {
+		return cnt;
+	}
+	public void setCnt(String cnt) {
+		this.cnt = cnt;
 	}
 }

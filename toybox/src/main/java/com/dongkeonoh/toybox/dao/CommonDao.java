@@ -25,6 +25,16 @@ public class CommonDao {
 		return result;
 	}
 	
+	public int deleteCommonGroup(CommonVo commonVo) {
+		int result = sqlSession.update("commonSql.deleteCommonGroup", commonVo);		
+		return result;
+	}
+	
+	public int dupeteCommonGroup(CommonVo commonVo) {
+		int result = sqlSession.selectOne("commonSql.dupCommonGroup", commonVo);		
+		return result;
+	}	
+	
 	public List<CommonVo> listCommonGroup(HashMap<String, String> map) {
 		List<CommonVo> result = sqlSession.selectList("commonSql.listCommonGroup", map);
 		

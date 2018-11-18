@@ -10,6 +10,10 @@ public interface CommonService {
 	public int putCommonGroup(CommonVo commonVo);
 	// 공통코드 수정
 	public int modifyCommonGroup(CommonVo commonVo);
+	// 공통코드 삭제
+	public int deleteCommonGroup(CommonVo commonVo);
+	// 공통코드 삭제
+	public int dupCommonGroup(CommonVo commonVo);
 	// 공통코드 추가시 번호 확인
 	public List<CommonVo> listCommonGroup(HashMap<String, String> map);
 }

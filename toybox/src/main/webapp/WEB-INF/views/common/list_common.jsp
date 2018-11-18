@@ -34,8 +34,7 @@
 		</nav>	
 		
 	
-		<button type="button" class="btn btn-primary btn-lg" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" onClick="clear_common_group()">공통코드 그룹생성</button>
-		<button type="button" class="btn btn-danger btn-lg" onclick="list_common_group(1, 10, '')">공통코드</button>
+		<button type="button" class="btn btn-primary btn-lg" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" onClick="clear_group()">공통코드 그룹생성</button>
 	
 		<div class="modal" id="grpModModal">
 			<div class="modal-dialog" role="document">
@@ -63,7 +62,6 @@
 					<div class="modal-footer">
 						<button type="button" id="putModifyGrpBtn" class="btn btn-primary" onClick="mod_common_group()">생성</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-						<input type="hidden" id="putModifyGrpType">
 					</div>
 				</div>
 			</div>
@@ -75,13 +73,23 @@
       <th scope="col">No</th>
       <th scope="col">공통코드 그룹</th>
       <th scope="col">공통코드 그룹명</th>
-      <th scope="col">공통코드 그룹명</th>
+      <th scope="col">공통코드 설명</th>
+      <th scope="col">사용유무</th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
   
   </tbody>
+  
 </table> 
+
+		<div id="temp"></div>
+  <div class="form-group">
+    <select class="custom-select">
+      <option value="10">10건씩</option>
+      <option value="15">15건씩</option>
+    </select>
+  </div>
 	</body>
 </html>

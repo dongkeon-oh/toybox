@@ -47,6 +47,20 @@ public class CommonServiceImpl implements CommonService{
 	}
 
 	@Override
+	public int deleteCommonGroup(CommonVo commonVo) {
+		// checksum -1 : 실패
+		int checksum = 1;
+		checksum = commonDao.deleteCommonGroup(commonVo);
+		return checksum;
+	}
+
+	@Override
+	public int dupCommonGroup(CommonVo commonVo) {
+		int result = commonDao.dupeteCommonGroup(commonVo);
+		return result;
+	}
+
+	@Override
 	public List<CommonVo> listCommonGroup(HashMap<String, String> map) {
 		List<CommonVo> result = commonDao.listCommonGroup(map);		
 		return result;

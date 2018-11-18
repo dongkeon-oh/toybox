@@ -65,6 +65,22 @@ public class CommonController {
 		int result = commonService.modifyCommonGroup(commonVo);		
 		return result;
 	}
+	
+	// 공통코드 저장
+	@RequestMapping(value = "/ajax_delete_common_group", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxDeleteCommonGroup(HttpServletRequest httpServletRequest, CommonVo commonVo) {
+		int result = commonService.deleteCommonGroup(commonVo);		
+		return result;
+	}
+	
+	// 공통코드 저장
+	@RequestMapping(value = "/ajax_dup_common_group", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxDupCommonGroup(HttpServletRequest httpServletRequest, CommonVo commonVo) {
+		int result = commonService.dupCommonGroup(commonVo);		
+		return result;
+	}
 
 	// 공통코드 추가 get
 	@RequestMapping(value = "/ajax_list_common_group", method = RequestMethod.POST)
