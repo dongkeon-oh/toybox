@@ -231,10 +231,7 @@ function list_common_group(page_no, page_cnt, keyword, keytype){
         	});
         	$("tbody").html(opt);
 
-        	//set_pagination(page_cnt, page_total, page_no);
-
-        	// 총 페이지 / 페이지를 나눌 사이즈(CNT) / 지금 내 페이지
-    		$("#temp").text(page_total);
+        	set_pagination(page_cnt, page_total, page_no, keyword, keytype);
     		
         },
         error:function(request,status,error){
@@ -243,23 +240,23 @@ function list_common_group(page_no, page_cnt, keyword, keytype){
     });
 }
 
-function set_pagination(page_cnt, page_total, page_no){
-	var total_page = 0;
-	if(page_cnt%page_total > 0){
-		total_page = 1;
+function set_pagination(page_cnt, page_total, page_no, keyword, keytype){
+	var page_area_full_size = Math.ceil(page_total/page_cnt);
+	if(page_area_full_size > 5){
+		page_area_full_size = 5;
 	}
-	total_page = page_cnt/page_total + total_page;
 
-	var page = "";
 	var append = "";
+	var this_page = "";
 	$("#pagination_area").html("");
-	for(var i = 1; total_page >= i; i++){
+	for(var i = 1; page_area_full_size >= i; i++){
 		if(i == page_no){
-			append = '<li class="disabled"><span onclick="list_common('+i+')">'+i+'</span></li>';
+			this_page = " active";
 		}else{
-			append = '<li class="active"><span onclick="list_common('+i+')">'+i+'</span></li>';
+			this_page = "";
 		}
-		page = page + append;
+		
+		append = append + '<li class="page-item'+this_page+'"><a class="page-link" href="#" onclick="list_common_group(\''+i+'\', \''+page_cnt+'\', \''+keyword+'\', \''+keytype+'\');">'+i+'</a></li>';
 	}
-	$("#pagination_area").append(page);
+	$("#pagination_area").html(append);
 }

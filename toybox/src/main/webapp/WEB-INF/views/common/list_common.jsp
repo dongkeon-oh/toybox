@@ -84,12 +84,19 @@
   
 </table> 
 
-		<div id="temp"></div>
+
   <div class="form-group">
     <select class="custom-select">
       <option value="10">10건씩</option>
       <option value="15">15건씩</option>
     </select>
   </div>
+  
+  <div>
+  <ul class="pagination" id="pagination_area">
+
+  </ul>
+</div>
+
 	</body>
 </html>
