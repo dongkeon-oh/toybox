@@ -87,16 +87,19 @@ public class CommonController {
 	@ResponseBody
 	public List<CommonVo> ajaxListCommonGroup(HttpServletRequest httpServletRequest
 			, @RequestParam("keyword") 		String keyword
+			, @RequestParam("keytype") 		String keytype
 			, @RequestParam("start_idx") 	String start_idx
 			, @RequestParam("end_idx") 		String end_idx
 	) {		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("keyword", keyword);
+		map.put("keytype", keytype);
 		map.put("start_idx", start_idx);
 		map.put("end_idx", end_idx);
 
 		System.out.println("[LOG] ==REQUEST=============================");
 		System.out.println("[LOG] keyword 	// " + keyword);
+		System.out.println("[LOG] keytype 	// " + keytype);
 		System.out.println("[LOG] start_idx // " + start_idx);
 		System.out.println("[LOG] end_idx 	// " + end_idx);
 		System.out.println("[LOG] ======================================");
@@ -108,26 +111,4 @@ public class CommonController {
 		System.out.println("[LOG] ======================================");
 		return result;
 	}
-	
-//	// 공통코드  post
-//	@RequestMapping(value = "/ajax_list_common", method = RequestMethod.POST)
-//	@ResponseBody
-//	public List<CommonVo> ajaxListCommon(HttpServletRequest httpServletRequest
-//			, @RequestParam("target") String target
-//			, @RequestParam("keyword") String keyword
-//			, @RequestParam("order_type") String order_type
-//			, @RequestParam("start_idx") String start_idx
-//			, @RequestParam("end_idx") String end_idx
-//			) {
-//		HashMap<String, String> map = new HashMap<String, String>();
-//		map.put("target", target);
-//		map.put("keyword", keyword);
-//		map.put("order_type", order_type);
-//		map.put("start_idx", start_idx);
-//		map.put("end_idx", end_idx);
-//		
-//		List<CommonVo> result = commonService.getCommonList(map);
-//		
-//		return result;
-//	}
 }

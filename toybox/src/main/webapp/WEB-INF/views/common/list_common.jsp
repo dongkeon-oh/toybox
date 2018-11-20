@@ -28,7 +28,7 @@
 				    	</select>
 				  	</div>
 			      	<input class="form-control mr-sm-2" id="keyword" type="text" placeholder="검색어를 입력하세요">
-			      	<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+			      	<button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="search_keyword()">검색</button>
 			    </form>
 		    </div>
 		</nav>	
@@ -86,7 +86,7 @@
 
 
   <div class="form-group">
-    <select class="custom-select"  onchange="change_page_count(this.value)">
+    <select class="custom-select" id="cnt" onchange="change_page_count(this.value)">
       <option value="10">10건씩</option>
       <option value="15">15건씩</option>
     </select>

@@ -267,3 +267,15 @@ function change_page_count(page_cnt){
 	
 	list_common_group("1", page_cnt, "", "");
 }
+
+function search_keyword(){
+	var page_cnt = $("#cnt").val(); 
+	var keyword = $("#keyword").val(); 
+	var keytype = $("#keytype").val(); 
+	if(keytype == 'sel'){
+		alert("검색조건을 선택하시기 바랍니다.");
+		return;
+	}
+	
+	list_common_group("1", page_cnt, keyword, keytype);
+}
