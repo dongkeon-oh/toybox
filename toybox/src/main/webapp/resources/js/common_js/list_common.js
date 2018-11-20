@@ -260,3 +260,10 @@ function set_pagination(page_cnt, page_total, page_no, keyword, keytype){
 	}
 	$("#pagination_area").html(append);
 }
+
+function change_page_count(page_cnt){
+	$("#keyword").val(""); 
+	$("#keytype option:eq(0)").prop("selected", true);
+	
+	list_common_group("1", page_cnt, "", "");
+}

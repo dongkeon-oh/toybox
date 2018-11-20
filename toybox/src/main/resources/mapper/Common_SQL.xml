@@ -66,10 +66,10 @@
 	             	      , COUNT(CGR_GROUP) OVER() CNT
 			  	       FROM TB_COMMON_GROUP
 			 	      WHERE 1=1
-					<if test="keytype != group">
+					<if test="keytype == group">
 					    AND CGR_GROUP LIKE '%'||#{keyword}||'%'
 					</if>
-					<if test="keytype != name">
+					<if test="keytype == name">
 					    AND CGR_GROUP_NAME LIKE '%'||#{keyword}||'%'
 					</if>
 			  	   ) A

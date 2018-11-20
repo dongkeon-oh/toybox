@@ -6,6 +6,8 @@ public class CommonVo {
     private String cgr_note;
     private String cgr_useyn;
     private String cnt;
+    private String keyword;
+    private String keytype;
     
 	public String getCgr_group() {
 		return cgr_group;
@@ -36,5 +38,17 @@ public class CommonVo {
 	}
 	public void setCnt(String cnt) {
 		this.cnt = cnt;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public String getKeytype() {
+		return keytype;
+	}
+	public void setKeytype(String keytype) {
+		this.keytype = keytype;
 	}
 }

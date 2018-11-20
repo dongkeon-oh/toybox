@@ -12,7 +12,7 @@
 		<title>공통코드 관리</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-light">
 			<a class="navbar-brand" href="#">검색</a>
 			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 		    	<span class="navbar-toggler-icon"></span>
@@ -21,13 +21,13 @@
 		  		<ul class="navbar-nav mr-auto"></ul>
 			    <form class="form-inline my-2 my-lg-0">
 				    <div class="form-group" style="margin-right: 8px;">
-				    	<select class="custom-select">
-				      		<option selected="selected">Open this select menu</option>
-				      		<option value="1">One</option>
-				      		<option value="2">Two</option>
+				    	<select class="custom-select" id="keytype">
+				      		<option value="sel">검색조건 선택</option>
+				      		<option value="group">공통코드</option>
+				      		<option value="name">공통코드명</option>
 				    	</select>
 				  	</div>
-			      	<input class="form-control mr-sm-2" type="text" placeholder="Search">
+			      	<input class="form-control mr-sm-2" id="keyword" type="text" placeholder="검색어를 입력하세요">
 			      	<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 			    </form>
 		    </div>
@@ -86,7 +86,7 @@
 
 
   <div class="form-group">
-    <select class="custom-select">
+    <select class="custom-select"  onchange="change_page_count(this.value)">
       <option value="10">10건씩</option>
       <option value="15">15건씩</option>
     </select>
