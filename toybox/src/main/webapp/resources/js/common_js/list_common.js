@@ -19,16 +19,18 @@ function mod_common_group(actionType){
     	return;
     }
     
-    var valid = valid_common_group(cgr_group, cgr_group_name, cgr_note);    
+   	var valid = valid_common_group(cgr_group, cgr_group_name, cgr_note);    
     if(!valid){
     	return;
     }
     
-    var dupCase = duplication_common_group(cgr_group);    
-    if(dupCase){
-    	return;
-    }
-    
+    if(actionType == "PUT"){
+        var dupCase = duplication_common_group(cgr_group);    
+        if(dupCase){
+        	return;
+        }
+    }    
+        
 	$.ajax({
         method:"POST",
         url:url,
@@ -46,6 +48,8 @@ function mod_common_group(actionType){
         	}else{
         		alert(cgr_group+"그룹 "+msg+"을 실패하였습니다.");
         	}
+        	$("#grpModModal").modal("hide");
+        	search_keyword("refresh");
         },
         error:function(request,status,error){
             console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -224,8 +228,10 @@ function list_common_group(page_no, page_cnt, keyword, keytype){
         		opt = opt + "	<td>";
         		if(item.cgr_useyn != 'N'){
         			opt = opt + "		<button type='button' class='btn btn-primary modGrpBtn'  data-toggle='modal' data-target='#grpModModal' onClick='modify_group("+(start_idx+index)+")' >수정</button>";
-            		opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_group("+(start_idx+index)+")'>삭제</button>";
-            	}
+        			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_group("+(start_idx+index)+")'>삭제</button>";
+        			opt = opt + "		<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#codeModModal' onClick='modify_group("+(start_idx+index)+")'>코드추가</button>";
+            	//				    <button data-toggle="modal" data-target="#codeModModal" style="margin-right: 8px;" onClick="clear_group()">공통코드 그룹생성</button>
+        		}
         		opt = opt + "	</td>";
         		opt = opt + "</tr>";
         	});
@@ -268,14 +274,24 @@ function change_page_count(page_cnt){
 	list_common_group("1", page_cnt, "", "");
 }
 
-function search_keyword(){
-	var page_cnt = $("#cnt").val(); 
-	var keyword = $("#keyword").val(); 
-	var keytype = $("#keytype").val(); 
-	if(keytype == 'sel'){
+function search_keyword(type){
+	if(type == 'refresh'){
+		$("#keyword").val(""); 
+		$("#keytype option:eq(0)").prop("selected", true);
+	}else if(keytype == 'sel' && type == 'onkey'){
 		alert("검색조건을 선택하시기 바랍니다.");
 		return;
 	}
 	
+	var page_cnt = $("#cnt").val(); 
+	var keyword = $("#keyword").val(); 
+	var keytype = $("#keytype").val(); 
+	
 	list_common_group("1", page_cnt, keyword, keytype);
+}
+
+function search_enter(){
+    if(event.keyCode == 13){
+    	search_keyword();
+   }
 }

@@ -20,27 +20,25 @@
 		  	<div class="navbar-collapse collapse" id="navbarColor02" style="">
 		  		<ul class="navbar-nav mr-auto"></ul>
 			    <form class="form-inline my-2 my-lg-0">
-				    <div class="form-group" style="margin-right: 8px;">
+				    <button type="button" class="btn btn-primary btn-lg" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" style="margin-right: 8px;" onClick="clear_group()">공통코드 그룹생성</button>
+			      	<div class="form-group" style="margin-right: 8px;">
 				    	<select class="custom-select" id="keytype">
 				      		<option value="sel">검색조건 선택</option>
 				      		<option value="group">공통코드</option>
 				      		<option value="name">공통코드명</option>
 				    	</select>
 				  	</div>
-			      	<input class="form-control mr-sm-2" id="keyword" type="text" placeholder="검색어를 입력하세요">
-			      	<button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="search_keyword()">검색</button>
+				  	<input class="form-control mr-sm-2" id="keyword" type="text" placeholder="검색어를 입력하세요" onkeyup="search_enter()">
+			      	<button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="search_keyword('onkey')">검색</button>
 			    </form>
 		    </div>
-		</nav>	
-		
-	
-		<button type="button" class="btn btn-primary btn-lg" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" onClick="clear_group()">공통코드 그룹생성</button>
+		</nav>		
 	
 		<div class="modal" id="grpModModal">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-					  	<h5 class="modal-title">공통코그 그룹생성</h5>
+					  	<h5 class="modal-title">공통코드 그룹 생성</h5>
 					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    	<span aria-hidden="true">&times;</span>
 					  	</button>
@@ -62,6 +60,28 @@
 					<div class="modal-footer">
 						<button type="button" id="putModifyGrpBtn" class="btn btn-primary" onClick="mod_common_group()">생성</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal" id="codeModModal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+					  	<h5 class="modal-title">공통코드 생성</h5>
+					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    	<span aria-hidden="true">&times;</span>
+					  	</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">공통코드 그룹</label>
+							<input type="text" class="form-control" placeholder="공통코드 그룹명" id="grpGroup" maxlength="16">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 			</div>
