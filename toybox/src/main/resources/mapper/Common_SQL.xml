@@ -79,5 +79,70 @@
 			)
 		WHERE RN <![CDATA[>=]]> #{start_idx} 
 	</select>
+	
+	<!-- 공통 코드 -->	
+	<!-- 공통코드 그룹 추가 -->
+	<insert id="putCommonCode" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+		INSERT INTO TB_COMMON_GROUP
+			 (
+			   CCD_SEQ,      
+			   CCD_CODE,     
+			   CCD_GROUP,    
+			   CCD_CODENAME, 
+			   CCD_DETAIL1,  
+			   CCD_DETAIL2,  
+			   CCD_DETAIL3,  
+			   CCD_NOTE,     
+			   CCD_ORDER,    
+			   CCD_USEYN 
+			 )
+        VALUES 
+     		 (
+			   SEQ_COMMON_ID.NEXTVAL,      
+			   #{CCD_CODE},     
+			   #{CCD_GROUP},    
+			   #{CCD_CODENAME}, 
+			   #{CCD_DETAIL1},  
+			   #{CCD_DETAIL2},  
+			   #{CCD_DETAIL3},  
+			   #{CCD_NOTE},     
+			   #{CCD_ORDER},
+       		   'Y'
+     		 )
+	</insert>   
+	
+	<!-- 공통 코드 조회 -->
+	<select id="listCommonCode" parameterType="HashMap" resultType="com.dongkeonoh.toybox.vo.CommonVo">
+	SELECT CCD_SEQ
+	     , CCD_CODE
+	     , CCD_GROUP
+	     , CCD_CODENAME
+	     , CCD_DETAIL1
+	     , CCD_DETAIL2
+	     , CCD_DETAIL3
+	     , CCD_NOTE
+	     , CCD_ORDER
+	     , CCD_USEYN
+	  FROM 
+	     (
+	       SELECT ROWNUM AS RN
+	            , A.*
+	         FROM (
+	                SELECT CCD_SEQ
+	                     , CCD_CODE
+	                     , CCD_GROUP
+	                     , CCD_CODENAME
+	                     , CCD_DETAIL1
+	                     , CCD_DETAIL2
+	                     , CCD_DETAIL3
+	                     , CCD_NOTE
+	                     , CCD_ORDER
+	                     , CCD_USEYN
+	                  FROM TB_COMMON_CODE
+	              ) A
+	        WHERE ROWNUM <![CDATA[<=]]> 1   
+	     )
+	      WHERE ROWNUM <![CDATA[>=]]> 10  
+	</select>
 </mapper>
 
