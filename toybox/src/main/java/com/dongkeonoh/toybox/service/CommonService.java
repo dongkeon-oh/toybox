@@ -16,4 +16,8 @@ public interface CommonService {
 	public int dupCommonGroup(CommonVo commonVo);
 	// 공통코드 추가시 번호 확인
 	public List<CommonVo> listCommonGroup(HashMap<String, String> map);
+	
+
+	// 공통코드 리스트
+	public List<CommonVo> listCommonCode(CommonVo commonVo);
 }

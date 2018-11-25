@@ -203,7 +203,7 @@ function list_common_group(page_no, page_cnt, keyword, keytype){
         	var opt = "";
         	var page_total = 0;
         	
-        	$("tbody").html("");
+        	$("#grp_tbody").html("");
         	$.each(result, function(index, item){
         		page_total = item.cnt;
         		
@@ -229,13 +229,13 @@ function list_common_group(page_no, page_cnt, keyword, keytype){
         		if(item.cgr_useyn != 'N'){
         			opt = opt + "		<button type='button' class='btn btn-primary modGrpBtn'  data-toggle='modal' data-target='#grpModModal' onClick='modify_group("+(start_idx+index)+")' >수정</button>";
         			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_group("+(start_idx+index)+")'>삭제</button>";
-        			opt = opt + "		<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#codeModModal' onClick='modify_group("+(start_idx+index)+")'>코드추가</button>";
+        			opt = opt + "		<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#codeModModal' onClick='list_common_code(\""+item.cgr_group+"\")'>코드추가</button>";
             	//				    <button data-toggle="modal" data-target="#codeModModal" style="margin-right: 8px;" onClick="clear_group()">공통코드 그룹생성</button>
         		}
         		opt = opt + "	</td>";
         		opt = opt + "</tr>";
         	});
-        	$("tbody").html(opt);
+        	$("#grp_tbody").html(opt);
 
         	set_pagination(page_cnt, page_total, page_no, keyword, keytype);
     		
@@ -294,4 +294,53 @@ function search_enter(){
     if(event.keyCode == 13){
     	search_keyword();
    }
+}
+
+
+function list_common_code(group_code){
+	$.ajax({
+        method:"POST",
+        url:"ajax_list_common_code",
+        data:{
+        	"cgr_group" : group_code
+        },
+        async:false,
+        success:function(response){
+        	
+        	$("#code_tbody").html("");
+
+        	var opt = "";
+        	var result = response;
+        	if(result.length > 0){
+            	$.each(result, function(index, item){
+            		opt = opt + "<tr>";
+            		opt = opt + "	<td>"+item.ccd_code+"</td>";
+            		opt = opt + "	<td>"+item.ccd_codename+"</td>";
+            		opt = opt + "	<td>"+item.ccd_detail1+"</td>";
+            		opt = opt + "	<td>"+item.ccd_detail1+"</td>";
+            		opt = opt + "	<td>"+item.ccd_detail1+"</td>";
+            		opt = opt + "	<td>"+item.ccd_note+"</td>";
+            		opt = opt + "	<td>"+item.ccd_order+"</td>";
+            		opt = opt + "	<td>";
+            		if(item.ccd_useyn != 'N'){
+            			opt = opt + "		<button type='button' class='btn btn-primary' onClick='add_code('"+item.ccd_group+"','ADD')' >수정</button>";
+            			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_code("+item.ccd_seq+")'>삭제</button>";
+            		}
+            		opt = opt + "	</td>";
+            		opt = opt + "</tr>";
+            	});
+        	}else{
+        		opt = "<tr><td colspan='7' style='float:center;'>공통코드를 추가하시기 바랍니다.</td><td><button type='button' class='btn btn-primary' onClick='add_code('"+item.ccd_group+"','NEW')' >수정</button></td></tr>";	
+        	}
+
+        	$("#code_tbody").html(opt);
+        },
+        error:function(request,status,error){
+            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+    });
+}
+
+function add_code(group_code, type){
+
 }

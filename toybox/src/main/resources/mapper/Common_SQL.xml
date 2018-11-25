@@ -99,20 +99,20 @@
         VALUES 
      		 (
 			   SEQ_COMMON_ID.NEXTVAL,      
-			   #{CCD_CODE},     
-			   #{CCD_GROUP},    
-			   #{CCD_CODENAME}, 
-			   #{CCD_DETAIL1},  
-			   #{CCD_DETAIL2},  
-			   #{CCD_DETAIL3},  
-			   #{CCD_NOTE},     
-			   #{CCD_ORDER},
+			   #{ccd_code},     
+			   #{ccd_group},    
+			   #{ccd_codename}, 
+			   #{ccd_detail1},  
+			   #{ccd_detail2},  
+			   #{ccd_detail3},  
+			   #{ccd_note},     
+			   #{ccd_order},
        		   'Y'
      		 )
 	</insert>   
 	
 	<!-- 공통 코드 조회 -->
-	<select id="listCommonCode" parameterType="HashMap" resultType="com.dongkeonoh.toybox.vo.CommonVo">
+	<select id="listCommonCode" parameterType="com.dongkeonoh.toybox.vo.CommonVo" resultType="com.dongkeonoh.toybox.vo.CommonVo">
 	SELECT CCD_SEQ
 	     , CCD_CODE
 	     , CCD_GROUP
@@ -123,26 +123,9 @@
 	     , CCD_NOTE
 	     , CCD_ORDER
 	     , CCD_USEYN
-	  FROM 
-	     (
-	       SELECT ROWNUM AS RN
-	            , A.*
-	         FROM (
-	                SELECT CCD_SEQ
-	                     , CCD_CODE
-	                     , CCD_GROUP
-	                     , CCD_CODENAME
-	                     , CCD_DETAIL1
-	                     , CCD_DETAIL2
-	                     , CCD_DETAIL3
-	                     , CCD_NOTE
-	                     , CCD_ORDER
-	                     , CCD_USEYN
-	                  FROM TB_COMMON_CODE
-	              ) A
-	        WHERE ROWNUM <![CDATA[<=]]> 1   
-	     )
-	      WHERE ROWNUM <![CDATA[>=]]> 10  
+	  FROM TB_COMMON_CODE
+	 WHERE CCD_GROUP = #{cgr_group}
+	 ORDER BY CCD_SEQ
 	</select>
 </mapper>
 

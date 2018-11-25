@@ -111,4 +111,23 @@ public class CommonController {
 		System.out.println("[LOG] ======================================");
 		return result;
 	}
+	
+	
+
+
+	// 공통코드 추가 get
+	@RequestMapping(value = "/ajax_list_common_code", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CommonVo> ajaxListCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
+		System.out.println("[LOG] ==REQUEST=============================");
+		System.out.println("[LOG] cgr_group 	// " + commonVo.getCgr_group());
+		System.out.println("[LOG] ======================================");
+		
+		List<CommonVo> result = commonService.listCommonCode(commonVo);		
+		
+		System.out.println("[LOG] ==REEPONS=============================");
+		System.out.println("[LOG] result.size() 	// " + result.size());
+		System.out.println("[LOG] ======================================");
+		return result;
+	}
 }

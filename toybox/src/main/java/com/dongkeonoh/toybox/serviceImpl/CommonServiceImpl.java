@@ -65,17 +65,12 @@ public class CommonServiceImpl implements CommonService{
 		List<CommonVo> result = commonDao.listCommonGroup(map);		
 		return result;
 	}
+	
 
-//	@Override
-//	public List<CommonVo> getCommonList(HashMap<String, String> map) {
-//		List<CommonVo> result = commonDao.getCommonList(map);
-//		
-//		return result;
-//	}
-//
-//	@Override
-//	public int delCommon(CategoryVo categoryVo) {
-//		int result = commonDao.delCommon(categoryVo);
-//		return result;
-//	}
+
+	@Override
+	public List<CommonVo> listCommonCode(CommonVo commonVo) {
+		List<CommonVo> result = commonDao.listCommonCode(commonVo);		
+		return result;
+	}
 }

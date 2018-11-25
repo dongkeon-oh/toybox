@@ -40,4 +40,13 @@ public class CommonDao {
 		
 		return result;
 	} 
+	
+	
+
+	
+	public List<CommonVo> listCommonCode(CommonVo commonVo) {
+		List<CommonVo> result = sqlSession.selectList("commonSql.listCommonCode", commonVo);
+		
+		return result;
+	} 
 }

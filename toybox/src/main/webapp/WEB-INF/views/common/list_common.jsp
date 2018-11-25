@@ -38,7 +38,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-					  	<h5 class="modal-title">공통코드 그룹 생성</h5>
+					  	<h5 class="modal-title">공통코드 그룹</h5>
 					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    	<span aria-hidden="true">&times;</span>
 					  	</button>
@@ -66,15 +66,34 @@
 		</div>
 		
 		<div class="modal" id="codeModModal">
-			<div class="modal-dialog" role="document">
+			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-					  	<h5 class="modal-title">공통코드 생성</h5>
+					  	<h5 class="modal-title">공통코드</h5>
 					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    	<span aria-hidden="true">&times;</span>
 					  	</button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body" id="modal-body" style="overflow:auto; height:500px;">
+							<table class="table table-hover">
+							  <thead>
+							    <tr>
+							      <th scope="col">공통코드</th>
+							      <th scope="col">공통코드명</th>
+							      <th scope="col">공통코드 디테일1</th>
+							      <th scope="col">공통코드 디테일2</th>
+							      <th scope="col">공통코드 디테일3</th>
+							      <th scope="col">공통코드 설명</th>
+							      <th scope="col">공통코드 정렬순서</th>
+							      <th scope="col"></th>
+							    </tr>
+							  </thead>
+							  <tbody id="code_tbody">
+							  
+							  </tbody>
+							  
+							</table> 
+					
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">공통코드 그룹</label>
 							<input type="text" class="form-control" placeholder="공통코드 그룹명" id="grpGroup" maxlength="16">
@@ -93,12 +112,12 @@
       <th scope="col">No</th>
       <th scope="col">공통코드 그룹</th>
       <th scope="col">공통코드 그룹명</th>
-      <th scope="col">공통코드 설명</th>
+      <th scope="col">공통코드 그룹 설명</th>
       <th scope="col">사용유무</th>
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="grp_tbody">
   
   </tbody>
   
