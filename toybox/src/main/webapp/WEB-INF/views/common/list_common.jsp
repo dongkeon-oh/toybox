@@ -93,13 +93,9 @@
 							  </tbody>
 							  
 							</table> 
-					
-						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">공통코드 그룹</label>
-							<input type="text" class="form-control" placeholder="공통코드 그룹명" id="grpGroup" maxlength="16">
-						</div>
 					</div>
 					<div class="modal-footer">
+						<button type='button' class='btn btn-primary' onClick='add_code("")' >공통코드 추가</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>

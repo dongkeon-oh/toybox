@@ -312,7 +312,7 @@ function list_common_code(group_code){
         	var result = response;
         	if(result.length > 0){
             	$.each(result, function(index, item){
-            		opt = opt + "<tr>";
+            		opt = opt + "<tr class='code_list'>";
             		opt = opt + "	<td>"+item.ccd_code+"</td>";
             		opt = opt + "	<td>"+item.ccd_codename+"</td>";
             		opt = opt + "	<td>"+item.ccd_detail1+"</td>";
@@ -329,7 +329,7 @@ function list_common_code(group_code){
             		opt = opt + "</tr>";
             	});
         	}else{
-        		opt = "<tr id='empty_code'><td colspan='7' style='float:center;'>공통코드를 추가하시기 바랍니다.</td><td><button type='button' class='btn btn-primary' onClick='add_code(\"\",\"NEW\")' >추가</button></td></tr>";	
+        		opt = "<tr id='empty_code'><td colspan='8' style='float:center;'><button type='button' class='btn btn-primary' onClick='add_code(\"\",\"NEW\")' >공통코드 추가</button>를 클릭해 공통코드를 추가하시기 바랍니다.</td></tr>";	
         	}
 
         	$("#code_tbody").html(opt);
@@ -340,23 +340,25 @@ function list_common_code(group_code){
     });
 }
 
-function add_code(group_code, type){
+function add_code(group_code){
 	var opt = "";
-	opt = opt + "<tr>";
-	opt = opt + "	<td><input type='text'></td>";
-	opt = opt + "	<td><input type='text'></td>";
-	opt = opt + "	<td><input type='text'></td>";
-	opt = opt + "	<td><input type='text'></td>";
-	opt = opt + "	<td><input type='text'></td>";
-	opt = opt + "	<td><input type='text'></td>";
-	opt = opt + "	<td><input type='text'></td>";
-	opt = opt + "	<td>";
-	opt = opt + "<button type='button' class='btn btn-primary'>추가</button>";
-	if(type == "NEW"){
-		$("#code_tbody").html("");		
-	}else if(type == "ADD"){
-		opt = opt + "<button type='button' class='btn btn-danger'>삭제</button>";
+	var cnt = $(".code_list").length + 1;
+	if(cnt == 1){
+		$("#code_tbody").html("");
 	}
+
+	opt = opt + "<tr>";
+	opt = opt + "	<td><input type='text' id='ccd_code_"+cnt+"'></td>";
+	opt = opt + "	<td><input type='text' id='ccd_codename_"+cnt+"'></td>";
+	opt = opt + "	<td><input type='text' id='ccd_detail1_"+cnt+"'></td>";
+	opt = opt + "	<td><input type='text' id='ccd_detail2_"+cnt+"'></td>";
+	opt = opt + "	<td><input type='text' id='ccd_detail3_"+cnt+"'></td>";
+	opt = opt + "	<td><input type='text' id='ccd_note_"+cnt+"'></td>";
+	opt = opt + "	<td><input type='text' id='ccd_order_"+cnt+"'></td>";
+	opt = opt + "	<td>";
+	opt = opt + "		<button type='button' class='btn btn-primary'>추가</button>";
+	opt = opt + "		<button type='button' class='btn btn-danger'>취소</button>";	
+	opt = opt + "		<input type='hidden' id='ccd_group_"+cnt+"' value='"+group_code+"'>";
 	opt = opt + "	</td>";
 	opt = opt + "</tr>";
 	
