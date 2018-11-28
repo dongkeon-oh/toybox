@@ -19,16 +19,6 @@ public class CommonServiceImpl implements CommonService{
 
 	@Resource(name="CategoryDao")
 	private CategoryDao categoryDao;
-	
-//	@Override
-//	public int putCommon(CommonVo commonVo) {
-//		// checksum -1 : 실패
-//		int checksum = -1;
-//			
-//		checksum = commonDao.putCommon(commonVo);
-//
-//		return checksum;
-//	}	
 
 	@Override
 	public int putCommonGroup(CommonVo commonVo) {
@@ -72,5 +62,13 @@ public class CommonServiceImpl implements CommonService{
 	public List<CommonVo> listCommonCode(CommonVo commonVo) {
 		List<CommonVo> result = commonDao.listCommonCode(commonVo);		
 		return result;
+	}
+	
+	@Override
+	public int putCommonCode(CommonVo commonVo) {
+		// checksum -1 : 실패
+		int checksum = 1;
+		checksum = commonDao.putCommonCode(commonVo);
+		return checksum;
 	}
 }

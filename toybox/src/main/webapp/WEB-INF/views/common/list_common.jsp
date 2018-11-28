@@ -94,9 +94,9 @@
 							  
 							</table> 
 					</div>
-					<div class="modal-footer">
-						<button type='button' class='btn btn-primary' onClick='add_code("")' >공통코드 추가</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					<div class="modal-footer" id="code_tfooter">
+<!-- 						<button type='button' class='btn btn-primary' onClick='add_code("")' >공통코드 추가</button> -->
+<!-- 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->
 					</div>
 				</div>
 			</div>

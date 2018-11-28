@@ -245,6 +245,7 @@ function list_common_group(page_no, page_cnt, keyword, keytype){
     });
 }
 
+// 에러 수정 필요
 function set_pagination(page_cnt, page_total, page_no, keyword, keytype){
 	var page_area_full_size = Math.ceil(page_total/page_cnt);
 	if(page_area_full_size > 5){
@@ -316,23 +317,27 @@ function list_common_code(group_code){
             		opt = opt + "	<td>"+item.ccd_code+"</td>";
             		opt = opt + "	<td>"+item.ccd_codename+"</td>";
             		opt = opt + "	<td>"+item.ccd_detail1+"</td>";
-            		opt = opt + "	<td>"+item.ccd_detail1+"</td>";
-            		opt = opt + "	<td>"+item.ccd_detail1+"</td>";
+            		opt = opt + "	<td>"+item.ccd_detail2+"</td>";
+            		opt = opt + "	<td>"+item.ccd_detail3+"</td>";
             		opt = opt + "	<td>"+item.ccd_note+"</td>";
             		opt = opt + "	<td>"+item.ccd_order+"</td>";
             		opt = opt + "	<td>";
             		if(item.ccd_useyn != 'N'){
-            			opt = opt + "		<button type='button' class='btn btn-primary' onClick='add_code('"+item.ccd_group+"','ADD')' >수정</button>";
-            			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_code("+item.ccd_seq+")'>삭제</button>";
+            			opt = opt + "		<button type='button' class='btn btn-primary' onClick='modify_code(\""+item.ccd_group+"\")' >수정</button>";
+            			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_code(\""+item.ccd_seq+"\")'>삭제</button>";
             		}
             		opt = opt + "	</td>";
             		opt = opt + "</tr>";
             	});
         	}else{
-        		opt = "<tr id='empty_code'><td colspan='8' style='float:center;'><button type='button' class='btn btn-primary' onClick='add_code(\"\",\"NEW\")' >공통코드 추가</button>를 클릭해 공통코드를 추가하시기 바랍니다.</td></tr>";	
+        		opt = "<tr id='empty_code'><td colspan='8' style='float:center;'><button type='button' class='btn btn-primary' onClick='add_code(\""+group_code+"\",\"NEW\")' >공통코드 추가</button>를 클릭해 공통코드를 추가하시기 바랍니다.</td></tr>";	
         	}
 
         	$("#code_tbody").html(opt);
+
+        	$("#code_tfooter").html("");
+        	$("#code_tfooter").append("<button type='button' class='btn btn-primary' onClick='add_code(\""+group_code+"\")' >공통코드 추가</button>");
+        	$("#code_tfooter").append("<button type='button' class='btn btn-secondary' data-dismiss='modal'>닫기</button>");
         },
         error:function(request,status,error){
             console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -356,11 +361,40 @@ function add_code(group_code){
 	opt = opt + "	<td><input type='text' id='ccd_note_"+cnt+"'></td>";
 	opt = opt + "	<td><input type='text' id='ccd_order_"+cnt+"'></td>";
 	opt = opt + "	<td>";
-	opt = opt + "		<button type='button' class='btn btn-primary'>추가</button>";
+	opt = opt + "		<button type='button' class='btn btn-primary' onclick='put_code(\""+group_code+"\", \""+cnt+"\")'>추가</button>";
 	opt = opt + "		<button type='button' class='btn btn-danger'>취소</button>";	
-	opt = opt + "		<input type='hidden' id='ccd_group_"+cnt+"' value='"+group_code+"'>";
 	opt = opt + "	</td>";
 	opt = opt + "</tr>";
 	
 	$("#code_tbody").append(opt);
+}
+
+function put_code(group_code, cnt){
+	var code = $("#ccd_code_"+cnt).val()
+	$.ajax({
+        method:"POST",
+        url:"ajax_put_common_code",
+        data:{
+        	"ccd_code" 		: code,
+        	"ccd_group" 	: group_code,
+        	"ccd_codename" 	: $("#ccd_codename_"+cnt).val(),
+        	"ccd_detail1" 	: $("#ccd_detail1_"+cnt).val(),
+        	"ccd_detail2" 	: $("#ccd_detail2_"+cnt).val(),
+        	"ccd_detail3" 	: $("#ccd_detail3_"+cnt).val(),
+        	"ccd_note" 		: $("#ccd_note_"+cnt).val(),
+        	"ccd_order" 	: $("#ccd_order_"+cnt).val()
+        },
+        async:false,
+        success:function(response){
+        	if(response == '1'){
+            	alert(group_code+"그룹에 "+code+"코드를 추가하였습니다.");
+        	}else{
+        		alert(group_code+"그룹에 "+code+"코드를 추가를 실패하였습니다.");
+        	}
+        	list_common_code(group_code);
+        },
+        error:function(request,status,error){
+            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+    });
 }

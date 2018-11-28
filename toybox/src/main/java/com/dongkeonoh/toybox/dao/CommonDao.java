@@ -49,4 +49,9 @@ public class CommonDao {
 		
 		return result;
 	} 
+
+	public int putCommonCode(CommonVo commonVo) {
+		int result = sqlSession.insert("commonSql.putCommonCode", commonVo);		
+		return result;
+	}
 }

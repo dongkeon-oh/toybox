@@ -20,4 +20,6 @@ public interface CommonService {
 
 	// 공통코드 리스트
 	public List<CommonVo> listCommonCode(CommonVo commonVo);
+
+	public int putCommonCode(CommonVo commonVo);	
 }

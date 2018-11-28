@@ -83,7 +83,7 @@
 	<!-- 공통 코드 -->	
 	<!-- 공통코드 그룹 추가 -->
 	<insert id="putCommonCode" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
-		INSERT INTO TB_COMMON_GROUP
+		INSERT INTO TB_COMMON_CODE
 			 (
 			   CCD_SEQ,      
 			   CCD_CODE,     

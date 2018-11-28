@@ -22,28 +22,10 @@ public class CommonController {
 
 	@Resource(name="CommonServiceImpl")
 	private CommonService commonService;
-
-//	// 공통코드 관리
-//	@RequestMapping(value = "/modify_common", method = RequestMethod.GET)
-//	public ModelAndView modifyCommon(HttpServletRequest httpServletRequest, CommonVo commonVo) {
-//		ModelAndView modelAndView = new ModelAndView();
-//		modelAndView.setViewName("common/modify_common");
-//		modelAndView.addObject("commonVo",commonVo);
-//		
-//		return modelAndView;
-//	}
-
-//	// 공통코드 저장
-//	@RequestMapping(value = "/ajax_put_common", method = RequestMethod.POST)
-//	@ResponseBody
-//	public int ajaxPutCommon(HttpServletRequest httpServletRequest, CommonVo commonVo) {
-//		int result = commonService.putCommon(commonVo);		
-//		return result;
-//	}
 	
 	// 공통코드 추가 get
 	@RequestMapping(value = "/list_common", method = RequestMethod.GET)
-	public ModelAndView getListCommon(HttpServletRequest httpServletRequest, CategoryVo commonDetailVo) {		
+	public ModelAndView getListCommon(HttpServletRequest httpServletRequest) {		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("common/list_common");
 		
@@ -128,6 +110,14 @@ public class CommonController {
 		System.out.println("[LOG] ==REEPONS=============================");
 		System.out.println("[LOG] result.size() 	// " + result.size());
 		System.out.println("[LOG] ======================================");
+		return result;
+	}
+	
+	// 공통코드 추가 get
+	@RequestMapping(value = "/ajax_put_common_code", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxPutCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
+		int result = commonService.putCommonCode(commonVo);		
 		return result;
 	}
 }
