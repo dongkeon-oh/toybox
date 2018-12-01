@@ -54,4 +54,14 @@ public class CommonDao {
 		int result = sqlSession.insert("commonSql.putCommonCode", commonVo);		
 		return result;
 	}
+	
+	public int dupCommonCode(CommonVo commonVo) {
+		int result = sqlSession.selectOne("commonSql.dupCommonCode", commonVo);		
+		return result;
+	}
+	
+	public int deleteCommonCode(CommonVo commonVo) {
+		int result = sqlSession.update("commonSql.deleteCommonCode", commonVo);	
+		return result;
+	}	
 }

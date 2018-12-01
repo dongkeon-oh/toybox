@@ -21,5 +21,9 @@ public interface CommonService {
 	// 공통코드 리스트
 	public List<CommonVo> listCommonCode(CommonVo commonVo);
 
-	public int putCommonCode(CommonVo commonVo);	
+	public int putCommonCode(CommonVo commonVo);
+	// 공통코드 삭제
+	public int dupCommonCode(CommonVo commonVo);
+	// 공통코드 삭제
+	public int deleteCommonCode(CommonVo commonVo);	
 }

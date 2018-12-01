@@ -71,4 +71,18 @@ public class CommonServiceImpl implements CommonService{
 		checksum = commonDao.putCommonCode(commonVo);
 		return checksum;
 	}
+
+	@Override
+	public int dupCommonCode(CommonVo commonVo) {
+		int result = commonDao.dupCommonCode(commonVo);
+		return result;
+	}
+
+	@Override
+	public int deleteCommonCode(CommonVo commonVo) {
+		// checksum -1 : 실패
+		int checksum = 1;
+		checksum = commonDao.deleteCommonCode(commonVo);
+		return checksum;
+	}
 }

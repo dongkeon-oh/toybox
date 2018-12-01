@@ -80,10 +80,6 @@
 							    <tr>
 							      <th scope="col">공통코드</th>
 							      <th scope="col">공통코드명</th>
-							      <th scope="col">공통코드 디테일1</th>
-							      <th scope="col">공통코드 디테일2</th>
-							      <th scope="col">공통코드 디테일3</th>
-							      <th scope="col">공통코드 설명</th>
 							      <th scope="col">공통코드 정렬순서</th>
 							      <th scope="col"></th>
 							    </tr>
@@ -97,6 +93,41 @@
 					<div class="modal-footer" id="code_tfooter">
 <!-- 						<button type='button' class='btn btn-primary' onClick='add_code("")' >공통코드 추가</button> -->
 <!-- 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal" id="detailModModal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+					  	<h5 class="modal-title">공통코드 상세</h5>
+					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    	<span aria-hidden="true">&times;</span>
+					  	</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">공통코드 그룹</label>
+							<input type="text" class="form-control" placeholder="공통코드 상세1" id="ccd_detail1">
+						</div>
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">공통코드 그룹명</label>
+							<input type="text" class="form-control" placeholder="공통코드 상세2" id="ccd_detail2">
+						</div>
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">공통코드 그룹명</label>
+							<input type="text" class="form-control" placeholder="공통코드 상세3" id="ccd_detail3">
+						</div>
+					    <div class="form-group">
+					      	<label for="ccd_note">설명</label>
+					      	<textarea class="form-control" id="ccd_note" rows="5" style="resize: none;"></textarea>
+					    </div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onClick="">수정</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 					</div>
 				</div>
 			</div>
@@ -132,6 +163,9 @@
 
   </ul>
 </div>
+
+
+
 
 	</body>
 </html>

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dongkeonoh.toybox.service.CommonService;
-import com.dongkeonoh.toybox.vo.CategoryVo;
 import com.dongkeonoh.toybox.vo.CommonVo;
 
 @Controller
@@ -118,6 +117,22 @@ public class CommonController {
 	@ResponseBody
 	public int ajaxPutCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
 		int result = commonService.putCommonCode(commonVo);		
+		return result;
+	}
+	
+	// 공통코드 저장
+	@RequestMapping(value = "/ajax_dup_common_code", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxDupCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {
+		int result = commonService.dupCommonCode(commonVo);		
+		return result;
+	}
+	
+	// 공통코드 저장
+	@RequestMapping(value = "/ajax_delete_common_code", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxDeleteCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {
+		int result = commonService.deleteCommonCode(commonVo);		
 		return result;
 	}
 }

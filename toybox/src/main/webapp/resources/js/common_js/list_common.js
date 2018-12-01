@@ -328,18 +328,21 @@ function list_common_code(group_code){
         	var result = response;
         	if(result.length > 0){
             	$.each(result, function(index, item){
-            		opt = opt + "<tr class='code_list'>";
+            		if(item.ccd_useyn != 'N'){
+                		opt = opt + "<tr class='code_list'>";
+            		}else{
+                		opt = opt + "<tr class='code_list table-danger'>";
+            		}           		
+            		
             		opt = opt + "	<td>"+item.ccd_code+"</td>";
             		opt = opt + "	<td>"+item.ccd_codename+"</td>";
-            		opt = opt + "	<td>"+item.ccd_detail1+"</td>";
-            		opt = opt + "	<td>"+item.ccd_detail2+"</td>";
-            		opt = opt + "	<td>"+item.ccd_detail3+"</td>";
-            		opt = opt + "	<td>"+item.ccd_note+"</td>";
             		opt = opt + "	<td>"+item.ccd_order+"</td>";
             		opt = opt + "	<td>";
             		if(item.ccd_useyn != 'N'){
             			opt = opt + "		<button type='button' class='btn btn-primary' onClick='modify_code(\""+item.ccd_group+"\")' >수정</button>";
-            			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_code(\""+item.ccd_seq+"\")'>삭제</button>";
+            			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_code(\""+item.ccd_seq+"\", \""+item.ccd_code+"\")'>삭제</button>";
+            		}else{
+            			opt = opt + "삭제됨";
             		}
             		opt = opt + "	</td>";
             		opt = opt + "</tr>";
@@ -370,10 +373,6 @@ function add_code(group_code){
 	opt = opt + "<tr>";
 	opt = opt + "	<td><input type='text' id='ccd_code_"+cnt+"'></td>";
 	opt = opt + "	<td><input type='text' id='ccd_codename_"+cnt+"'></td>";
-	opt = opt + "	<td><input type='text' id='ccd_detail1_"+cnt+"'></td>";
-	opt = opt + "	<td><input type='text' id='ccd_detail2_"+cnt+"'></td>";
-	opt = opt + "	<td><input type='text' id='ccd_detail3_"+cnt+"'></td>";
-	opt = opt + "	<td><input type='text' id='ccd_note_"+cnt+"'></td>";
 	opt = opt + "	<td><input type='text' id='ccd_order_"+cnt+"'></td>";
 	opt = opt + "	<td>";
 	opt = opt + "		<button type='button' class='btn btn-primary' onclick='put_code(\""+group_code+"\", \""+cnt+"\")'>추가</button>";
@@ -387,11 +386,16 @@ function add_code(group_code){
 function put_code(group_code, cnt){
 	var code = $("#ccd_code_"+cnt).val();
 	var name = $("#ccd_codename_"+cnt).val();
-	var note = $("#ccd_note_"+cnt).val();
-	var order = $("#ccd_order_"+cnt).val();
+//	var note = $("#ccd_note_"+cnt).val();
+	var order = $("#ccd_order_"+cnt).val();	
+	var valid = true;
 	
-	var valid = valid_common_code(code, name, note, order);
+	valid = valid_common_code(code, name, order);
 	if(!valid) return;
+	
+	valid = duplication_common_code(group_code, code);
+	if(!valid) return;
+	
 	
 	$.ajax({
         method:"POST",
@@ -400,10 +404,10 @@ function put_code(group_code, cnt){
         	"ccd_code" 		: code,
         	"ccd_group" 	: group_code,
         	"ccd_codename" 	: name,
-        	"ccd_detail1" 	: $("#ccd_detail1_"+cnt).val(),
-        	"ccd_detail2" 	: $("#ccd_detail2_"+cnt).val(),
-        	"ccd_detail3" 	: $("#ccd_detail3_"+cnt).val(),
-        	"ccd_note" 		: note,
+//        	"ccd_detail1" 	: $("#ccd_detail1_"+cnt).val(),
+//        	"ccd_detail2" 	: $("#ccd_detail2_"+cnt).val(),
+//        	"ccd_detail3" 	: $("#ccd_detail3_"+cnt).val(),
+//        	"ccd_note" 		: note,
         	"ccd_order" 	: order
         },
         async:false,
@@ -421,13 +425,18 @@ function put_code(group_code, cnt){
     });
 }
 
-function valid_common_code(ccd_code, ccd_codename, ccd_note, ccd_order){
+function valid_common_code(ccd_code, ccd_codename, ccd_order){
 	var validation		= true;
-	var regexr_code 	= /[a-zA-Z0-9_]{8,16}$/;
+	var regexr_code 	= /[a-zA-Z0-9_]{1,16}$/;
 	var regexr_order 	= /[0-9]{1,4}$/;
 	
+	if(ccd_code == 0){		
+		alert('공통코드를 입력하시기 바랍니다.');
+		validation = false;
+		return validation;
+	}
 	if(!regexr_code.test(ccd_code)){
-		alert('공통코드는 8자리 이상 16자리 이하의 영문과 숫자만 사용이 가능합니다.');
+		alert('공통코드는 8자리 이상 16자리 이하의 영문과 숫자, 특수문자 "_" 만 사용이 가능합니다.');
 		validation = false;
 		return validation;
 	}	
@@ -443,18 +452,6 @@ function valid_common_code(ccd_code, ccd_codename, ccd_note, ccd_order){
 		validation = false;
 		return validation;
 	}
-
-	var byte_note = get_byte_calc(ccd_note);   
-    
-	if(byte_note > 1000){		
-		alert('공통코드 설명은 100바이트 미만으로 가능합니다.');
-		validation = false;
-		return validation;
-	}else if(byte_note == 0){		
-		alert('공통코드 설명을 입력하시기 바랍니다.');
-		validation = false;
-		return validation;
-	}
 	
 	if(!regexr_order.test(ccd_order)){
 		alert('정렬순서는 1자리 이상 4자리 이하의 숫자만 사용이 가능합니다.');
@@ -465,6 +462,62 @@ function valid_common_code(ccd_code, ccd_codename, ccd_note, ccd_order){
 	return validation;
 }
 
+function duplication_common_code(group, code){	
+	var dupCase = true;
+    
+	$.ajax({
+        method:"POST",
+        url:"ajax_dup_common_code",
+        data:{
+        	"ccd_group" : group,
+        	"ccd_code" : code
+        },
+        async:false,
+        success:function(response){
+        	var result = response;
+        	if(result > 0){	//중복
+        		alert(code+"는 사용할 수 없는 공통코드입니다.");
+        		dupCase = false;
+        	}
+        },
+        error:function(request,status,error){
+            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+    });
+	
+	return dupCase;
+}
+
 function cancel_code(group_code){
 	list_common_code(group_code);
+}
+
+function delete_code(seq, code){	
+	var del_code = code.trim();
+	var del_seq = seq.trim();
+	
+	var delConfirm = confirm("정말 "+del_code+"코드를 삭제하시겠습니까?");
+	if(delConfirm){
+		
+		$.ajax({
+	        method:"POST",
+	        url:"ajax_delete_common_code",
+	        data:{
+	        	"ccd_seq" : del_seq
+	        },
+	        async:false,
+	        success:function(response){
+	        	var result = response;
+	        	alert(result);
+	        	if(result > 0){
+	        		alert(del_code+"코드를 삭제하였습니다.");
+	        	}else{
+	        		alert(del_code+"코드 삭제를 실패하였습니다.");
+	        	}
+	        },
+	        error:function(request,status,error){
+	            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	        }
+	    });
+	}
 }
