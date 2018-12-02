@@ -69,7 +69,7 @@
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-					  	<h5 class="modal-title">공통코드</h5>
+					  	<h5 class="modal-title" id="code_title">공통코드</h5>
 					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    	<span aria-hidden="true">&times;</span>
 					  	</button>
@@ -109,21 +109,35 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">공통코드 그룹</label>
-							<input type="text" class="form-control" placeholder="공통코드 상세1" id="ccd_detail1">
+							<label class="col-form-label" for="inputDefault">공통코드</label>
+							<input type="text" class="form-control code_mod" placeholder="공통코드" id="ccd_code" maxlength='8'>
 						</div>
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">공통코드 그룹명</label>
-							<input type="text" class="form-control" placeholder="공통코드 상세2" id="ccd_detail2">
+							<label class="col-form-label" for="inputDefault">공통코드명</label>
+							<input type="text" class="form-control code_mod" placeholder="공통코드명" id="ccd_codename" maxlength='16'>
 						</div>
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">공통코드 그룹명</label>
-							<input type="text" class="form-control" placeholder="공통코드 상세3" id="ccd_detail3">
+							<label class="col-form-label" for="inputDefault">공통코드 정렬순서</label>
+							<input type="text" class="form-control code_mod" placeholder="공통코드 정렬순서" id="ccd_order" maxlength='5'>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">공통코드 상세1</label>
+							<input type="text" class="form-control code_mod" placeholder="공통코드 상세1" id="ccd_detail1">
+						</div>
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">공통코드 상세2</label>
+							<input type="text" class="form-control code_mod" placeholder="공통코드 상세2" id="ccd_detail2">
+						</div>
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">공통코드 상세3</label>
+							<input type="text" class="form-control code_mod" placeholder="공통코드 상세3" id="ccd_detail3">
 						</div>
 					    <div class="form-group">
 					      	<label for="ccd_note">설명</label>
-					      	<textarea class="form-control" id="ccd_note" rows="5" style="resize: none;"></textarea>
-					    </div>
+					      	<textarea class="form-control code_mod" id="ccd_note" rows="5" style="resize: none;"></textarea>
+					    </div>	
+						<input type="hidden" class="code_mod" id="ccd_seq">	
+						<input type="hidden" class="code_mod" id="ccd_group">				    
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" onClick="">수정</button>

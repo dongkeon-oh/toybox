@@ -46,7 +46,7 @@ function mod_common_group(actionType){
         		alert(cgr_group+"그룹을 "+msg+"하였습니다.");
         		clear_group();
         	}else{
-        		alert(cgr_group+"그룹 "+msg+"을 실패하였습니다.");
+        		alert(cgr_group+"그룹 "+msg+"에 실패하였습니다.");
         	}
         	$("#grpModModal").modal("hide");
         	search_keyword("refresh");
@@ -313,6 +313,8 @@ function search_enter(){
 
 
 function list_common_code(group_code){
+	$("#code_title").text("["+group_code+"]그룹 공통코드");
+	
 	$.ajax({
         method:"POST",
         url:"ajax_list_common_code",
@@ -327,7 +329,7 @@ function list_common_code(group_code){
         	var opt = "";
         	var result = response;
         	if(result.length > 0){
-            	$.each(result, function(index, item){
+            	$.each(result, function(index, item){            		
             		if(item.ccd_useyn != 'N'){
                 		opt = opt + "<tr class='code_list'>";
             		}else{
@@ -339,8 +341,8 @@ function list_common_code(group_code){
             		opt = opt + "	<td>"+item.ccd_order+"</td>";
             		opt = opt + "	<td>";
             		if(item.ccd_useyn != 'N'){
-            			opt = opt + "		<button type='button' class='btn btn-primary' onClick='modify_code(\""+item.ccd_group+"\")' >수정</button>";
-            			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_code(\""+item.ccd_seq+"\", \""+item.ccd_code+"\")'>삭제</button>";
+            			opt = opt + "		<button type='button' class='btn btn-primary' onClick='modify_code(\""+item.ccd_seq+"\", \""+item.ccd_group+"\")' >수정</button>";
+            			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_code(\""+item.ccd_seq+"\", \""+item.ccd_code+"\", \""+group_code+"\")'>삭제</button>";
             		}else{
             			opt = opt + "삭제됨";
             		}
@@ -348,13 +350,13 @@ function list_common_code(group_code){
             		opt = opt + "</tr>";
             	});
         	}else{
-        		opt = "<tr id='empty_code'><td colspan='8' style='float:center;'><button type='button' class='btn btn-primary' onClick='add_code(\""+group_code+"\",\"NEW\")' >공통코드 추가</button>를 클릭해 공통코드를 추가하시기 바랍니다.</td></tr>";	
+        		opt = "<tr id='empty_code'><td colspan='8' style='float:center;'><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#detailModModal' onClick='add_code(\"\", \""+group_code+"\")' >공통코드 추가</button>를 클릭해 공통코드를 추가하시기 바랍니다.</td></tr>";	
         	}
 
         	$("#code_tbody").html(opt);
 
         	$("#code_tfooter").html("");
-        	$("#code_tfooter").append("<button type='button' class='btn btn-primary' onClick='add_code(\""+group_code+"\")' >공통코드 추가</button>");
+        	$("#code_tfooter").append("<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#detailModModal' onClick='add_code(\"\", \""+group_code+"\")' >공통코드 추가</button>");
         	$("#code_tfooter").append("<button type='button' class='btn btn-secondary' data-dismiss='modal'>닫기</button>");
         },
         error:function(request,status,error){
@@ -363,31 +365,49 @@ function list_common_code(group_code){
     });
 }
 
-function add_code(group_code){
-	var opt = "";
-	var cnt = $(".code_list").length + 1;
-	if(cnt == 1){
-		$("#code_tbody").html("");
+function add_code(seq, group_code){
+	$("#ccd_seq").val("");
+	if(seq != undefined){
+		$("#ccd_seq").val(seq);
 	}
-
-	opt = opt + "<tr>";
-	opt = opt + "	<td><input type='text' id='ccd_code_"+cnt+"'></td>";
-	opt = opt + "	<td><input type='text' id='ccd_codename_"+cnt+"'></td>";
-	opt = opt + "	<td><input type='text' id='ccd_order_"+cnt+"'></td>";
-	opt = opt + "	<td>";
-	opt = opt + "		<button type='button' class='btn btn-primary' onclick='put_code(\""+group_code+"\", \""+cnt+"\")'>추가</button>";
-	opt = opt + "		<button type='button' class='btn btn-danger' onclick='cancel_code(\""+group_code+"\")'>취소</button>";	
-	opt = opt + "	</td>";
-	opt = opt + "</tr>";
-	
-	$("#code_tbody").append(opt);
+	$("#ccd_group").val("");
+	if(seq != undefined){
+		$("#ccd_group").val(group_code);
+	}
+//	var opt = "";
+//	var cnt = $(".code_list").length + 1;
+//	if(cnt == 1){
+//		$("#code_tbody").html("");
+//	}
+//
+//	opt = opt + "<tr>";
+//	opt = opt + "	<td><input type='text' id='ccd_code_"+cnt+"' maxlength='8'></td>";
+//	opt = opt + "	<td><input type='text' id='ccd_codename_"+cnt+"' maxlength='16'></td>";
+//	opt = opt + "	<td><input type='text' id='ccd_order_"+cnt+"' maxlength='5'></td>";
+//	opt = opt + "	<td>";
+//	opt = opt + "		<button type='button' class='btn btn-primary' onclick='put_code(\""+group_code+"\", \""+cnt+"\")'>추가</button>";
+//	opt = opt + "		<button type='button' class='btn btn-danger' onclick='cancel_code(\""+group_code+"\")'>취소</button>";	
+//	opt = opt + "	</td>";
+//	opt = opt + "</tr>";
+//	
+//	$("#code_tbody").append(opt);
 }
 
-function put_code(group_code, cnt){
-	var code = $("#ccd_code_"+cnt).val();
-	var name = $("#ccd_codename_"+cnt).val();
-//	var note = $("#ccd_note_"+cnt).val();
-	var order = $("#ccd_order_"+cnt).val();	
+function modify_code(group_code){
+	var msg = "수정";
+	var url = "";
+	if($("#ccd_group").val() == ""){
+		msg = "추가";
+		url = "ajax_put_common_code";
+	}
+	
+	var code = $("#ccd_code").val();
+	var name = $("#ccd_codename").val();
+	var order = $("#ccd_order").val();	
+	var detail1 = $("#ccd_detail1").val();	
+	var detail2 = $("#ccd_detail2").val();	
+	var detail3 = $("#ccd_detail3").val();	
+	var note = $("#ccd_note").val();
 	var valid = true;
 	
 	valid = valid_common_code(code, name, order);
@@ -399,23 +419,23 @@ function put_code(group_code, cnt){
 	
 	$.ajax({
         method:"POST",
-        url:"ajax_put_common_code",
+        url:url,
         data:{
         	"ccd_code" 		: code,
         	"ccd_group" 	: group_code,
         	"ccd_codename" 	: name,
-//        	"ccd_detail1" 	: $("#ccd_detail1_"+cnt).val(),
-//        	"ccd_detail2" 	: $("#ccd_detail2_"+cnt).val(),
-//        	"ccd_detail3" 	: $("#ccd_detail3_"+cnt).val(),
-//        	"ccd_note" 		: note,
-        	"ccd_order" 	: order
+        	"ccd_order" 	: order,
+        	"ccd_detail1" 	: detail1,
+        	"ccd_detail2" 	: detail2,
+        	"ccd_detail3" 	: detail3,
+        	"ccd_note" 		: note
         },
         async:false,
         success:function(response){
         	if(response == '1'){
-            	alert(group_code+"그룹에 "+code+"코드를 추가하였습니다.");
+            	alert(group_code+"그룹에 "+code+"코드를 "+msg+"하였습니다.");
         	}else{
-        		alert(group_code+"그룹에 "+code+"코드를 추가를 실패하였습니다.");
+        		alert(group_code+"그룹에 "+code+"코드 "+msg+"에 실패하였습니다.");
         	}
         	list_common_code(group_code);
         },
@@ -428,15 +448,15 @@ function put_code(group_code, cnt){
 function valid_common_code(ccd_code, ccd_codename, ccd_order){
 	var validation		= true;
 	var regexr_code 	= /[a-zA-Z0-9_]{1,16}$/;
-	var regexr_order 	= /[0-9]{1,4}$/;
+	var regexr_order 	= /[0-9]{1,5}$/;
 	
-	if(ccd_code == 0){		
+	if(ccd_code.length == 0){		
 		alert('공통코드를 입력하시기 바랍니다.');
 		validation = false;
 		return validation;
 	}
 	if(!regexr_code.test(ccd_code)){
-		alert('공통코드는 8자리 이상 16자리 이하의 영문과 숫자, 특수문자 "_" 만 사용이 가능합니다.');
+		alert('공통코드는 1자리 이상 16자리 이하의 영문과 숫자, 특수문자 "_" 만 사용이 가능합니다.');
 		validation = false;
 		return validation;
 	}	
@@ -488,31 +508,25 @@ function duplication_common_code(group, code){
 	return dupCase;
 }
 
-function cancel_code(group_code){
-	list_common_code(group_code);
-}
-
-function delete_code(seq, code){	
-	var del_code = code.trim();
-	var del_seq = seq.trim();
+function delete_code(seq, code, group){	
 	
-	var delConfirm = confirm("정말 "+del_code+"코드를 삭제하시겠습니까?");
+	var delConfirm = confirm("정말 "+code+"코드를 삭제하시겠습니까?");
 	if(delConfirm){
 		
 		$.ajax({
 	        method:"POST",
 	        url:"ajax_delete_common_code",
 	        data:{
-	        	"ccd_seq" : del_seq
+	        	"ccd_seq" : seq
 	        },
 	        async:false,
 	        success:function(response){
 	        	var result = response;
-	        	alert(result);
 	        	if(result > 0){
-	        		alert(del_code+"코드를 삭제하였습니다.");
+	        		alert(code+"코드를 삭제하였습니다.");
+	        		list_common_code(group);
 	        	}else{
-	        		alert(del_code+"코드 삭제를 실패하였습니다.");
+	        		alert(code+"코드 삭제를 실패하였습니다.");
 	        	}
 	        },
 	        error:function(request,status,error){
