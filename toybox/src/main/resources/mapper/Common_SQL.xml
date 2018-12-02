@@ -88,7 +88,11 @@
 			   CCD_SEQ,      
 			   CCD_CODE,     
 			   CCD_GROUP,    
-			   CCD_CODENAME,    
+			   CCD_CODENAME, 
+			   CCD_DETAIL1,    
+			   CCD_DETAIL2,    
+			   CCD_DETAIL3, 
+			   CCD_NOTE,       
 			   CCD_ORDER,    
 			   CCD_USEYN 
 			 )
@@ -97,7 +101,11 @@
 			   SEQ_COMMON_ID.NEXTVAL,      
 			   #{ccd_code},     
 			   #{ccd_group},    
-			   #{ccd_codename},     
+			   #{ccd_codename},  
+			   #{ccd_detail1},    
+			   #{ccd_detail2},    
+			   #{ccd_detail3}, 
+			   #{ccd_note},       
 			   #{ccd_order},
        		   'Y'
      		 )

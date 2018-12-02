@@ -140,7 +140,7 @@
 						<input type="hidden" class="code_mod" id="ccd_group">				    
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onClick="">수정</button>
+						<button type="button" class="btn btn-primary" id="modify_code" onClick="modify_code()">수정</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 					</div>
 				</div>

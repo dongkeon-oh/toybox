@@ -393,13 +393,16 @@ function add_code(seq, group_code){
 //	$("#code_tbody").append(opt);
 }
 
-function modify_code(group_code){
+function modify_code(){
+	var group_code = $("#ccd_group").val();
+	
 	var msg = "수정";
 	var url = "";
 	if($("#ccd_group").val() == ""){
 		msg = "추가";
 		url = "ajax_put_common_code";
 	}
+	$("#modify_code").val(msg);
 	
 	var code = $("#ccd_code").val();
 	var name = $("#ccd_codename").val();
@@ -410,10 +413,10 @@ function modify_code(group_code){
 	var note = $("#ccd_note").val();
 	var valid = true;
 	
-	valid = valid_common_code(code, name, order);
+	valid = valid_common_code(code, name, order, detail1, detail2, detail3, note);
 	if(!valid) return;
 	
-	valid = duplication_common_code(group_code, code);
+	valid = duplication_common_code(group_code, code, order);
 	if(!valid) return;
 	
 	
@@ -445,23 +448,23 @@ function modify_code(group_code){
     });
 }
 
-function valid_common_code(ccd_code, ccd_codename, ccd_order){
+function valid_common_code(code, name, order, detail1, detail2, detail3, note){
 	var validation		= true;
 	var regexr_code 	= /[a-zA-Z0-9_]{1,16}$/;
-	var regexr_order 	= /[0-9]{1,5}$/;
+	var regexr_order 	= /[0-9]$/;
 	
-	if(ccd_code.length == 0){		
+	if(code.length == 0){		
 		alert('공통코드를 입력하시기 바랍니다.');
 		validation = false;
 		return validation;
 	}
-	if(!regexr_code.test(ccd_code)){
+	if(!regexr_code.test(code)){
 		alert('공통코드는 1자리 이상 16자리 이하의 영문과 숫자, 특수문자 "_" 만 사용이 가능합니다.');
 		validation = false;
 		return validation;
 	}	
 
-	var byte_codename = get_byte_calc(ccd_codename);   
+	var byte_codename = get_byte_calc(name);   
     
 	if(byte_codename > 100){		
 		alert('공통코드명은 100바이트 미만으로 가능합니다.');
@@ -473,8 +476,26 @@ function valid_common_code(ccd_code, ccd_codename, ccd_order){
 		return validation;
 	}
 	
-	if(!regexr_order.test(ccd_order)){
+	if(!regexr_order.test(order)){
 		alert('정렬순서는 1자리 이상 4자리 이하의 숫자만 사용이 가능합니다.');
+		validation = false;
+		return validation;
+	}
+	
+	var byte_detail1 = get_byte_calc(detail1); 
+	var byte_detail2 = get_byte_calc(detail2); 
+	var byte_detail3 = get_byte_calc(detail3);   
+    
+	if((byte_detail1 > 1000)||(byte_detail2 > 1000)||(byte_detail3 > 1000)){		
+		alert('공통코드 상세는 1000바이트 미만으로 가능합니다.');
+		validation = false;
+		return validation;
+	}
+
+	var byte_note = get_byte_calc(note);   
+    
+	if(byte_note > 1000){		
+		alert('공통코드 설명은 1000바이트 미만으로 가능합니다.');
 		validation = false;
 		return validation;
 	}
@@ -482,7 +503,7 @@ function valid_common_code(ccd_code, ccd_codename, ccd_order){
 	return validation;
 }
 
-function duplication_common_code(group, code){	
+function duplication_common_code(group, code, order){	
 	var dupCase = true;
     
 	$.ajax({
@@ -490,13 +511,17 @@ function duplication_common_code(group, code){
         url:"ajax_dup_common_code",
         data:{
         	"ccd_group" : group,
-        	"ccd_code" : code
+        	"ccd_code" : code,
+        	"ccd_order" : order
         },
         async:false,
         success:function(response){
         	var result = response;
-        	if(result > 0){	//중복
+        	if(result.ccd_code > 0){	//중복
         		alert(code+"는 사용할 수 없는 공통코드입니다.");
+        		dupCase = false;
+        	}else if(result.ccd_order > 0){	//중복
+        		alert("정렬순서 "+order+"번는 이미 사용중입니다.");
         		dupCase = false;
         	}
         },
