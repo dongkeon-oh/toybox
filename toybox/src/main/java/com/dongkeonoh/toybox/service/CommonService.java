@@ -23,7 +23,9 @@ public interface CommonService {
 
 	public int putCommonCode(CommonVo commonVo);
 	// 공통코드 삭제
-	public int dupCommonCode(CommonVo commonVo);
+	public String dupCommonCode(CommonVo commonVo);
+	// 공통코드 삭제
+	public String dupCommonOrder(CommonVo commonVo);
 	// 공통코드 삭제
 	public int deleteCommonCode(CommonVo commonVo);	
 }

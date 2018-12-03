@@ -73,8 +73,14 @@ public class CommonServiceImpl implements CommonService{
 	}
 
 	@Override
-	public int dupCommonCode(CommonVo commonVo) {
-		int result = commonDao.dupCommonCode(commonVo);
+	public String dupCommonCode(CommonVo commonVo) {
+		String result = commonDao.dupCommonCode(commonVo);
+		return result;
+	}
+
+	@Override
+	public String dupCommonOrder(CommonVo commonVo) {
+		String result = commonDao.dupCommonOrder(commonVo);
 		return result;
 	}
 

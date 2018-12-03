@@ -123,8 +123,13 @@ public class CommonController {
 	// 공통코드 저장
 	@RequestMapping(value = "/ajax_dup_common_code", method = RequestMethod.POST)
 	@ResponseBody
-	public int ajaxDupCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {
-		int result = commonService.dupCommonCode(commonVo);		
+	public CommonVo ajaxDupCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {
+		String code = commonService.dupCommonCode(commonVo);		
+		String order = commonService.dupCommonOrder(commonVo);	
+		
+		CommonVo result = new CommonVo();
+		result.setCcd_code(code);
+		result.setCcd_order(order);
 		return result;
 	}
 	

@@ -55,8 +55,13 @@ public class CommonDao {
 		return result;
 	}
 	
-	public int dupCommonCode(CommonVo commonVo) {
-		int result = sqlSession.selectOne("commonSql.dupCommonCode", commonVo);		
+	public String dupCommonCode(CommonVo commonVo) {
+		String result = sqlSession.selectOne("commonSql.dupCommonCode", commonVo);		
+		return result;
+	}
+	
+	public String dupCommonOrder(CommonVo commonVo) {
+		String result = sqlSession.selectOne("commonSql.dupCommonOrder", commonVo);		
 		return result;
 	}
 	

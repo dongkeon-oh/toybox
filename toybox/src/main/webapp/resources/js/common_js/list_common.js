@@ -419,7 +419,6 @@ function modify_code(){
 	valid = duplication_common_code(group_code, code, order);
 	if(!valid) return;
 	
-	
 	$.ajax({
         method:"POST",
         url:url,
