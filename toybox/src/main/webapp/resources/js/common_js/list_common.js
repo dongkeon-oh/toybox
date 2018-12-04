@@ -2,6 +2,10 @@ $(function() {
 	list_common_group(1, 10, "", "group");
 });
 
+var target_group;
+var target_code;
+var target_seq;
+
 function mod_common_group(actionType){	
 	var cgr_group = $("#grpGroup").val();
     var	cgr_group_name = $("#grpGroupName").val();
@@ -312,14 +316,15 @@ function search_enter(){
 }
 
 
-function list_common_code(group_code){
-	$("#code_title").text("["+group_code+"]그룹 공통코드");
+function list_common_code(group){
+	target_group = group;
+	$("#code_title").text("["+group+"]그룹 공통코드");
 	
 	$.ajax({
         method:"POST",
         url:"ajax_list_common_code",
         data:{
-        	"cgr_group" : group_code
+        	"cgr_group" : group
         },
         async:false,
         success:function(response){
@@ -341,8 +346,8 @@ function list_common_code(group_code){
             		opt = opt + "	<td>"+item.ccd_order+"</td>";
             		opt = opt + "	<td>";
             		if(item.ccd_useyn != 'N'){
-            			opt = opt + "		<button type='button' class='btn btn-primary' onClick='modify_code(\""+item.ccd_seq+"\", \""+item.ccd_group+"\")' >수정</button>";
-            			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_code(\""+item.ccd_seq+"\", \""+item.ccd_code+"\", \""+group_code+"\")'>삭제</button>";
+            			opt = opt + "		<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#detailModModal' onClick='add_code(\""+item.ccd_group+"\", \""+item.ccd_seq+"\")' >수정</button>";
+            			opt = opt + "		<button type='button' class='btn btn-danger' onClick='delete_code(\""+item.ccd_seq+"\", \""+item.ccd_code+"\", \""+group+"\")'>삭제</button>";
             		}else{
             			opt = opt + "삭제됨";
             		}
@@ -350,13 +355,13 @@ function list_common_code(group_code){
             		opt = opt + "</tr>";
             	});
         	}else{
-        		opt = "<tr id='empty_code'><td colspan='8' style='float:center;'><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#detailModModal' onClick='add_code(\"\", \""+group_code+"\")' >공통코드 추가</button>를 클릭해 공통코드를 추가하시기 바랍니다.</td></tr>";	
+        		opt = "<tr id='empty_code'><td colspan='8' style='float:center;'><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#detailModModal' onClick='add_code(\""+group+"\", \"_NEW_\")' >공통코드 추가</button>를 클릭해 공통코드를 추가하시기 바랍니다.</td></tr>";	
         	}
 
         	$("#code_tbody").html(opt);
 
         	$("#code_tfooter").html("");
-        	$("#code_tfooter").append("<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#detailModModal' onClick='add_code(\"\", \""+group_code+"\")' >공통코드 추가</button>");
+        	$("#code_tfooter").append("<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#detailModModal' onClick='add_code(\""+group+"\", \"_NEW_\")' >공통코드 추가</button>");
         	$("#code_tfooter").append("<button type='button' class='btn btn-secondary' data-dismiss='modal'>닫기</button>");
         },
         error:function(request,status,error){
@@ -365,44 +370,31 @@ function list_common_code(group_code){
     });
 }
 
-function add_code(seq, group_code){
-	$("#ccd_seq").val("");
-	if(seq != undefined){
-		$("#ccd_seq").val(seq);
+function clear_code(){
+	$(".code_mod").val("");
+	$("#ccd_code").attr("readonly", false);	//공통코드 변경가능 
+}
+
+function add_code(group, seq){
+	target_code = group;
+	target_seq = seq;
+	
+	clear_code();
+	
+	if(seq != "_NEW_"){
+		view_common_code(seq);
+		$("#ccd_code").attr("readonly", true);	//공통코드 변경가능 
 	}
-	$("#ccd_group").val("");
-	if(seq != undefined){
-		$("#ccd_group").val(group_code);
-	}
-//	var opt = "";
-//	var cnt = $(".code_list").length + 1;
-//	if(cnt == 1){
-//		$("#code_tbody").html("");
-//	}
-//
-//	opt = opt + "<tr>";
-//	opt = opt + "	<td><input type='text' id='ccd_code_"+cnt+"' maxlength='8'></td>";
-//	opt = opt + "	<td><input type='text' id='ccd_codename_"+cnt+"' maxlength='16'></td>";
-//	opt = opt + "	<td><input type='text' id='ccd_order_"+cnt+"' maxlength='5'></td>";
-//	opt = opt + "	<td>";
-//	opt = opt + "		<button type='button' class='btn btn-primary' onclick='put_code(\""+group_code+"\", \""+cnt+"\")'>추가</button>";
-//	opt = opt + "		<button type='button' class='btn btn-danger' onclick='cancel_code(\""+group_code+"\")'>취소</button>";	
-//	opt = opt + "	</td>";
-//	opt = opt + "</tr>";
-//	
-//	$("#code_tbody").append(opt);
 }
 
 function modify_code(){
-	var group_code = $("#ccd_group").val();
-	
 	var msg = "수정";
-	var url = "";
-	if($("#ccd_group").val() == ""){
+	var url = "ajax_modify_common_code";
+	if(target_seq == "_NEW_"){
 		msg = "추가";
 		url = "ajax_put_common_code";
 	}
-	$("#modify_code").val(msg);
+	$("#modify_code").text(msg);
 	
 	var code = $("#ccd_code").val();
 	var name = $("#ccd_codename").val();
@@ -416,15 +408,16 @@ function modify_code(){
 	valid = valid_common_code(code, name, order, detail1, detail2, detail3, note);
 	if(!valid) return;
 	
-	valid = duplication_common_code(group_code, code, order);
+	valid = duplication_common_code(target_group, code, order, target_seq);
 	if(!valid) return;
 	
 	$.ajax({
         method:"POST",
         url:url,
         data:{
+        	"ccd_seq" 		: target_seq,
         	"ccd_code" 		: code,
-        	"ccd_group" 	: group_code,
+        	"ccd_group" 	: target_group,
         	"ccd_codename" 	: name,
         	"ccd_order" 	: order,
         	"ccd_detail1" 	: detail1,
@@ -435,11 +428,12 @@ function modify_code(){
         async:false,
         success:function(response){
         	if(response == '1'){
-            	alert(group_code+"그룹에 "+code+"코드를 "+msg+"하였습니다.");
+            	alert(target_group+"그룹에 "+code+"코드를 "+msg+"하였습니다.");
         	}else{
-        		alert(group_code+"그룹에 "+code+"코드 "+msg+"에 실패하였습니다.");
+        		alert(target_group+"그룹에 "+code+"코드 "+msg+"에 실패하였습니다.");
         	}
-        	list_common_code(group_code);
+        	$("#detailModModal").modal("hide");
+        	list_common_code(target_group);
         },
         error:function(request,status,error){
             console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -502,7 +496,7 @@ function valid_common_code(code, name, order, detail1, detail2, detail3, note){
 	return validation;
 }
 
-function duplication_common_code(group, code, order){	
+function duplication_common_code(group, code, order, type){	
 	var dupCase = true;
     
 	$.ajax({
@@ -516,7 +510,7 @@ function duplication_common_code(group, code, order){
         async:false,
         success:function(response){
         	var result = response;
-        	if(result.ccd_code > 0){	//중복
+        	if(result.ccd_code > 0 && (type == "_NEW_")){	//중복
         		alert(code+"는 사용할 수 없는 공통코드입니다.");
         		dupCase = false;
         	}else if(result.ccd_order > 0){	//중복
@@ -530,6 +524,36 @@ function duplication_common_code(group, code, order){
     });
 	
 	return dupCase;
+}
+
+function view_common_code(seq){	
+	$.ajax({
+        method:"POST",
+        url:"ajax_view_common_code",
+        data:{
+        	"ccd_seq" : seq
+        },
+        async:false,
+        success:function(response){
+        	var result = response;
+        	if(result.ccd_seq > 0){	//중복
+        		$("#ccd_code").val(result.ccd_code);
+        		$("#ccd_codename").val(result.ccd_codename);
+        		$("#ccd_order").val(result.ccd_order);
+        		$("#ccd_detail1").val(result.ccd_detail1);
+        		$("#ccd_detail2").val(result.ccd_detail2);
+        		$("#ccd_detail3").val(result.ccd_detail3);
+        		$("#ccd_note").val(result.ccd_note);
+        		
+        		target_seq = result.ccd_seq;
+        	}else{
+        		alert("공통코드 조회에 실패하였습니다.");
+        	}
+        },
+        error:function(request,status,error){
+            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+    });
 }
 
 function delete_code(seq, code, group){	

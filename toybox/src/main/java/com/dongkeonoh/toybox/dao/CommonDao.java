@@ -42,18 +42,16 @@ public class CommonDao {
 	} 
 	
 	
-
+	public int putCommonCode(CommonVo commonVo) {
+		int result = sqlSession.insert("commonSql.putCommonCode", commonVo);		
+		return result;
+	}
 	
 	public List<CommonVo> listCommonCode(CommonVo commonVo) {
 		List<CommonVo> result = sqlSession.selectList("commonSql.listCommonCode", commonVo);
 		
 		return result;
 	} 
-
-	public int putCommonCode(CommonVo commonVo) {
-		int result = sqlSession.insert("commonSql.putCommonCode", commonVo);		
-		return result;
-	}
 	
 	public String dupCommonCode(CommonVo commonVo) {
 		String result = sqlSession.selectOne("commonSql.dupCommonCode", commonVo);		
@@ -62,6 +60,16 @@ public class CommonDao {
 	
 	public String dupCommonOrder(CommonVo commonVo) {
 		String result = sqlSession.selectOne("commonSql.dupCommonOrder", commonVo);		
+		return result;
+	}
+	
+	public CommonVo getCommonCodeDetail(CommonVo commonVo) {
+		CommonVo result = sqlSession.selectOne("commonSql.getCommonCodeDetail", commonVo);		
+		return result;
+	}
+
+	public int modifyCommonCode(CommonVo commonVo) {
+		int result = sqlSession.update("commonSql.modifyCommonCode", commonVo);		
 		return result;
 	}
 	

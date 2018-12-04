@@ -57,12 +57,6 @@ public class CommonServiceImpl implements CommonService{
 	}
 	
 
-
-	@Override
-	public List<CommonVo> listCommonCode(CommonVo commonVo) {
-		List<CommonVo> result = commonDao.listCommonCode(commonVo);		
-		return result;
-	}
 	
 	@Override
 	public int putCommonCode(CommonVo commonVo) {
@@ -70,6 +64,12 @@ public class CommonServiceImpl implements CommonService{
 		int checksum = 1;
 		checksum = commonDao.putCommonCode(commonVo);
 		return checksum;
+	}
+
+	@Override
+	public List<CommonVo> listCommonCode(CommonVo commonVo) {
+		List<CommonVo> result = commonDao.listCommonCode(commonVo);		
+		return result;
 	}
 
 	@Override
@@ -84,6 +84,20 @@ public class CommonServiceImpl implements CommonService{
 		return result;
 	}
 
+	@Override
+	public CommonVo getCommonCodeDetail(CommonVo commonVo) {
+		CommonVo result = commonDao.getCommonCodeDetail(commonVo);
+		return result;
+	}
+
+	@Override
+	public int modifyCommonCode(CommonVo commonVo) {
+		// checksum -1 : 실패
+		int checksum = 1;
+		checksum = commonDao.modifyCommonCode(commonVo);
+		return checksum;
+	}
+	
 	@Override
 	public int deleteCommonCode(CommonVo commonVo) {
 		// checksum -1 : 실패

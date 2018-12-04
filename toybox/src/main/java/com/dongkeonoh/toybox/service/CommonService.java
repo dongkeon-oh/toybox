@@ -18,14 +18,18 @@ public interface CommonService {
 	public List<CommonVo> listCommonGroup(HashMap<String, String> map);
 	
 
-	// 공통코드 리스트
-	public List<CommonVo> listCommonCode(CommonVo commonVo);
 
 	public int putCommonCode(CommonVo commonVo);
+	// 공통코드 리스트
+	public List<CommonVo> listCommonCode(CommonVo commonVo);
 	// 공통코드 삭제
 	public String dupCommonCode(CommonVo commonVo);
 	// 공통코드 삭제
 	public String dupCommonOrder(CommonVo commonVo);
+	// 공통코드 삭제
+	public CommonVo getCommonCodeDetail(CommonVo commonVo);
+	// 공통코드 수정
+	public int modifyCommonCode(CommonVo commonVo);	
 	// 공통코드 삭제
 	public int deleteCommonCode(CommonVo commonVo);	
 }

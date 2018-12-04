@@ -135,9 +135,7 @@
 					    <div class="form-group">
 					      	<label for="ccd_note">설명</label>
 					      	<textarea class="form-control code_mod" id="ccd_note" rows="5" style="resize: none;"></textarea>
-					    </div>	
-						<input type="hidden" class="code_mod" id="ccd_seq">	
-						<input type="hidden" class="code_mod" id="ccd_group">				    
+					    </div>					    
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" id="modify_code" onClick="modify_code()">수정</button>

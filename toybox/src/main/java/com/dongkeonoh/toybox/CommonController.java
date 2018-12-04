@@ -94,7 +94,14 @@ public class CommonController {
 	}
 	
 	
-
+	
+	// 공통코드 추가 get
+	@RequestMapping(value = "/ajax_put_common_code", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxPutCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
+		int result = commonService.putCommonCode(commonVo);		
+		return result;
+	}
 
 	// 공통코드 추가 get
 	@RequestMapping(value = "/ajax_list_common_code", method = RequestMethod.POST)
@@ -112,14 +119,6 @@ public class CommonController {
 		return result;
 	}
 	
-	// 공통코드 추가 get
-	@RequestMapping(value = "/ajax_put_common_code", method = RequestMethod.POST)
-	@ResponseBody
-	public int ajaxPutCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
-		int result = commonService.putCommonCode(commonVo);		
-		return result;
-	}
-	
 	// 공통코드 저장
 	@RequestMapping(value = "/ajax_dup_common_code", method = RequestMethod.POST)
 	@ResponseBody
@@ -130,6 +129,57 @@ public class CommonController {
 		CommonVo result = new CommonVo();
 		result.setCcd_code(code);
 		result.setCcd_order(order);
+		return result;
+	}
+	
+	// 공통코드 추가 get
+	@RequestMapping(value = "/ajax_view_common_code", method = RequestMethod.POST)
+	@ResponseBody
+	public CommonVo ajaxViewCommonCodeDetail(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
+		System.out.println("[LOG] ==REQUEST=============================");
+		System.out.println("[LOG] getCcd_code 	// " + commonVo.getCcd_code());
+		System.out.println("[LOG] ======================================");
+		
+		CommonVo result = commonService.getCommonCodeDetail(commonVo);		
+		
+		System.out.println("[LOG] ==REEPONS=============================");
+		System.out.println("[LOG] result.getCcd_code() 		// " + result.getCcd_code());
+		System.out.println("[LOG] result.getCcd_codename() 	// " + result.getCcd_codename());
+		System.out.println("[LOG] result.getCcd_order() 	// " + result.getCcd_order());
+		System.out.println("[LOG] result.getCcd_detail1() 	// " + result.getCcd_detail1());
+		System.out.println("[LOG] result.getCcd_detail2() 	// " + result.getCcd_detail2());
+		System.out.println("[LOG] result.getCcd_detail3() 	// " + result.getCcd_detail3());
+		System.out.println("[LOG] result.getCcd_note() 		// " + result.getCcd_note());
+		System.out.println("[LOG] ======================================");
+		return result;
+	}
+
+	// 공통코드 추가 get
+	@RequestMapping(value = "/ajax_modify_common_code", method = RequestMethod.POST)
+	@ResponseBody
+	public CommonVo ajaxModifyCommonCodeDetail(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
+		System.out.println("[LOG] ==REQUEST=============================");
+		System.out.println("[LOG] getCcd_seq 		// " + commonVo.getCcd_seq());
+		System.out.println("[LOG] getCcd_code 		// " + commonVo.getCcd_code());
+		System.out.println("[LOG] getCcd_codename 	// " + commonVo.getCcd_codename());
+		System.out.println("[LOG] getCcd_order 		// " + commonVo.getCcd_order());
+		System.out.println("[LOG] getCcd_detail1 	// " + commonVo.getCcd_detail1());
+		System.out.println("[LOG] getCcd_detail2 	// " + commonVo.getCcd_detail2());
+		System.out.println("[LOG] getCcd_detail3 	// " + commonVo.getCcd_detail3());
+		System.out.println("[LOG] getCcd_note 		// " + commonVo.getCcd_note());
+		System.out.println("[LOG] ======================================");
+		
+		CommonVo result = commonService.getCommonCodeDetail(commonVo);		
+		
+		System.out.println("[LOG] ==REEPONS=============================");
+		System.out.println("[LOG] result.getCcd_code() 		// " + result.getCcd_code());
+		System.out.println("[LOG] result.getCcd_codename() 	// " + result.getCcd_codename());
+		System.out.println("[LOG] result.getCcd_order() 	// " + result.getCcd_order());
+		System.out.println("[LOG] result.getCcd_detail1() 	// " + result.getCcd_detail1());
+		System.out.println("[LOG] result.getCcd_detail2() 	// " + result.getCcd_detail2());
+		System.out.println("[LOG] result.getCcd_detail3() 	// " + result.getCcd_detail3());
+		System.out.println("[LOG] result.getCcd_note() 		// " + result.getCcd_note());
+		System.out.println("[LOG] ======================================");
 		return result;
 	}
 	
