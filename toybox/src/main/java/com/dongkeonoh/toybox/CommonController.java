@@ -157,7 +157,7 @@ public class CommonController {
 	// 공통코드 추가 get
 	@RequestMapping(value = "/ajax_modify_common_code", method = RequestMethod.POST)
 	@ResponseBody
-	public CommonVo ajaxModifyCommonCodeDetail(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
+	public int ajaxModifyCommonCodeDetail(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
 		System.out.println("[LOG] ==REQUEST=============================");
 		System.out.println("[LOG] getCcd_seq 		// " + commonVo.getCcd_seq());
 		System.out.println("[LOG] getCcd_code 		// " + commonVo.getCcd_code());
@@ -169,16 +169,10 @@ public class CommonController {
 		System.out.println("[LOG] getCcd_note 		// " + commonVo.getCcd_note());
 		System.out.println("[LOG] ======================================");
 		
-		CommonVo result = commonService.getCommonCodeDetail(commonVo);		
+		int result = commonService.modifyCommonCode(commonVo);		
 		
 		System.out.println("[LOG] ==REEPONS=============================");
-		System.out.println("[LOG] result.getCcd_code() 		// " + result.getCcd_code());
-		System.out.println("[LOG] result.getCcd_codename() 	// " + result.getCcd_codename());
-		System.out.println("[LOG] result.getCcd_order() 	// " + result.getCcd_order());
-		System.out.println("[LOG] result.getCcd_detail1() 	// " + result.getCcd_detail1());
-		System.out.println("[LOG] result.getCcd_detail2() 	// " + result.getCcd_detail2());
-		System.out.println("[LOG] result.getCcd_detail3() 	// " + result.getCcd_detail3());
-		System.out.println("[LOG] result.getCcd_note() 		// " + result.getCcd_note());
+		System.out.println("[LOG] result : " + result);
 		System.out.println("[LOG] ======================================");
 		return result;
 	}

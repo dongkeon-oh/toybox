@@ -513,9 +513,10 @@ function duplication_common_code(group, code, order, type){
         	if(result.ccd_code > 0 && (type == "_NEW_")){	//중복
         		alert(code+"는 사용할 수 없는 공통코드입니다.");
         		dupCase = false;
-        	}else if(result.ccd_order > 0){	//중복
+        	}else if(result.ccd_order > 0){	
         		alert("정렬순서 "+order+"번는 이미 사용중입니다.");
-        		dupCase = false;
+        		dupCase = false; 
+        	
         	}
         },
         error:function(request,status,error){
