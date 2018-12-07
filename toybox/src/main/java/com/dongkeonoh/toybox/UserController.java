@@ -19,13 +19,23 @@ public class UserController {
 
 	@Resource(name="UserServiceImpl")
 	private UserService userService;
-
+	
 	// 유저 추가 get
 	@RequestMapping(value = "/add_user", method = RequestMethod.GET)
 	public ModelAndView get_addUser(HttpServletRequest httpServletRequest, Model model) {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/add_user_get");
+		
+		return modelAndView;
+	}
+	
+	// 유저 추가 get
+	@RequestMapping(value = "/modify_user", method = RequestMethod.GET)
+	public ModelAndView modUser(HttpServletRequest httpServletRequest) {
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/modify_user");
 		
 		return modelAndView;
 	}
