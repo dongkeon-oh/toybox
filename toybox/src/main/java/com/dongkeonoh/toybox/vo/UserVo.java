@@ -8,9 +8,8 @@ public class UserVo {
 	private String usr_image;	
 	private String usr_sms;		
 	private String usr_kakao;	
-	private String usr_useyn;	
 	private String usr_active;
-	private int usr_checksum;
+	private int cnt;
 	
 	public String getUsr_id() {
 		return usr_id;
@@ -48,22 +47,16 @@ public class UserVo {
 	public void setUsr_kakao(String usr_kakao) {
 		this.usr_kakao = usr_kakao;
 	}
-	public String getUsr_useyn() {
-		return usr_useyn;
-	}
-	public void setUsr_useyn(String usr_useyn) {
-		this.usr_useyn = usr_useyn;
-	}
 	public String getUsr_active() {
 		return usr_active;
 	}
 	public void setUsr_active(String usr_active) {
 		this.usr_active = usr_active;
 	}	
-	public int getUsr_checksum() {
-		return usr_checksum;
+	public int getCnt() {
+		return cnt;
 	}
-	public void setUsr_checksum(int usr_checksum) {
-		this.usr_checksum = usr_checksum;
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}	
 }

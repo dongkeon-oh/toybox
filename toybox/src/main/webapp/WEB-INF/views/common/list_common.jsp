@@ -7,7 +7,7 @@
 		<meta charset="UTF-8">
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-		<link  href="${pageContext.request.contextPath}/css/bootstrap/dist/bootstrap.min.css" rel="stylesheet">
+		<link  href="${pageContext.request.contextPath}/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/js/common_js/list_common.js"></script>
 		<title>공통코드 관리</title>
 	</head>

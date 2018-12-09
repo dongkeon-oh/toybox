@@ -6,6 +6,29 @@
 <mapper namespace="userSql">
 
 	<!-- 유저 추가 -->
+	<insert id="putUser" parameterType="com.dongkeonoh.toybox.vo.UserVo">
+		INSERT INTO TB_USER 
+        VALUES 
+     		 (
+       		   #{usr_id},
+       		   #{usr_password},
+       		   #{usr_name},
+		<choose>
+			<when test='usr_image != null and usr_image != ""'>
+       		   #{usr_image},
+			</when>
+			<otherwise>
+				DEFAULT
+			</otherwise>
+		</choose>
+       		   #{usr_sms},
+       		   #{usr_kakao},
+       		   'N'
+     		 )
+	</insert>
+
+
+	<!-- 유저 추가 -->
 	<insert id="addUser" parameterType="com.dongkeonoh.toybox.vo.UserVo">
 		INSERT INTO TB_USER 
         VALUES 

@@ -18,6 +18,12 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	
 	@Override
+	public int putUser(UserVo userVo) {
+		int checksum = userDao.putUser(userVo);
+		return checksum;
+	}
+	
+	@Override
 	public int addUser(UserVo userVo) {
 		int checksum = userDao.addUser(userVo);
 		return checksum;

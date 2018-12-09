@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.dongkeonoh.toybox.dao.CategoryDao;
 import com.dongkeonoh.toybox.dao.CommonDao;
 import com.dongkeonoh.toybox.service.CommonService;
 import com.dongkeonoh.toybox.vo.CommonVo;
@@ -16,9 +15,6 @@ import com.dongkeonoh.toybox.vo.CommonVo;
 public class CommonServiceImpl implements CommonService{
 	@Resource(name="CommonDao")
 	private CommonDao commonDao;
-
-	@Resource(name="CategoryDao")
-	private CategoryDao categoryDao;
 
 	@Override
 	public int putCommonGroup(CommonVo commonVo) {

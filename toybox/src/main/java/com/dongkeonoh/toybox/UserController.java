@@ -21,21 +21,40 @@ public class UserController {
 	private UserService userService;
 	
 	// 유저 추가 get
-	@RequestMapping(value = "/add_user", method = RequestMethod.GET)
-	public ModelAndView get_addUser(HttpServletRequest httpServletRequest, Model model) {
-		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("user/add_user_get");
-		
-		return modelAndView;
-	}
-	
-	// 유저 추가 get
 	@RequestMapping(value = "/modify_user", method = RequestMethod.GET)
 	public ModelAndView modUser(HttpServletRequest httpServletRequest) {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/modify_user");
+		
+		return modelAndView;
+	}
+
+
+	// 유저 추가 post
+	@RequestMapping(value = "/put_user", method = RequestMethod.POST)
+	public ModelAndView put_user(HttpServletRequest httpServletRequest, UserVo userVo) {
+		
+		int checksum = userService.putUser(userVo);
+		if(checksum > 0) {
+			//성공
+		}else {
+			//실패
+		}
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/modify_user");
+		modelAndView.addObject("checksum", checksum);
+		
+		return modelAndView;
+	}	
+	
+	// 유저 추가 get
+	@RequestMapping(value = "/add_user", method = RequestMethod.GET)
+	public ModelAndView get_addUser(HttpServletRequest httpServletRequest, Model model) {
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/add_user_get");
 		
 		return modelAndView;
 	}

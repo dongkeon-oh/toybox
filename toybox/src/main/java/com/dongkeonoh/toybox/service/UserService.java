@@ -6,6 +6,8 @@ import com.dongkeonoh.toybox.vo.UserVo;
 
 public interface UserService {
 	// 유저 추가
+	public int putUser(UserVo userVo);
+	// 유저 추가
 	public int addUser(UserVo userVo);
 	// 유저 보기
 	public UserVo viewUser(String userId);
