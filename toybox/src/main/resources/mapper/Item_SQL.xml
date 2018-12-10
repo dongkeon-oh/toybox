@@ -6,10 +6,7 @@
 <mapper namespace="itemSql">
 
 	<!-- 유저 추가 -->
-	<insert id="addItem" parameterType="com.dongkeonoh.toybox.vo.ItemVo">
-		<selectKey keyProperty="itm_id" resultType="String" order="BEFORE">
-    	SELECT SEQ_ITEM_ID.NEXTVAL FROM DUAL
-		</selectKey>
+	<insert id="putItem" parameterType="com.dongkeonoh.toybox.vo.ItemVo">
 		INSERT INTO TB_ITEM 
         VALUES 
      		 (
@@ -27,7 +24,8 @@
 				DEFAULT
 			</otherwise>
 		</choose>
-       		   #{itm_location}
+			   'Y',
+       		   #{itm_condition}
      		 )
 	</insert>
 </mapper>
