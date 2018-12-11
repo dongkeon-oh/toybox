@@ -14,38 +14,39 @@ public class UserDao {
 	@Autowired
 	private SqlSession sqlSession;
 
+	// 유저 추가
 	public int putUser(UserVo userVo) {
 		int result = sqlSession.insert("userSql.putUser", userVo);
 		return result;
 	}
 
-	public int addUser(UserVo userVo) {
-		int result = sqlSession.insert("userSql.addUser", userVo);
-		return result;
-	}
-	
-	public UserVo viewUser(String userId) {
-		UserVo result = sqlSession.selectOne("userSql.viewUser", userId);
-		return result;
-	}
-	
+	// 유저 수정
 	public int modifyUser(UserVo userVo) {
-		int result = sqlSession.update("userSql.modifyUser", userVo);
+		int result = sqlSession.insert("userSql.modifyUser", userVo);
+		return result;
+	}
+
+	// 유저 활성화 (active)
+	public int activeUser(UserVo userVo) {
+		int result = sqlSession.update("userSql.activeUser", userVo);
 		return result; 
 	}
-	
+
+	// 유저 삭제
 	public int deleteUser(UserVo userVo) {
 		int result = sqlSession.update("userSql.deleteUser", userVo);
 		return result;
 	}
 	
-	public int activeUser(UserVo userVo) {
-		int result = sqlSession.update("userSql.activeUser", userVo);
+	// 유저 조회
+	public UserVo getUser(String userId) {
+		UserVo result = sqlSession.selectOne("userSql.getUser", userId);
 		return result;
 	}
 	
-	public List<UserVo> searchUser(UserVo userVo) {
-		List<UserVo> result = sqlSession.selectList("userSql.searchUser", userVo);
+	// 유저 목록 조회
+	public List<UserVo> listUser(UserVo userVo) {
+		List<UserVo> result = sqlSession.selectList("userSql.listUser", userVo);
 		return result;
 	}
 }

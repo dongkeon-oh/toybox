@@ -18,7 +18,7 @@
        		   #{usr_image},
 			</when>
 			<otherwise>
-				DEFAULT
+				DEFAULT,
 			</otherwise>
 		</choose>
        		   #{usr_sms},
@@ -26,57 +26,23 @@
        		   'N'
      		 )
 	</insert>
-
-
-	<!-- 유저 추가 -->
-	<insert id="addUser" parameterType="com.dongkeonoh.toybox.vo.UserVo">
-		INSERT INTO TB_USER 
-        VALUES 
-     		 (
-       		   #{usr_id},
-       		   #{usr_password},
-       		   #{usr_name},
-		<choose>
-			<when test='usr_image != null and usr_image != ""'>
-       		   #{usr_image},
-			</when>
-			<otherwise>
-				DEFAULT
-			</otherwise>
-		</choose>
-       		   #{usr_sms},
-       		   #{usr_kakao},
-       		   'Y',
-       		   'N'
-     		 )
-     	<selectKey resultType="int" keyProperty="usr_checksum" order="AFTER">
-     	SELECT COUNT(USR_ID) AS USR_CHECKSUM
-     	  FROM tb_user
-		 WHERE USR_ID = #{usr_id}
-     	</selectKey>
-	</insert>
-	
-	<!-- 유저 보기 -->
-	<select id="viewUser" resultType="com.dongkeonoh.toybox.vo.UserVo" parameterType="String">
-		SELECT USR_ID, USR_NAME, USR_IMAGE, USR_SMS, USR_KAKAO, USR_ACTIVE
-		  FROM TB_USER
-		 WHERE USR_ID = #{usr_id}
-	</select>	
 	
 	<!-- 유저 수정 -->
 	<update id='modifyUser' parameterType="com.dongkeonoh.toybox.vo.UserVo">
 		UPDATE tb_user 
-		   SET USR_PASSWORD = #{usr_password},
+		   SET USR_ID = #{usr_id}
+		<if test='usr_password != null and usr_password != ""'>
+		   	   USR_PASSWORD = #{usr_password},
+		</if>
+		<if test='usr_image != null and usr_image != ""'>
     		   USR_IMAGE = #{usr_image},
+		</if>
+		<if test='usr_sms != null and usr_sms != ""'>
     		   USR_SMS = #{usr_sms},
+		</if>
+		<if test='usr_kakao != null and usr_kakao != ""'>
     	 	   USR_KAKAO = #{usr_kakao}
-    	 WHERE USR_ID = #{usr_id}
-	</update>
-	
-	<!-- 유저 삭제 -->
-	<update id='deleteUser' parameterType="com.dongkeonoh.toybox.vo.UserVo">
-		UPDATE tb_user 
-		   SET USR_USEYN = 'N'
+		</if>
     	 WHERE USR_ID = #{usr_id}
 	</update>
 	
@@ -87,23 +53,60 @@
     	 WHERE USR_ID = #{usr_id}
 	</update>
 	
-	<!-- 유저 검색 -->
-	<select id="searchUser" resultType="com.dongkeonoh.toybox.vo.UserVo" parameterType="com.dongkeonoh.toybox.vo.UserVo">
-		SELECT USR_ID, USR_NAME, USR_IMAGE, USR_SMS, USR_KAKAO 
+	<!-- 유저 삭제 -->
+	<delete id='deleteUser' parameterType="com.dongkeonoh.toybox.vo.UserVo">
+		DELETE 
+		  FROM TB_USER 
+		  WHERE USR_ID = #{usr_id}
+	</delete>
+
+	<!-- 유저 보기 -->
+	<select id="getUser" resultType="com.dongkeonoh.toybox.vo.UserVo" parameterType="String">
+		SELECT USR_ID
+		     , USR_NAME
+		     , USR_IMAGE
+		     , USR_SMS
+		     , USR_KAKAO
 		  FROM TB_USER
-		 WHERE USR_USEYN = 'Y'
-		<if test='usr_id != null and usr_id != ""'>
-		   AND USR_ID LIKE '%'||#{usr_id}||'%'
-		</if>
-		<if test='usr_name != null and usr_name != ""'>
-		   AND USR_NAME LIKE '%'||#{usr_name}||'%'
-		</if>
-		<if test='usr_sms != null and usr_sms != ""'>
-		   AND USR_SMS LIKE '%'||#{usr_sms}||'%'
-		</if>
-		<if test='usr_kakao != null and usr_kakao != ""'>
-		   AND USR_KAKAO LIKE '%'||#{usr_kakao}||'%'
-		</if>
+		 WHERE USR_ID = #{usr_id}
 	</select>	
+	
+	<!-- 유저 목록 조회 -->
+	<select id="listUser" parameterType="HashMap" resultType="com.dongkeonoh.toybox.vo.UserVo">
+		SELECT USR_ID
+		     , USR_NAME
+		     , USR_IMAGE
+		     , USR_SMS
+		     , USR_KAKAO
+		     , USR_ACTIVE
+             , CNT
+ 		 FROM
+			(
+			  SELECT ROWNUM AS RN
+			  	   , A.*
+			  	FROM
+			  	   (
+			  	   	 SELECT USR_ID
+					      , USR_NAME
+					      , USR_IMAGE
+					      , USR_SMS
+					      , USR_KAKAO
+					      , USR_ACTIVE
+	             	      , COUNT(USR_ID) OVER() CNT
+			  	       FROM TB_USER
+			 	      WHERE 1=1
+<!-- 				<choose> -->
+<!-- 					<when test="keytype != null and keytype.equals('group')"> -->
+<!-- 					    AND CGR_GROUP LIKE '%'||#{keyword}||'%' -->
+<!-- 					</when> -->
+<!-- 					<when test="keytype != null and keytype.equals('name')"> -->
+<!-- 					    AND CGR_GROUP_NAME LIKE '%'||#{keyword}||'%' -->
+<!-- 					</when> -->
+<!-- 				</choose> -->
+			  	   ) A
+			   WHERE ROWNUM <![CDATA[<=]]> #{end_idx}	  
+			)
+		WHERE RN <![CDATA[>=]]> #{start_idx} 
+	</select>
 </mapper>
 
