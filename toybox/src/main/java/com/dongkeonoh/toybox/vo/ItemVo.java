@@ -8,7 +8,7 @@ public class ItemVo {
 	private String itm_mainitem;	
 	private String itm_note;	
 	private String itm_image;	
-	private String itm_location;
+	private String itm_condition;
 	
 	public String getItm_id() {
 		return itm_id;
@@ -52,10 +52,10 @@ public class ItemVo {
 	public void setItm_image(String itm_image) {
 		this.itm_image = itm_image;
 	}
-	public String getItm_location() {
-		return itm_location;
+	public String getItm_condition() {
+		return itm_condition;
 	}
-	public void setItm_location(String itm_location) {
-		this.itm_location = itm_location;
+	public void setItm_condition(String itm_condition) {
+		this.itm_condition = itm_condition;
 	}
 }
