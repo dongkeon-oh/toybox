@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!-- saved from url=(0050)http://getbootstrap.com/docs/4.1/examples/sign-in/ -->
 <html lang="en">
@@ -37,5 +38,7 @@
       <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
     </form>
   
+  <a href="put_user">회원가입</a>
+  <a href="get_user">회원가입</a>
 
 </body></html>
