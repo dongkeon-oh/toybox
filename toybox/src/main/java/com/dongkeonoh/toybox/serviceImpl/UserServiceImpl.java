@@ -57,4 +57,11 @@ public class UserServiceImpl implements UserService{
 		List<UserVo> userList = userDao.listUser(userVo);
 		return userList;
 	}	
+
+	// 유저 목록 조회
+	@Override
+	public List<UserVo> getComCode(String group) {		
+		List<UserVo> userList = userDao.getComCode(group);
+		return userList;
+	}	
 }

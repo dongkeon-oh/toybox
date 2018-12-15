@@ -23,7 +23,9 @@
 		</choose>
        		   #{usr_sms},
        		   #{usr_kakao},
-       		   'N'
+       		   'N',
+       		   #{usr_question},
+       		   #{usr_answer}
      		 )
 	</insert>
 	
@@ -67,6 +69,8 @@
 		     , USR_IMAGE
 		     , USR_SMS
 		     , USR_KAKAO
+       		 , USR_QUESTION
+       		 , USR_ANSWER
 		  FROM TB_USER
 		 WHERE USR_ID = #{usr_id}
 	</select>	
@@ -107,6 +111,22 @@
 			   WHERE ROWNUM <![CDATA[<=]]> #{end_idx}	  
 			)
 		WHERE RN <![CDATA[>=]]> #{start_idx} 
+	</select>
+	
+	<!-- 공통코드 보기 (임시) -->
+	<select id="getComCode" resultType="com.dongkeonoh.toybox.vo.CommonVo" parameterType="String">
+		SELECT CCD_SEQ      
+			 , CCD_CODE     
+			 , CCD_GROUP    
+			 , CCD_CODENAME 
+			 , CCD_DETAIL1  
+			 , CCD_DETAIL2  
+			 , CCD_DETAIL3  
+			 , CCD_NOTE     
+			 , CCD_ORDER    
+			 , CCD_USEYN 
+		  FROM TB_COMMON_CODE
+		 WHERE CCD_GROUP = #{group}
 	</select>
 </mapper>
 

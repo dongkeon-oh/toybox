@@ -17,4 +17,6 @@ public interface UserService {
 	public UserVo getUser(String userId);
 	// 유저 목록 조회
 	public List<UserVo> listUser(UserVo userVo);
+	// 유저 목록 조회
+	public List<UserVo> getComCode(String group);
 }

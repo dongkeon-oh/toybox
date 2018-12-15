@@ -49,4 +49,12 @@ public class UserDao {
 		List<UserVo> result = sqlSession.selectList("userSql.listUser", userVo);
 		return result;
 	}
+	
+
+	
+	// 유저 조회
+	public List<UserVo> getComCode(String group) {
+		List<UserVo> result = sqlSession.selectList("userSql.getComCode", group);
+		return result;
+	}
 }

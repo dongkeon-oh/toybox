@@ -1,5 +1,7 @@
 package com.dongkeonoh.toybox;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,11 +20,13 @@ public class UserController {
 	private UserService userService;
 
 	// 유저 추가
-	@RequestMapping(value = "/put_user", method = RequestMethod.GET)
+	@RequestMapping(value = "/add_user", method = RequestMethod.GET)
 	public ModelAndView put_user_get(HttpServletRequest httpServletRequest) {
+		List<UserVo> com_list = userService.getComCode("user_question");
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/modify_user");	
+		modelAndView.addObject("com_list", com_list);	
 		return modelAndView;
 	}
 	
@@ -39,7 +43,7 @@ public class UserController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
-		modelAndView.addObject("checksum", checksum);		
+		modelAndView.addObject("checksum", checksum);	
 		return modelAndView;
 	}	
 	
@@ -47,11 +51,13 @@ public class UserController {
 	@RequestMapping(value = "/get_user", method = RequestMethod.GET)
 	public ModelAndView get_user(HttpServletRequest httpServletRequest, UserVo userVo) {
 		//userVo.setUsr_id("test");
-		UserVo checksum = userService.getUser("test");
+		UserVo checksum = userService.getUser("test22");
+		List<UserVo> com_list = userService.getComCode("user_question");
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/modify_user");
 		modelAndView.addObject("userVo", checksum);		
+		modelAndView.addObject("com_list", com_list);	
 		return modelAndView;
 	}	
 	

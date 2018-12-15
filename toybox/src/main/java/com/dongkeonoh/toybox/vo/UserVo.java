@@ -9,6 +9,8 @@ public class UserVo {
 	private String usr_sms;		
 	private String usr_kakao;	
 	private String usr_active;
+	private String usr_question;
+	private String usr_answer;
 	private int cnt;
 	
 	public String getUsr_id() {
@@ -53,10 +55,22 @@ public class UserVo {
 	public void setUsr_active(String usr_active) {
 		this.usr_active = usr_active;
 	}	
+	public String getUsr_question() {
+		return usr_question;
+	}
+	public void setUsr_question(String usr_question) {
+		this.usr_question = usr_question;
+	}
+	public String getUsr_answer() {
+		return usr_answer;
+	}
+	public void setUsr_answer(String usr_answer) {
+		this.usr_answer = usr_answer;
+	}	
 	public int getCnt() {
 		return cnt;
 	}
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
-	}	
+	}
 }
