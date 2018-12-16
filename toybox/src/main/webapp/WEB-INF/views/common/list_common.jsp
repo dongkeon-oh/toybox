@@ -8,10 +8,11 @@
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 		<link  href="${pageContext.request.contextPath}/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+		<link  href="${pageContext.request.contextPath}/css/common_css/list_common.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/js/common_js/list_common.js"></script>
 		<title>공통코드 관리</title>
 	</head>
-	<body>
+	<body class="bg-light">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-light">
 			<a class="navbar-brand" href="#">검색</a>
 			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +21,7 @@
 		  	<div class="navbar-collapse collapse" id="navbarColor02" style="">
 		  		<ul class="navbar-nav mr-auto"></ul>
 			    <form class="form-inline my-2 my-lg-0">
-				    <button type="button" class="btn btn-primary btn-lg" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" style="margin-right: 8px;" onClick="clear_group()">공통코드 그룹생성</button>
+				    <button type="button" class="btn btn-outline-primary" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" style="margin-right: 8px;" onClick="clear_group()">공통코드 그룹생성</button>
 			      	<div class="form-group" style="margin-right: 8px;">
 				    	<select class="custom-select" id="keytype">
 				      		<option value="sel">검색조건 선택</option>
@@ -32,8 +33,8 @@
 			      	<button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="search_keyword('onkey')">검색</button>
 			    </form>
 		    </div>
-		</nav>		
-	
+		</nav>
+		
 		<div class="modal" id="grpModModal">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -102,7 +103,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-					  	<h5 class="modal-title">공통코드 상세</h5>
+					  	<h5 class="modal-title" id="code_detail_title">공통코드 상세</h5>
 					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    	<span aria-hidden="true">&times;</span>
 					  	</button>
@@ -148,12 +149,12 @@
 		<table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">No</th>
+      <th scope="col">#</th>
       <th scope="col">공통코드 그룹</th>
       <th scope="col">공통코드 그룹명</th>
       <th scope="col">공통코드 그룹 설명</th>
       <th scope="col">사용유무</th>
-      <th scope="col"></th>
+      <th scope="col" class="th_btn_area"></th>
     </tr>
   </thead>
   <tbody id="grp_tbody">
