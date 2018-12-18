@@ -75,8 +75,8 @@ public class CommonServiceImpl implements CommonService{
 	}
 
 	@Override
-	public String dupCommonOrder(CommonVo commonVo) {
-		String result = commonDao.dupCommonOrder(commonVo);
+	public CommonVo dupCommonOrder(CommonVo commonVo) {
+		CommonVo result = commonDao.dupCommonOrder(commonVo);
 		return result;
 	}
 

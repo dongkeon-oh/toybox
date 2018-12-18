@@ -451,10 +451,12 @@ function add_code(group, seq) {
 	if (seq != "_NEW_") {
 		view_common_code(seq);
 		$("#ccd_code").attr("readonly", true); // 공통코드 변경가능
+		$("#code_detail_title").text("공통코드 수정");
+		$("#modify_code").text("수정");
+	}else{
+		$("#code_detail_title").text("공통코드 추가");
+		$("#modify_code").text("추가");
 	}
-	$("#code_detail_title").text("공통코드 추가");
-	$("#modify_code").text("추가");
-
 }
 
 function modify_code() {
@@ -587,13 +589,12 @@ function duplication_common_code(group, code, order, type) {
 		async : false,
 		success : function(response) {
 			var result = response;
-			if (result.ccd_code > 0 && (type == "_NEW_")) { // 중복
+			if (result.cnt > 0 && (type == "_NEW_")) { // 중복
 				alert(code + "는 사용할 수 없는 공통코드입니다.");
 				dupCase = false;
-			} else if (result.ccd_order > 0 && ()) {
+			} else if (result.ccd_order > 0 && result.ccd_code != code) {
 				alert("정렬순서 " + order + "번는 이미 사용중입니다.");
 				dupCase = false;
-
 			}
 		},
 		error : function(request, status, error) {
