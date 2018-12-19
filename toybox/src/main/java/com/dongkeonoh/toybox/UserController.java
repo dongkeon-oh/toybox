@@ -20,7 +20,7 @@ public class UserController {
 	private UserService userService;
 
 	// 유저 추가
-	@RequestMapping(value = "/add_user", method = RequestMethod.GET)
+	@RequestMapping(value = "/join_user", method = RequestMethod.GET)
 	public ModelAndView put_user_get(HttpServletRequest httpServletRequest) {
 		List<UserVo> com_list = userService.getComCode("user_question");
 		

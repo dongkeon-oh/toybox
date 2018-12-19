@@ -14,24 +14,39 @@
 	<script src="${pageContext.request.contextPath}/js/user_js/modify_user.js"></script>
 		
     <link rel="icon" href="http://getbootstrap.com/favicon.ico">
-
-    <title>회원가입</title>
+    <c:set var="action_type" value="put_user"></c:set>
+    <c:choose>
+    	<c:when test="${userVo.usr_id != null}">
+    		<title>회원정보 수정</title>
+    		<c:set var="action_type" value="modify_user"></c:set>
+    	</c:when>
+    	<c:otherwise>
+    		<title>회원가입</title>
+    	</c:otherwise>
+    </c:choose>
   </head>
 
   <body class="bg-light">
 
     <div class="container">
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="./Checkout example for Bootstrap_files/bootstrap-solid.svg" alt="" width="72" height="72">
+<!--         <img class="d-block mx-auto mb-4" src="./Checkout example for Bootstrap_files/bootstrap-solid.svg" alt="" width="72" height="72"> -->
         <h2>회원가입</h2>
       </div>
 
       <div class="row">
-        <div class="col-md-12 order-md-1">
-          <form action="put_user" method="post" class="needs-validation" id="modify_user">
+        <div class="col-md-8 offset-md-2">
+          <form action="${action_type }" method="post" class="needs-validation" id="modify_user">
             <div class="mb-3">
               <label for="usr_id">아이디</label>
-              <input type="text" class="form-control" id="usr_id" name="usr_id" placeholder="아이디를 입력하세요." value="${userVo.usr_id}" maxlength="20">
+	         <c:choose>
+		    	<c:when test="${userVo.usr_id != null}">
+		    		<input type="text" class="form-control" id="usr_id" name="usr_id" readonly="readonly" value="${userVo.usr_id}" maxlength="20">
+		    	</c:when>
+		    	<c:otherwise>
+		    		<input type="text" class="form-control" id="usr_id" name="usr_id" placeholder="아이디를 입력하세요." maxlength="20">
+		    	</c:otherwise>
+		    </c:choose>
             </div>
 
             <div class="mb-3">
@@ -82,11 +97,11 @@
 				<input type="text" class="form-control" name="usr_answer" id="usr_answer" placeholder="답변" value="${userVo.usr_answer}">
             </div>
 
-            <div class="mb-3">
-				<label for="usr_image">프로필 사진</label>
-				<input type="file" class="form-control-file" name="usr_image" id="usr_image" placeholder="프로필 사진">
+<!--             <div class="mb-3"> -->
+<!-- 				<label for="usr_image">프로필 사진</label> -->
+<!-- 				<input type="file" class="form-control-file" name="usr_image" id="usr_image" placeholder="프로필 사진"> -->
 <!-- 			    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small> -->
-            </div>
+<!--             </div> -->
 
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">회원가입</button>
