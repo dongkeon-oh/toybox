@@ -44,7 +44,7 @@ function generate_list(destination_page, page_size, total_size, keyword, url, sc
 			var result = response;
 			var append_tag = "<tr>";
 			var data_array = new Array();
-			alert(list_pagination_area.list);
+
 			$("#"+list_pagination_area.list).html("");
 			
 			// 필요한 데이터만 배열에 추가한다.
