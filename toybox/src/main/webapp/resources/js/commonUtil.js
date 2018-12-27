@@ -33,7 +33,7 @@ function generate_list(destination_page, page_size, total_size, keyword, url, sc
 	}
 
 	$.ajax({
-		method : "POST",
+		method : "GET",
 		url : url,
 		data : {
 			"keyword" : keyword,
@@ -43,52 +43,52 @@ function generate_list(destination_page, page_size, total_size, keyword, url, sc
 		async : false,
 		success : function(response) {
 			result = response;
+			var append_tag = "";
+			var data_array = new Array();
+
+			$("#"+list_pagination_area.list).html("");
+			
+			// 필요한 데이터만 배열에 추가한다.
+			result.forEach(function (item, index) {
+				$.each(item, function (key, value) {
+					if(column_list[key] != undefined){
+						column_list[key]["value"] = value;
+					}
+				});
+				data_array.push(column_list);
+			});
+			
+			// 필요한 데이터를 이용해 페이지 영역을 세팅한다.
+			data_array.forEach(function (item, index) {
+				append_tag = append_tag + "<tr>";
+				$.each(item, function (key, value) {
+					// 타입별 처리
+					if(key == "type" && (item[key]["type"] == "number" || item[key]["type"] == "date")){
+						// 숫자 형태 확인
+						if(!$.isNumeric(item[key]["value"])){
+							item[key]["value"] = "Not Number";
+						}else if(item[key]["type"] == "number"){
+							// 작업예정
+						}else if(item[key]["type"] == "date"){
+							// 작업예정
+						}
+					}
+					append_tag = append_tag + "<td align='"+ item[key]["align"] +"'>"
+					append_tag = append_tag + item[key]["value"]
+					append_tag = append_tag + "</td>"
+				});
+				append_tag = append_tag + "</tr>";
+			});
+			
+			$("#"+list_pagination_area.list).html(append_tag);
 		},
 		error : function(request, status, error) {
 			console.log("code:" + request.status + "\n" + "message:"
 					+ request.responseText + "\n" + "error:" + error);
 		}
 	});
-	
-	generate_list_detail(result);
 }
 
 function generate_list_detail(result){
-	var append_tag = "<tr>";
-	var data_array = new Array();
 
-	$("#"+list_pagination_area.list).html("");
-	
-	// 필요한 데이터만 배열에 추가한다.
-	result.forEach(function (item, index) {
-		$.each(item, function (key, value) {
-			if(column_list[key] != undefined){
-				column_list[key]["value"] = value;
-			}
-		});
-		data_array.push(column_list);
-	});
-	
-	// 필요한 데이터를 이용해 페이지 영역을 세팅한다.
-	data_array.forEach(function (item, index) {
-		$.each(item, function (key, value) {
-			// 타입별 처리
-			if(key == "type" && (item["type"] == "number" || item["type"] == "date")){
-				// 숫자 형태 확인
-				if(!$.isNumeric(item["value"])){
-					item["value"] = "Not Number";
-				}else if(item["type"] == "number"){
-					// 작업예정
-				}else if(item["type"] == "date"){
-					// 작업예정
-				}
-			}
-		});
-		append_tag = append_tag + "<td align='"+ item.align +"'>"
-		append_tag = append_tag + item.value
-		append_tag = append_tag + "</td>"
-	});
-	append_tag = "</tr>";
-	
-	$("#"+list_pagination_area.list).html(append_tag);
 }
