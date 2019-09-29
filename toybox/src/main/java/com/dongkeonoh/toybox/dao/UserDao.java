@@ -1,5 +1,6 @@
 package com.dongkeonoh.toybox.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -45,8 +46,8 @@ public class UserDao {
 	}
 	
 	// 유저 목록 조회
-	public List<UserVo> listUser(UserVo userVo) {
-		List<UserVo> result = sqlSession.selectList("userSql.listUser", userVo);
+	public List<UserVo> listUser(HashMap<String, String> map) {
+		List<UserVo> result = sqlSession.selectList("userSql.listUser", map);
 		return result;
 	}
 	

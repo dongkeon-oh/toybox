@@ -13,12 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView testList(HttpServletRequest httpServletRequest, Model model) {
+public class ErrorController {	
+	@RequestMapping(value = "/error", method = RequestMethod.GET)
+	public ModelAndView errorPage(HttpServletRequest httpServletRequest, Model model) {
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("login");
+		modelAndView.setViewName("error");
 		
 		return modelAndView;
 	}	

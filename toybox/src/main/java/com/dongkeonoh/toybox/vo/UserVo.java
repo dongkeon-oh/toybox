@@ -11,6 +11,7 @@ public class UserVo {
 	private String usr_active;
 	private String usr_question;
 	private String usr_answer;
+	private String usr_type;
 	private int cnt;
 	
 	public String getUsr_id() {
@@ -60,6 +61,12 @@ public class UserVo {
 	}
 	public void setUsr_question(String usr_question) {
 		this.usr_question = usr_question;
+	}
+	public String getUsr_type() {
+		return usr_type;
+	}
+	public void setUsr_type(String usr_type) {
+		this.usr_type = usr_type;
 	}
 	public String getUsr_answer() {
 		return usr_answer;

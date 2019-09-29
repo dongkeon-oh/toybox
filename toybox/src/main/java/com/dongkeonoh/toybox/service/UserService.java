@@ -1,5 +1,6 @@
 package com.dongkeonoh.toybox.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.dongkeonoh.toybox.vo.UserVo;
@@ -16,7 +17,7 @@ public interface UserService {
 	// 유저 조회
 	public UserVo getUser(String userId);
 	// 유저 목록 조회
-	public List<UserVo> listUser(UserVo userVo);
+	public List<UserVo> listUser(HashMap<String, String> map);
 	// 유저 목록 조회
 	public List<UserVo> getComCode(String group);
 }

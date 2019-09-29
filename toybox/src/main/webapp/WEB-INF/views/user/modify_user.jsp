@@ -3,14 +3,17 @@
 <!DOCTYPE html>
 <html>
 
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta charset="UTF-8">
     
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	<link  href="${pageContext.request.contextPath}/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <title>회원가입</title>
+					
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+				
 	<script src="${pageContext.request.contextPath}/js/user_js/modify_user.js"></script>
 		
     <link rel="icon" href="http://getbootstrap.com/favicon.ico">
@@ -26,7 +29,7 @@
     </c:choose>
   </head>
 
-  <body class="bg-light">
+  <body class="bg-dark">
 
     <div class="container">
       <div class="py-5 text-center">
@@ -104,21 +107,15 @@
 <!--             </div> -->
 
             <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">회원가입</button>
+            <button class="btn btn-success btn-lg btn-block mb-3" type="submit">회원가입</button>
           </form>
+          
+      		<form action="login" method="get">
+      			<button class="btn btn-outline-success btn-lg btn-block mb-3" type="submit">취소</button>
+			</form>
         </div>
       </div>
-
-      <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">© 2017-2018 Company Name</p>
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="http://getbootstrap.com/docs/4.1/examples/checkout/#">Privacy</a></li>
-          <li class="list-inline-item"><a href="http://getbootstrap.com/docs/4.1/examples/checkout/#">Terms</a></li>
-          <li class="list-inline-item"><a href="http://getbootstrap.com/docs/4.1/examples/checkout/#">Support</a></li>
-        </ul>
-      </footer>
     </div>
-
 
   
 

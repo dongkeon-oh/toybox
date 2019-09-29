@@ -2,7 +2,7 @@
  * 
  */
 $(function(){
-	$('form').on('submit', function() {
+	$('#modify_user').on('submit', function() {
 	     return valid_user();
 	 });
 });

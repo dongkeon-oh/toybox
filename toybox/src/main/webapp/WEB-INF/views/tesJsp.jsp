@@ -1,31 +1,40 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" contentType="text/html; charset=UTF-8"%>
-<html>
-	<head>
-		<title>COMMON LIST</title>
-	</head>
-	<body>
-		<form>
-			<table>
-				<tr>
-					<td>COM_ID</td>
-					<td>COM_CATEGORY1</td>
-					<td>COM_CATEGORY2</td>
-					<td>COM_CATEGORY3</td>
-					<td>COM_NAME</td>
-					<td>COM_USEYN</td>
-				</tr>
-				<c:forEach var="item" items="${eList}" >
-				<tr>
-					<td>${item.com_id }</td>
-					<td>${item.com_category1 }</td>
-					<td>${item.com_category2 }</td>
-					<td>${item.com_category3 }</td>
-					<td>${item.com_name }</td>
-					<td>${item.com_useyn }</td>
-				</tr>
-				</c:forEach>
-			</table>
-		</form>
-	</body>
-</html>
+		<nav class="navbar navbar-expand-xs navbar-dark bg-dark">		
+			<div class="form-inline my-2 my-lg-0">
+		  		<a class="navbar-brand" href="#">아이템 목록</a>
+		    </div>
+		
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    	<span class="navbar-toggler-icon"></span>
+		  	</button>
+		  	
+		  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    	<ul class="navbar-nav mr-auto">
+		    		<c:forEach var="mList" items="${menu_list }" varStatus="status">
+			      		<li class="nav-item active">
+			        		<a class="nav-link" href="${mList.ccd_code }">${mList.ccd_codename }
+				    			<c:if test="${mList.ccd_code == mapping_menu }"><span class="sr-only">(current)</span>
+				    			</c:if>	
+				    		</a>
+			        				${mList.ccd_code} /// ${mapping_menu }
+			      		</li>
+					</c:forEach>
+		      		<li class="nav-item">
+		        		<a class="nav-link" href="#">Link</a>
+		      		</li>
+<!-- 		      		<li class="nav-item dropdown"> -->
+<!-- 		        		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+<!-- 		          			Dropdown -->
+<!-- 		        		</a> -->
+<!-- 		        		<div class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
+<!-- 		          			<a class="dropdown-item" href="#">Action</a> -->
+<!-- 		          			<a class="dropdown-item" href="#">Another action</a> -->
+<!-- 		          			<div class="dropdown-divider"></div> -->
+<!-- 		          			<a class="dropdown-item" href="#">Something else here</a> -->
+<!-- 		        		</div> -->
+<!-- 		      		</li> -->
+<!-- 		      		<li class="nav-item"> -->
+<!-- 		        		<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+<!-- 		      		</li> -->
+		    	</ul>
+		  	</div>
+		</nav>

@@ -78,6 +78,7 @@
 			   WHERE ROWNUM <![CDATA[<=]]> #{end_idx}	  
 			)
 		WHERE RN <![CDATA[>=]]> #{start_idx} 
+        ORDER BY CGR_GROUP
 	</select>
 	
 	<!-- 공통 코드 -->	
@@ -140,9 +141,13 @@
 		     , CCD_CODENAME
 		     , CCD_ORDER
 		     , CCD_USEYN
+		     , CCD_DETAIL1
+			 , CCD_DETAIL2
+			 , CCD_DETAIL3
+			 , CCD_NOTE   
 		  FROM TB_COMMON_CODE
 		 WHERE CCD_GROUP = #{cgr_group}
-		 ORDER BY CCD_ORDER
+		 ORDER BY CCD_ORDER 
 	</select>
 	
 	<!-- 공통 코드 조회 -->

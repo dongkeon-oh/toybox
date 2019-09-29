@@ -59,7 +59,7 @@
 	<delete id='deleteUser' parameterType="com.dongkeonoh.toybox.vo.UserVo">
 		DELETE 
 		  FROM TB_USER 
-		  WHERE USR_ID = #{usr_id}
+		 WHERE USR_ID = #{usr_id}
 	</delete>
 
 	<!-- 유저 보기 -->

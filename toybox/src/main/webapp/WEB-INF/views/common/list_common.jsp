@@ -5,9 +5,11 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-		<link  href="${pageContext.request.contextPath}/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link  href="${pageContext.request.contextPath}/css/common_css/list_common.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/js/common_js/list_common.js"></script>
 		<title>공통코드 관리</title>
@@ -24,7 +26,6 @@
 				    <button type="button" class="btn btn-outline-primary" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" style="margin-right: 8px;" onClick="clear_group()">공통코드 그룹생성</button>
 			      	<div class="form-group" style="margin-right: 8px;">
 				    	<select class="custom-select" id="keytype">
-				      		<option value="sel">검색조건 선택</option>
 				      		<option value="group">공통코드</option>
 				      		<option value="name">공통코드명</option>
 				    	</select>
@@ -66,7 +67,7 @@
 			</div>
 		</div>
 		
-		<div class="modal" id="codeModModal">
+		<div class="modal" id="codeModModal" data-keyboard="false">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -99,7 +100,7 @@
 			</div>
 		</div>
 		
-		<div class="modal" id="detailModModal">
+		<div class="modal" id="detailModModal" data-keyboard="false">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -108,10 +109,10 @@
 					    	<span aria-hidden="true">&times;</span>
 					  	</button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body" style="overflow:auto; height:450px;">
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">공통코드</label>
-							<input type="text" class="form-control code_mod" placeholder="공통코드" id="ccd_code" maxlength='8'>
+							<input type="text" class="form-control code_mod" placeholder="공통코드" id="ccd_code" maxlength='100'>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">공통코드명</label>

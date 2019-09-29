@@ -1,5 +1,6 @@
 package com.dongkeonoh.toybox.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -53,8 +54,8 @@ public class UserServiceImpl implements UserService{
 
 	// 유저 목록 조회
 	@Override
-	public List<UserVo> listUser(UserVo userVo) {		
-		List<UserVo> userList = userDao.listUser(userVo);
+	public List<UserVo> listUser(HashMap<String, String> map) {		
+		List<UserVo> userList = userDao.listUser(map);
 		return userList;
 	}	
 

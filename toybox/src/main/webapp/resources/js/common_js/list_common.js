@@ -215,86 +215,84 @@ function list_common_group(page_no, page_cnt, keyword, keytype) {
 	var end_idx = page_cnt * page_no;
 	var start_idx = end_idx - page_cnt + 1;
 
-	$
-			.ajax({
-				method : "POST",
-				url : "ajax_list_common_group",
-				data : {
-					"keyword" : keyword,
-					"keytype" : keytype,
-					"start_idx" : start_idx,
-					"end_idx" : end_idx
-				},
-				async : false,
-				success : function(response) {
-					var result = response;
-					var opt = "";
-					var page_total = 0;
+	$.ajax({
+		method : "POST",
+		url : "ajax_list_common_group",
+		data : {
+			"keyword" : keyword,
+			"keytype" : keytype,
+			"start_idx" : start_idx,
+			"end_idx" : end_idx
+		},
+		async : false,
+		success : function(response) {
+			var result = response;
+			var opt = "";
+			var page_total = 0;
 
-					$("#grp_tbody").html("");
-					$
-							.each(
-									result,
-									function(index, item) {
-										page_total = item.cnt;
+			$("#grp_tbody").html("");
+			$.each(
+				result,
+				function(index, item) {
+					page_total = item.cnt;
 
-										var note = item.cgr_note;
-										if (note.length > 30) {
-											note = "<marquee behavior=scroll>"
-													+ note + "</marquee>";
-										}
+					var note = item.cgr_note;
+					if (note.length > 30) {
+						note = "<marquee behavior=scroll>"
+								+ note + "</marquee>";
+					}
 
-										var table_row_type = "";// =
-																// "table-secondary";
-										var use_yn = "사용";
-										if (item.cgr_useyn == 'N') {
-											use_yn = "삭제됨";
-											table_row_type = "table-danger";
-										}
+					var table_row_type = "";// =
+											// "table-secondary";
+					var use_yn = "사용";
+					if (item.cgr_useyn == 'N') {
+						use_yn = "삭제됨";
+						table_row_type = "table-danger";
+					}
 
-										opt = opt + "<tr class='"
-												+ table_row_type + "'>";
-										opt = opt + "	<td>"
-												+ (start_idx + index) + "</td>";
-										opt = opt + "	<td id='trGrp"
-												+ (start_idx + index) + "'>"
-												+ item.cgr_group + "</td>";
-										opt = opt + "	<td id='trGrpNm"
-												+ (start_idx + index) + "'>"
-												+ item.cgr_group_name + "</td>";
-										opt = opt + "	<td id='trNote"
-												+ (start_idx + index) + "'>"
-												+ note + "</td>";
-										opt = opt + "	<td>" + use_yn + "</td>";
-										opt = opt + "	<td>";
-										if (item.cgr_useyn != 'N') {
-											opt = opt
-													+ "		<button type='button' class='btn btn-primary btn-sm modGrpBtn'  data-toggle='modal' data-target='#grpModModal' onClick='modify_group("
-													+ (start_idx + index)
-													+ ")' >수정</button>";
-											opt = opt
-													+ "		<button type='button' class='btn btn-danger btn-sm' onClick='delete_group("
-													+ (start_idx + index)
-													+ ")'>삭제</button>";
-											opt = opt
-													+ "		<button type='button' class='btn btn-secondary btn-sm' data-toggle='modal' data-target='#codeModModal' onClick='list_common_code(\""
-													+ item.cgr_group
-													+ "\")'>코드추가</button>";
-										}
-										opt = opt + "	</td>";
-										opt = opt + "</tr>";
-									});
-					$("#grp_tbody").html(opt);
-
-					set_pagination(page_cnt, page_total, page_no, keyword,
-							keytype);
-
-				},
-				error : function(request, status, error) {
-					console.log("code:" + request.status + "\n" + "message:"
-							+ request.responseText + "\n" + "error:" + error);
+					opt = opt + "<tr class='"
+							+ table_row_type + "'>";
+					opt = opt + "	<td>"
+							+ (start_idx + index) + "</td>";
+					opt = opt + "	<td id='trGrp"
+							+ (start_idx + index) + "'>"
+							+ item.cgr_group + "</td>";
+					opt = opt + "	<td id='trGrpNm"
+							+ (start_idx + index) + "'>"
+							+ item.cgr_group_name + "</td>";
+					opt = opt + "	<td id='trNote"
+							+ (start_idx + index) + "'>"
+							+ note + "</td>";
+					opt = opt + "	<td>" + use_yn + "</td>";
+					opt = opt + "	<td>";
+					if (item.cgr_useyn != 'N') {
+						opt = opt
+								+ "		<button type='button' class='btn btn-primary btn-sm modGrpBtn'  data-toggle='modal' data-target='#grpModModal' onClick='modify_group("
+								+ (start_idx + index)
+								+ ")' >수정</button>";
+						opt = opt
+								+ "		<button type='button' class='btn btn-danger btn-sm' onClick='delete_group("
+								+ (start_idx + index)
+								+ ")'>삭제</button>";
+						opt = opt
+								+ "		<button type='button' class='btn btn-secondary btn-sm' data-toggle='modal' data-target='#codeModModal' onClick='list_common_code(\""
+								+ item.cgr_group
+								+ "\")'>코드추가</button>";
+					}
+					opt = opt + "	</td>";
+					opt = opt + "</tr>";
 				}
-			});
+			);
+			$("#grp_tbody").html(opt);
+
+			set_pagination(page_cnt, page_total, page_no, keyword,
+					keytype);
+		},
+		error : function(request, status, error) {
+			console.log("code:" + request.status + "\n" + "message:"
+					+ request.responseText + "\n" + "error:" + error);
+		}
+	});
 }
 
 // 에러 수정 필요
@@ -325,10 +323,7 @@ function set_pagination(page_cnt, page_total, page_no, keyword, keytype) {
 }
 
 function change_page_count(page_cnt) {
-	$("#keyword").val("");
-	$("#keytype option:eq(0)").prop("selected", true);
-
-	list_common_group("1", page_cnt, "", "");
+	list_common_group("1", page_cnt, $("#keyword").val(), $("#keytype").val());
 }
 
 function search_keyword(type) {
@@ -522,7 +517,7 @@ function modify_code() {
 
 function valid_common_code(code, name, order, detail1, detail2, detail3, note) {
 	var validation = true;
-	var regexr_code = /[a-zA-Z0-9_]{1,16}$/;
+	var regexr_code = /[a-zA-Z0-9_\/]{1,100}$/;
 	var regexr_order = /[0-9]$/;
 
 	if (code.length == 0) {
@@ -531,7 +526,7 @@ function valid_common_code(code, name, order, detail1, detail2, detail3, note) {
 		return validation;
 	}
 	if (!regexr_code.test(code)) {
-		alert('공통코드는 1자리 이상 16자리 이하의 영문과 숫자, 특수문자 "_" 만 사용이 가능합니다.');
+		alert('공통코드는 1자리 이상 100자리 이하의 영문과 숫자, 특수문자 "_" 만 사용이 가능합니다.');
 		validation = false;
 		return validation;
 	}
@@ -664,4 +659,11 @@ function delete_code(seq, code, group) {
 			}
 		});
 	}
+}
+
+// 모달 닫을 시 이전 모달이 움직이는 상황을 위한 함수
+// 사용하지 않음
+function close_detail_Modal(){
+	$("#detailModModal").css("display","none");
+	$(".modal-backdrop.show").eq(1).removeClass();
 }

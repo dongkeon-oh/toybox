@@ -5,30 +5,211 @@
 
 <mapper namespace="itemSql">
 
-	<!-- 유저 추가 -->
-	<insert id="addItem" parameterType="com.dongkeonoh.toybox.vo.ItemVo">
-		<selectKey keyProperty="itm_id" resultType="String" order="BEFORE">
-    	SELECT SEQ_ITEM_ID.NEXTVAL FROM DUAL
-		</selectKey>
-		INSERT INTO TB_ITEM 
-        VALUES 
-     		 (
-       		   #{itm_id},
-       		   #{itm_name},
-       		   #{itm_type},
-       		   #{itm_owner},
-       		   #{itm_mainitem},
-       		   #{itm_note},
+	<!-- 아이템 조회 -->
+	<select id="listItem" parameterType="HashMap" resultType="com.dongkeonoh.toybox.vo.ItemVo">
+		WITH CDT AS(      
+			SELECT CDT_ITEM
+                 , CASE 
+                    WHEN CDT_FROMDATE <![CDATA[ > ]]> #{return_date}
+                        THEN 'rentable'
+                    WHEN CDT_TODATE <![CDATA[ < ]]> #{rent_date}
+                        THEN 'rentable'
+                    ELSE 'rented'
+                    END AS CDT_CONDITION
+			  FROM
+				 (
+			    	SELECT CDT_ITEM
+                         , CDT_FROMDATE
+                         , CDT_TODATE
+			          	 , ROW_NUMBER() OVER(PARTITION BY CDT_ITEM ORDER BY CDT_CREATEDATE DESC) AS ROW_IDX
+			      	  FROM TB_CONDITION
+			         ORDER BY CDT_CREATEDATE DESC
+			      )
+			  WHERE ROW_IDX = 1
+		), 
+		ITEM AS (
+			SELECT ITM_ID
+		         , ITM_NAME
+		      FROM TB_ITEM 
+		)
+		SELECT * 
+		  FROM
+		  	 (
+			   SELECT ITEM.ITM_ID
+				   	, ITEM.ITM_NAME
+				   	, CDT.CDT_CONDITION
+				    , ROWNUM AS RN
+				 FROM ITEM LEFT JOIN CDT
+			   	   ON ITEM.ITM_ID = CDT.CDT_ITEM
+            	WHERE ITM_NAME LIKE '%'||#{keyword}||'%'
+			)
+			WHERE RN BETWEEN #{start_idx} AND #{end_idx}
+	</select>
+	
+	<!-- 대여 신청 전 물품 조회 -->
+	<select id="listItemBeforeApply" parameterType="HashMap" resultType="com.dongkeonoh.toybox.vo.ItemVo">
+		WITH CDT AS(      
+			SELECT CDT_ITEM
+                 , CDT_LOCATION
+			  FROM
+				 (
+			    	SELECT CDT_ITEM
+                         , CDT_LOCATION
+			          	 , ROW_NUMBER() OVER(PARTITION BY CDT_ITEM ORDER BY CDT_CREATEDATE DESC) AS ROW_IDX
+			      	  FROM TB_CONDITION
+			         ORDER BY CDT_CREATEDATE DESC
+			      )
+			  WHERE ROW_IDX = 1
+		), 
+		ITEM AS (
+			SELECT ITM_ID
+		         , ITM_NAME
+		      FROM TB_ITEM 
+		)
+		SELECT ITEM.ITM_ID
+			 , ITEM.ITM_NAME
+			 , CDT.CDT_LOCATION
+		  FROM ITEM LEFT JOIN CDT
+			ON ITEM.ITM_ID = CDT.CDT_ITEM
 		<choose>
-			<when test='itm_image != null and itm_image != ""'>
-       		   #{itm_image},
+			<when  test="list.size != 0">
+         WHERE ITEM.ITM_ID IN
+        		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            	#{item}
+				</foreach>
 			</when>
 			<otherwise>
-				DEFAULT
+		 WHERE 1 != 1
 			</otherwise>
 		</choose>
-       		   #{itm_location}
+	</select>
+	
+	<!-- 인수자 목록 -->
+	<select id="listItemReturnPoint" resultType="com.dongkeonoh.toybox.vo.UserVo">
+		SELECT USR_ID
+			 , USR_NAME
+		  FROM TB_USER
+         WHERE USR_ID != 'ADMIN'
+           AND USR_ACTIVE = 'Y'
+	</select>
+	
+	<!-- 대여 직전 물품 상태 조회 -->
+	<!-- 현재 사용하지 않음 -->
+	<select id="listItemBeforeRent" parameterType="java.util.HashMap" resultType="com.dongkeonoh.toybox.vo.ItemVo">
+		SELECT CDT_ITEM
+			 , CDT_CONDITION
+		  FROM
+		  	 (      
+			   SELECT CDT_ITEM
+                 	, CASE 
+                    	WHEN CDT_FROMDATE <![CDATA[ > ]]> #{returnDate}
+                        	THEN 'rentable'
+                    	WHEN CDT_TODATE <![CDATA[ < ]]> #{rentDate}
+                        	THEN 'rentable'
+                    	ELSE 'rented'
+                    	 END AS CDT_CONDITION
+			  	  FROM
+				     (
+			    	   SELECT CDT_ITEM
+                         	, CDT_CONDITION
+                         	, CDT_FROMDATE
+                         	, CDT_TODATE
+			          	 	, ROW_NUMBER() OVER(PARTITION BY CDT_ITEM ORDER BY CDT_CREATEDATE DESC) AS ROW_IDX
+			      	 	 FROM TB_CONDITION
+			         	ORDER BY CDT_CREATEDATE DESC
+			      	 )
+			  	 WHERE ROW_IDX = 1              
+			 )        
+<!-- 		 <if test="search_list != null"> -->
+<!-- 		 WHERE CDT_ITEM IN  -->
+<!--         	<foreach collection="search_list" item="item" index="index" separator="," open="(" close=")"> -->
+<!--             	#{item} -->
+<!-- 			</foreach> -->
+<!-- 		 </if> -->
+	</select>
+	
+	<!-- 대출 신청 -->
+	<insert id="rentItem" parameterType="HashMap">
+		<foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
+     	  INTO TB_CONDITION 
+        VALUES 
+        	 (
+       		   'rent_requested',
+       		   #{item.cdt_item},
+       		   #{item.cdt_user},
+       		   #{item.cdt_location},
+       		   #{item.cdt_note},
+       		   #{item.cdt_todate},
+       		   #{item.cdt_fromdate},
+       		   SYSDATE,
+       		   #{item.cdt_return}
      		 )
+		</foreach>
 	</insert>
+	
+	<!-- 애여 내역 -->
+	<select id="requestItem" parameterType="HashMap" resultType="com.dongkeonoh.toybox.vo.ItemVo">
+		SELECT ITM_NAME     
+			 , CDT_CONDITION 
+			 , CDT_ITEM      
+			 , CDT_USER       
+			 , CDT_FROMDATE
+			 , CDT_TODATE
+		  FROM 
+		  	 (
+			   SELECT ITEM.ITM_NAME
+			   	    , CDT.CDT_CONDITION
+			   	    , CDT.CDT_ITEM
+			   	    , CDT.CDT_USER
+			   	    , TO_CHAR(CDT.CDT_FROMDATE, 'YYYY/MM/DD') AS CDT_FROMDATE
+			   	    , TO_CHAR(CDT.CDT_TODATE, 'YYYY/MM/DD')  AS CDT_TODATE
+			        , ROWNUM AS RN
+			     FROM TB_CONDITION CDT
+			        , TB_ITEM ITEM
+			    WHERE CDT.CDT_ITEM = ITEM.ITM_ID
+			      AND CDT.CDT_USER = #{user}
+			      AND CDT.CDT_FROMDATE <![CDATA[ >= ]]> #{search_date}
+			      AND ITEM.ITM_NAME LIKE '%'||#{keyword}||'%'
+		     ) 
+         WHERE RN BETWEEN #{start_idx} AND #{end_idx} 
+	</select>
+	
+	<!-- 요청 내역 -->
+	<select id="responseItem" parameterType="String" resultType="com.dongkeonoh.toybox.vo.ItemVo">
+		SELECT ITM.ITM_ID 
+		     , ITM.ITM_NAME
+		     , CDT.CDT_USER
+		     , CDT.CDT_RETURN
+		     , CDT.CDT_NOTE
+		     , TO_CHAR(CDT.CDT_FROMDATE,'YYYY/MM/DD') AS CDT_FROMDATE
+		     , TO_CHAR(CDT.CDT_TODATE  ,'YYYY/MM/DD') AS CDT_TODATE  
+		     , CDT.CDT_CREATEDATE
+		  FROM TB_ITEM ITM
+		     , (
+				SELECT CDT_ITEM
+		             , CDT_USER
+		             , CDT_RETURN
+		             , CDT_NOTE
+		             , CDT_FROMDATE
+		             , CDT_TODATE
+		             , CDT_CREATEDATE  
+		          FROM (
+					    SELECT CDT_ITEM
+		                     , CDT_USER
+		                     , CDT_RETURN
+		                     , CDT_NOTE
+		                     , CDT_FROMDATE
+		                     , CDT_TODATE
+		                     , CDT_CREATEDATE                         
+					      	 , ROW_NUMBER() OVER(PARTITION BY CDT_ITEM ORDER BY CDT_CREATEDATE DESC) AS ROW_IDX
+					      FROM TB_CONDITION
+		                 WHERE CDT_LOCATION = #{user_id}
+		                   AND CDT_CONDITION = 'rent_requested'
+					     ORDER BY CDT_CREATEDATE DESC
+					   )
+				 WHERE ROW_IDX = 1 
+		       ) CDT
+		 WHERE CDT.CDT_ITEM = ITM.ITM_ID
+	</select>
 </mapper>
 
