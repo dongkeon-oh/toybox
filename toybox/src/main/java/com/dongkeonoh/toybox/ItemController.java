@@ -31,7 +31,7 @@ public class ItemController implements ToyboxGlobalNameSpace {
 	// 아이템 조회
 	@RequestMapping(value = "/list_item", method = RequestMethod.GET)
 	public ModelAndView getListItem(ModelAndView modelAndView, HttpServletRequest httpServletRequest
-			, @RequestParam("keyword") 		String keyword
+//			, @RequestParam("keyword") 		String keyword
 	) {
 		modelAndView.addObject("mapping_name", "아이템 대여");
 		modelAndView.addObject("mapping_menu", "list_item");

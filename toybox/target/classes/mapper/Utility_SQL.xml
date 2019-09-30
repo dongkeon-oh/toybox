@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="utilitySql">
+	<!-- 로그인 -->
+	<select id="getMenu" resultType="com.dongkeonoh.toybox.vo.CommonVo" parameterType="com.dongkeonoh.toybox.vo.UserVo">
+		WITH USR AS (
+		    SELECT USR_ID
+		    	 , USR_TYPE
+		      FROM TB_USER USR
+		     WHERE USR_ID = #{usr_id}
+		),
+		CCD AS (
+		SELECT CCD_SEQ
+		     , CCD_CODE
+		     , CCD_GROUP
+		     , CCD_CODENAME
+		     , CCD_DETAIL1
+		     , CCD_DETAIL2
+		     , CCD_DETAIL3
+		     , CCD_NOTE
+		     , CCD_ORDER
+		     , CCD_USEYN
+		  FROM TB_COMMON_CODE
+		 WHERE CCD_GROUP = 'menu_permission'
+		)
+		SELECT CCD_CODE
+		     , CCD_CODENAME
+		     , CCD_NOTE
+		  FROM CCD, USR
+		WHERE USR_TYPE IN (CCD_DETAIL1, CCD_DETAIL2, CCD_DETAIL3)
+		ORDER BY CCD_ORDER ASC
+	</select>	
+</mapper>
+

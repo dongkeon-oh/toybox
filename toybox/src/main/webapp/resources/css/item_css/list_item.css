@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+html, body {
+	height: 100%;
+}
+
+.nav_btn {
+	margin-right: 8px;
+}
+
+.fixed_select {
+	width: 80px;
+	word-break:break-all;
+}
+
+.fix_state {
+	width: 100px;
+	word-break:break-all;
+}
+
+.fix_quick {
+	width: 140px;
+	word-break:break-all;
+}
+
+label{
+	color:white;
+}
+
+#from_to_area{
+	color:white;
+	border : 0px;
+}

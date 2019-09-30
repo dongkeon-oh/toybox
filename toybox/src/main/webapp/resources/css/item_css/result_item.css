@@ -1,0 +1,17 @@
+html, body {
+	height: 100%;
+}
+
+h2{
+	color : white;
+}
+
+.jumbotron{
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.result_area{
+	padding-top: 24px;
+}
