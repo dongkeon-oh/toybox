@@ -27,8 +27,8 @@ function set_pagination(content_size, content_total, page_no, keyword, keytype) 
 	
 	var pagination_no = 0;
 		
-	if(pagination_point > 10){
-		pagination_no = Math.floor((pagination_point/10)*10);									//왼쪽 화살표 세팅
+	if(pagination_point >= 10){
+		pagination_no = (Math.floor(pagination_point/10)*10);									//왼쪽 화살표 세팅
 		arrow_left = 'page_'+pagination_no;
 	}
 	

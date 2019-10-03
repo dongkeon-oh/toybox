@@ -258,7 +258,7 @@ function list_common_group(page_no, page_cnt, keyword, keytype) {
 					var use_yn = "사용";
 					if (item.cgr_useyn == 'N') {
 						use_yn = "삭제됨";
-						table_row_type = "table-danger";
+						table_row_type = "bg-danger";
 					}
 
 					opt = opt + "<tr class='"
@@ -306,32 +306,6 @@ function list_common_group(page_no, page_cnt, keyword, keytype) {
 	});
 }
 
-// 에러 수정 필요
-//function set_pagination(page_cnt, page_total, page_no, keyword, keytype) {
-//	var page_area_full_size = Math.ceil(page_total / page_cnt);
-//	if (page_area_full_size > 10) {
-//		page_area_full_size = 10;
-//	}
-//
-//	var append = "";
-//	var this_page = "";
-//	$("#pagination_area").html("");
-//	for (var i = 1; page_area_full_size >= i; i++) {
-//		if (i == page_no) {
-//			this_page = " active";
-//		} else {
-//			this_page = "";
-//		}
-//
-//		append = append
-//				+ '<li class="page-item'
-//				+ this_page
-//				+ '"><a class="page-link" href="#" onclick="list_common_group(\''
-//				+ i + '\', \'' + page_cnt + '\', \'' + keyword + '\', \''
-//				+ keytype + '\');">' + i + '</a></li>';
-//	}
-//	$("#pagination_area").html(append);
-//}
 
 function change_page_count(page_cnt) {
 	list_common_group("1", page_cnt, $("#keyword").val(), $("#keytype").val());
