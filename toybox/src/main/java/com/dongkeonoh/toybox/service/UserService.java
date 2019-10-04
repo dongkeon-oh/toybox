@@ -10,14 +10,12 @@ public interface UserService {
 	public int putUser(UserVo userVo);
 	// 유저 수정
 	public int modifyUser(UserVo userVo);
-	// 유저 활성화 (active)
-	public int activeUser(UserVo userVo);
 	// 유저 삭제
 	public int deleteUser(UserVo userVo);
+	// 유저 활성화 (active)
+	public int activeUser(UserVo userVo);
 	// 유저 조회
 	public UserVo getUser(String userId);
 	// 유저 목록 조회
 	public List<UserVo> listUser(HashMap<String, String> map);
-	// 유저 목록 조회
-	public List<UserVo> getComCode(String group);
 }

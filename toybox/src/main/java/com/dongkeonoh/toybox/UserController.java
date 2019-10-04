@@ -25,18 +25,18 @@ public class UserController {
 
 	// 유저 추가
 	@RequestMapping(value = "/join_user", method = RequestMethod.GET)
-	public ModelAndView put_user_get(HttpServletRequest httpServletRequest) {
-		List<UserVo> com_list = userService.getComCode("user_question");
+	public ModelAndView join_user(HttpServletRequest httpServletRequest) {
+//		List<UserVo> com_list = userService.putUser("user_question");
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/modify_user");	
-		modelAndView.addObject("com_list", com_list);	
+//		modelAndView.addObject("com_list", com_list);	
 		return modelAndView;
 	}
 	
 	// 유저 추가
 	@RequestMapping(value = "/put_user", method = RequestMethod.POST)
-	public ModelAndView put_user_post(HttpServletRequest httpServletRequest, UserVo userVo) {
+	public ModelAndView put_user(HttpServletRequest httpServletRequest, UserVo userVo) {
 		
 		int checksum = userService.putUser(userVo);
 		if(checksum > 0) {
@@ -48,20 +48,6 @@ public class UserController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
 		modelAndView.addObject("checksum", checksum);	
-		return modelAndView;
-	}	
-	
-	// 유저 추가
-	@RequestMapping(value = "/get_user", method = RequestMethod.GET)
-	public ModelAndView get_user(HttpServletRequest httpServletRequest, UserVo userVo) {
-		//userVo.setUsr_id("test");
-		UserVo checksum = userService.getUser("test22");
-		List<UserVo> com_list = userService.getComCode("user_question");
-		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("user/modify_user");
-		modelAndView.addObject("userVo", checksum);		
-		modelAndView.addObject("com_list", com_list);	
 		return modelAndView;
 	}	
 	
@@ -82,8 +68,23 @@ public class UserController {
 		return modelAndView;
 	}
 	
+	// 유저 active
+	@RequestMapping(value = "/ajax_active_user", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajax_active_user(HttpServletRequest httpServletRequest, UserVo userVo) {
+		int result = userService.activeUser(userVo);		
+		return result;
+	}
+	
+	// 유저 조회
+	@RequestMapping(value = "/ajax_get_user", method = RequestMethod.POST)
+	@ResponseBody
+	public UserVo ajax_get_user(HttpServletRequest httpServletRequest, String user_id) {
+		UserVo result = userService.getUser(user_id);
+		return result;
+	}	
 
-	// 유저 추가
+	// 유저 리스트
 	@RequestMapping(value = "/list_user", method = RequestMethod.GET)
 	public ModelAndView list_user(HttpServletRequest httpServletRequest) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -91,16 +92,18 @@ public class UserController {
 		return modelAndView;
 	}
 	
-	// 유저 추가 get
-	@RequestMapping(value = "/ajax_list_user", method = RequestMethod.GET)
+	// 유저 리스트 보기
+	@RequestMapping(value = "/ajax_list_user", method = RequestMethod.POST)
 	@ResponseBody
-	public List<UserVo> listUser(HttpServletRequest httpServletRequest, UserVo userVo
+	public List<UserVo> ajax_list_user(HttpServletRequest httpServletRequest
 			, @RequestParam("keyword") 		String keyword
+			, @RequestParam("keytype") 		String keytype
 			, @RequestParam("start_idx") 	String start_idx
 			, @RequestParam("end_idx") 		String end_idx
 	) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("keyword", keyword);
+		map.put("keytype", keytype);
 		map.put("start_idx", start_idx);
 		map.put("end_idx", end_idx);
 		

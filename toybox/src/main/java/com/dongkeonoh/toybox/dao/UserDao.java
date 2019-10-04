@@ -27,16 +27,17 @@ public class UserDao {
 		return result;
 	}
 
-	// 유저 활성화 (active)
-	public int activeUser(UserVo userVo) {
-		int result = sqlSession.update("userSql.activeUser", userVo);
-		return result; 
-	}
-
 	// 유저 삭제
 	public int deleteUser(UserVo userVo) {
 		int result = sqlSession.update("userSql.deleteUser", userVo);
 		return result;
+	}
+
+	// 유저 관리메뉴
+	// 유저 활성화 (active)
+	public int activeUser(UserVo userVo) {
+		int result = sqlSession.update("userSql.activeUser", userVo);
+		return result; 
 	}
 	
 	// 유저 조회
@@ -48,14 +49,6 @@ public class UserDao {
 	// 유저 목록 조회
 	public List<UserVo> listUser(HashMap<String, String> map) {
 		List<UserVo> result = sqlSession.selectList("userSql.listUser", map);
-		return result;
-	}
-	
-
-	
-	// 유저 조회
-	public List<UserVo> getComCode(String group) {
-		List<UserVo> result = sqlSession.selectList("userSql.getComCode", group);
 		return result;
 	}
 }

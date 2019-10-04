@@ -31,17 +31,17 @@ public class UserServiceImpl implements UserService{
 		return checksum;
 	}
 
-	// 유저 활성화 (active)
-	@Override
-	public int activeUser(UserVo userVo) {
-		int checksum = userDao.activeUser(userVo);
-		return checksum;
-	}
-
 	// 유저 삭제
 	@Override
 	public int deleteUser(UserVo userVo) {
 		int checksum = userDao.deleteUser(userVo);
+		return checksum;
+	}
+
+	// 유저 활성화 (active)
+	@Override
+	public int activeUser(UserVo userVo) {
+		int checksum = userDao.activeUser(userVo);
 		return checksum;
 	}
 
@@ -57,12 +57,5 @@ public class UserServiceImpl implements UserService{
 	public List<UserVo> listUser(HashMap<String, String> map) {		
 		List<UserVo> userList = userDao.listUser(map);
 		return userList;
-	}	
-
-	// 유저 목록 조회
-	@Override
-	public List<UserVo> getComCode(String group) {		
-		List<UserVo> userList = userDao.getComCode(group);
-		return userList;
-	}	
+	}		
 }
