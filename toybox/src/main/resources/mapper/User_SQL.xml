@@ -65,16 +65,18 @@
 
 	<!-- 유저 보기 -->
 	<select id="getUser" resultType="com.dongkeonoh.toybox.vo.UserVo" parameterType="String">
-		SELECT USR_ID
-		     , USR_NAME
-       		 , USR_TYPE
-		     , USR_IMAGE
-		     , USR_SMS
-		     , USR_KAKAO
-       		 , USR_QUESTION
-       		 , USR_ANSWER
-		  FROM TB_USER
+		SELECT U.USR_ID
+		     , U.USR_NAME
+       		 , U.USR_TYPE
+		     , U.USR_IMAGE
+		     , U.USR_SMS
+		     , U.USR_KAKAO
+       		 , CC.CCD_CODENAME AS USR_QUESTION
+       		 , U.USR_ANSWER
+		     , U.USR_ACTIVE
+		  FROM TB_USER U, TB_COMMON_CODE CC
 		 WHERE USR_ID = #{usr_id}
+           AND U.USR_QUESTION = CC.CCD_SEQ
 	</select>	
 	
 	<!-- 유저 목록 조회 -->

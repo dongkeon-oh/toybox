@@ -88,7 +88,7 @@ public class UserController {
 	@RequestMapping(value = "/list_user", method = RequestMethod.GET)
 	public ModelAndView list_user(HttpServletRequest httpServletRequest) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("user/list_user");	
+		modelAndView.setViewName("common/list_user");	
 		return modelAndView;
 	}
 	

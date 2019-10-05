@@ -37,7 +37,7 @@
 		    </div>
 		</nav>
 		
-		<div class="modal">
+		<div class="modal" id="user_modal">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -46,7 +46,7 @@
 					    	<span aria-hidden="true">&times;</span>
 					  	</button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body"  style="overflow:auto; height:450px;">
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">아이디</label>
 							<input type="text" class="form-control user_info" id="usr_id" readonly="readonly">
@@ -56,7 +56,7 @@
 							<input type="text" class="form-control user_info" id="usr_name" readonly="readonly">
 						</div>
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">틍급</label>
+							<label class="col-form-label" for="inputDefault">등급</label>
 							<input type="text" class="form-control user_info" id="usr_type" readonly="readonly">
 						</div>
 						<div class="form-group">
@@ -81,11 +81,11 @@
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">비밀번호 질문 답변</label>
-							<input type="text" class="form-control user_info" id="usr_answer">
+							<input type="text" class="form-control user_info" id="usr_answer" readonly="readonly">
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" id="putModifyGrpBtn" class="btn btn-primary" onClick="mod_common_group()">활성화</button>
+						<button type="button" class="btn btn-primary" id='btn_active' onClick="mod_user_active()" value="Y">활성화</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
@@ -102,7 +102,7 @@
       <th scope="col" class="th_btn_area"></th>
     </tr>
   </thead>
-  <tbody id="grp_tbody">
+  <tbody>
   
   </tbody>
   

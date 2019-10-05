@@ -12,10 +12,12 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link  href="${pageContext.request.contextPath}/css/common_css/list_common.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/js/common_js/list_common.js"></script>
+		<script src="${pageContext.request.contextPath}/js/common_js/pagination.js"></script>
+		
 		<title>공통코드 관리</title>
 	</head>
 	<body class="bg-light">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-light">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" href="#">검색</a>
 			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 		    	<span class="navbar-toggler-icon"></span>
@@ -23,7 +25,7 @@
 		  	<div class="navbar-collapse collapse" id="navbarColor02" style="">
 		  		<ul class="navbar-nav mr-auto"></ul>
 			    <form class="form-inline my-2 my-lg-0">
-				    <button type="button" class="btn btn-outline-primary" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" style="margin-right: 8px;" onClick="clear_group()">공통코드 그룹생성</button>
+				    <button type="button" class="btn btn-outline-success" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" style="margin-right: 8px;" onClick="clear_group()">공통코드 그룹생성</button>
 			      	<div class="form-group" style="margin-right: 8px;">
 				    	<select class="custom-select" id="keytype">
 				      		<option value="group">공통코드</option>
@@ -147,9 +149,9 @@
 			</div>
 		</div>
 		
-		<table class="table table-hover">
+		<table class="table table-hover table-borderless">
   <thead>
-    <tr>
+    <tr class="bg-success">
       <th scope="col">#</th>
       <th scope="col">공통코드 그룹</th>
       <th scope="col">공통코드 그룹명</th>
@@ -164,19 +166,21 @@
   
 </table> 
 
-
-  <div class="form-group">
-    <select class="custom-select" id="cnt" onchange="change_page_count(this.value)">
-      <option value="10">10건씩</option>
-      <option value="15">15건씩</option>
-    </select>
-  </div>
-  
-  <div>
+<div class="row">
+  <div class="col-md-4 offset-md-4">
   <ul class="pagination" id="pagination_area">
 
   </ul>
-</div>
+	</div>
+  <div class="col-md-3 offset-md-1">
+    <select class="custom-select" id="cnt" onchange="change_page_count(this.value)">
+      <option value="10">10건씩</option>
+      <option value="15">15건씩</option>
+      <option value="2">2건씩 (테스트)</option>
+    </select>
+  </div>
+</div>  
+
 
 
 
