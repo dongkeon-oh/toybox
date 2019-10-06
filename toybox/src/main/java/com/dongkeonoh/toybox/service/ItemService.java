@@ -24,4 +24,8 @@ public interface ItemService {
 	
 	// 요청 내역 확인
 	public List<ItemVo> responseItem(String user_id);
+	
+
+	// 아이템 대여 신청
+	public int putItem(ItemVo item);
 }

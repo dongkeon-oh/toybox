@@ -229,6 +229,7 @@ public class ItemController implements ToyboxGlobalNameSpace {
 	
 	// 요청 내역 확인
 	@RequestMapping(value = "/response_item", method = RequestMethod.GET)
+	@ResponseBody
 	public ModelAndView response_item(ModelAndView modelAndView, HttpServletRequest httpServletRequest) {	
 		
 		// 세션 구하기
@@ -248,4 +249,29 @@ public class ItemController implements ToyboxGlobalNameSpace {
 		
 		return modelAndView;
 	}
+	
+	// 아이템 대여 신청
+	@RequestMapping(value = "/put_Item", method = RequestMethod.POST)
+	public int put_Item(ModelAndView modelAndView, ItemVo item) {		
+		System.out.println("[LOG] ==REQUEST=============================");
+		System.out.println("[LOG] rent_date // "+ item.getItm_name()				 );    
+		System.out.println("[LOG] rent_date // "+ item.getItm_type()				 );    
+		System.out.println("[LOG] rent_date // "+ item.getItm_owner()				 );   
+		System.out.println("[LOG] rent_date // "+ item.getItm_mainitem()			 );
+		System.out.println("[LOG] rent_date // "+ item.getItm_note()				 );	
+		System.out.println("[LOG] rent_date // "+ item.getItm_image()				 );
+		System.out.println("[LOG] ======================================");
+		
+		int result = -1;
+		try {
+			result = itemService.putItem(item);
+		}catch (Exception e) {
+			// 에러페이지로 이동
+			modelAndView.addObject("error_msg",  "대여신청 중");
+			modelAndView.addObject("error_code", "1");
+			modelAndView.setViewName("error");
+		}
+		
+		return result;
+	}	
 }

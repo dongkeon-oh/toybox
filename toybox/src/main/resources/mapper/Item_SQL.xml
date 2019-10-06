@@ -211,5 +211,21 @@
 		       ) CDT
 		 WHERE CDT.CDT_ITEM = ITM.ITM_ID
 	</select>
+	
+	<!-- 아이템 추가 -->
+	<insert id="putItem" parameterType="HashMap">
+     	INSERT INTO TB_ITEM 
+        VALUES 
+        	 (
+       		   SEQ_ITEM_ID.NEXTVAL,
+       		   #{item.itm_name},
+       		   #{item.itm_type},
+       		   #{item.itm_owner},
+       		   #{item.itm_mainitem},
+       		   #{item.itm_note},
+       		   'item_default.jpg',
+               'Y'
+     		 )
+	</insert>
 </mapper>
 

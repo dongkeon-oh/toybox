@@ -61,4 +61,9 @@ public class ItemServiceImpl implements ItemService{
 		List<ItemVo> result = itemDao.responseItem(user_id);
 		return result;		
 	}
+	
+	public int putItem(ItemVo item) {
+		int result = itemDao.putItem(item);
+		return result;
+	}
 }

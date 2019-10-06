@@ -51,4 +51,9 @@ public class ItemDao {
 		List<ItemVo> result = sqlSession.selectList("itemSql.responseItem", user_id);
 		return result;
 	}
+	
+	public int putItem(ItemVo item) {
+		int result = sqlSession.insert("itemSql.putItem", item);
+		return result;
+	}
 }
