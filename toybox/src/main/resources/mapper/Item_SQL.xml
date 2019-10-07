@@ -227,5 +227,59 @@
                'Y'
      		 )
 	</insert>
+	
+	<!-- 아이템 관리 조회 -->
+	<select id="adminItem" parameterType="HashMap" resultType="com.dongkeonoh.toybox.vo.ItemVo">
+		WITH ITEM AS (
+			SELECT ITM_ID
+		         , ITM_NAME
+		         , ITM_USEYN
+		         , ITM_OWNER
+                 , ROWNUM AS RN
+		      FROM (              
+					SELECT ITM_ID
+				         , ITM_NAME
+				         , ITM_USEYN
+				         , ITM_OWNER
+		              FROM TB_ITEM 
+		             ORDER BY ITM_ID
+                   )
+             WHERE ITM_NAME LIKE '%'||#{keyword}||'%'
+		),
+		USR AS (
+			SELECT USR_ID
+		         , USR_NAME
+		      FROM TB_USER
+		)
+		SELECT * 
+		  FROM
+		  	 (
+			   SELECT ITEM.ITM_ID
+				   	, ITEM.ITM_NAME
+			        , ITEM.ITM_USEYN
+			        , USR.USR_NAME AS ITM_OWNER
+				    , COUNT(ITM_ID) OVER() AS CNT
+			        , ITEM.RN
+				 FROM ITEM, USR
+            	WHERE ITEM.ITM_OWNER = USR.USR_ID
+			)
+			WHERE RN BETWEEN #{start_idx} AND #{end_idx}
+	</select>
+
+	<!-- 아이템 관리 조회 -->
+	<select id="getItem" parameterType="String" resultType="com.dongkeonoh.toybox.vo.ItemVo">
+		SELECT ITM_NAME     
+			 , C.CCD_CODENAME AS ITM_TYPE   
+			 , U.USR_NAME AS ITM_OWNER   
+			 , I.ITM_MAINITEM 
+			 , I.ITM_NOTE     
+			 , I.ITM_USEYN    
+		  FROM TB_ITEM I
+		   	 , TB_COMMON_CODE C
+		   	 , TB_USER U
+		 WHERE ITM_ID = #{itm_id}
+		   AND I.ITM_TYPE = C.CCD_SEQ
+		   AND I.ITM_OWNER = U.USR_ID
+	</select>
 </mapper>
 

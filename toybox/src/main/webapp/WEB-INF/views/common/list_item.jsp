@@ -10,81 +10,67 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<script src="${pageContext.request.contextPath}/js/common_js/list_user.js"></script>
+		<script src="${pageContext.request.contextPath}/js/common_js/list_item.js"></script>
 		<script src="${pageContext.request.contextPath}/js/common_js/pagination.js"></script>
 		
-		<title>유저 관리</title>
+		<title>아이템 관리</title>
 	</head>
 	<body class="bg-light">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">유저 관리</a>
+			<a class="navbar-brand" href="#">아이템 관리</a>
 			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 		    	<span class="navbar-toggler-icon"></span>
 		  	</button>
 		  	<div class="navbar-collapse collapse" id="navbarColor02" style="">
 		  		<ul class="navbar-nav mr-auto"></ul>
-			    <form class="form-inline my-2 my-lg-0">
-			      	<div class="form-group" style="margin-right: 8px;">
-				    	<select class="custom-select" id="keytype">
-				      		<option value="id">아이디</option>
-				      		<option value="name">이름</option>
-				    	</select>
-				  	</div>
-				  	<input class="form-control mr-sm-2" id="keyword" type="text" placeholder="검색어를 입력하세요" onkeyup="search_enter()">
-			      	<button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="search_keyword('onkey')">검색</button>
-			    </form>
+			    <div class="form-inline my-2 my-lg-0">
+				  	<input class="form-control mr-sm-2" id="keyword" type="text" placeholder="검색어를 입력하세요" onkeyup="search_enter('onkey')">
+			      	<button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="search_enter('click')">검색</button>
+			    </div>
 		    </div>
 		</nav>
 		
-		<div class="modal" id="user_modal">
+		<div class="modal" id="item_modal">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-					  	<h5 class="modal-title">유저 정보</h5>
+					  	<h5 class="modal-title">아이템 정보</h5>
 					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    	<span aria-hidden="true">&times;</span>
 					  	</button>
 					</div>
 					<div class="modal-body"  style="overflow:auto; height:450px;">
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">아이디</label>
-							<input type="text" class="form-control user_info" id="usr_id" readonly="readonly">
+							<label class="col-form-label" for="inputDefault">아이템</label>
+							<input type="text" class="form-control user_info" id="itm_name">
 						</div>
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">이름</label>
-							<input type="text" class="form-control user_info" id="usr_name" readonly="readonly">
+							<label class="col-form-label" for="inputDefault">아이템 타입</label>
+							<input type="text" class="form-control user_info" id="itm_type">
 						</div>
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">등급</label>
-							<input type="text" class="form-control user_info" id="usr_type" readonly="readonly">
+							<label class="col-form-label" for="inputDefault">소유자</label>
+							<input type="text" class="form-control user_info" id="itm_owner">
 						</div>
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">프로필 사진</label>
-							<input type="text" class="form-control user_info" id="usr_image" readonly="readonly" value="준비중입니다.">
+							<label class="col-form-label" for="inputDefault">이미지</label>
+							<input type="text" class="form-control user_info" id="itm_image" readonly="readonly" value="준비중입니다.">
 						</div>
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">SMS</label>
-							<input type="text" class="form-control user_info" id="usr_sms" readonly="readonly">
+							<label class="col-form-label" for="inputDefault">메인 아이템</label>
+							<input type="text" class="form-control user_info" id="itm_mainitem">
 						</div>
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">KakaoTalk</label>
-							<input type="text" class="form-control user_info" id="usr_kakao" readonly="readonly">
+							<label class="col-form-label" for="inputDefault">아아템 상태</label>
+							<input type="text" class="form-control user_info" id="itm_useyn">
 						</div>
-						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">유저 상태</label>
-							<input type="text" class="form-control user_info" id="usr_active" readonly="readonly">
-						</div>
-						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">비밀번호 질문</label>
-							<input type="text" class="form-control user_info" id="usr_question" readonly="readonly">
-						</div>
-						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">비밀번호 질문 답변</label>
-							<input type="text" class="form-control user_info" id="usr_answer" readonly="readonly">
-						</div>
+					    <div class="form-group">
+					      	<label for="itm_note">설명</label>
+					      	<textarea class="form-control" id="itm_note" rows="5" style="resize: none;"></textarea>
+					    </div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id='btn_active' onClick="mod_user_active()" value="Y">활성화</button>
+						<button type="button" class="btn btn-primary" id='btn_modify'>추가</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
@@ -95,9 +81,9 @@
   <thead>
     <tr class="bg-success">
       <th scope="col">#</th>
-      <th scope="col">아이디</th>
-      <th scope="col">이름</th>
-      <th scope="col">유저 상태</th>
+      <th scope="col">아이템</th>
+      <th scope="col">상태</th>
+      <th scope="col">소유자</th>
       <th scope="col" class="th_btn_area"></th>
     </tr>
   </thead>

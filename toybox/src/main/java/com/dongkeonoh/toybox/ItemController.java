@@ -274,4 +274,60 @@ public class ItemController implements ToyboxGlobalNameSpace {
 		
 		return result;
 	}	
+	
+	// 아이템 조회
+	@RequestMapping(value = "/admin_list_item", method = RequestMethod.GET)
+	public ModelAndView admin_list_item(ModelAndView modelAndView) {
+		modelAndView.setViewName("common/list_item");		
+		
+		return modelAndView;
+	}
+	
+	// 아이템 조회
+	// 아이템 리스트 출력
+	@RequestMapping(value = "/ajax_admin_item", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ItemVo> ajaxAdminItem(HttpServletRequest httpServletRequest
+			, @RequestParam("keyword") 		String keyword
+			, @RequestParam("start_idx") 	String start_idx
+			, @RequestParam("end_idx") 		String end_idx
+	) {		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("keyword", 		keyword);
+		map.put("start_idx", 	start_idx);
+		map.put("end_idx", 		end_idx);
+
+		System.out.println("[LOG] ==REQUEST=============================");
+		System.out.println("[LOG] keyword 	// " 	+ keyword);
+		System.out.println("[LOG] start_idx // " 	+ start_idx);
+		System.out.println("[LOG] end_idx // " 		+ end_idx);
+		System.out.println("[LOG] ======================================");
+		
+		List<ItemVo> result = itemService.adminItem(map);		
+		
+		System.out.println("[LOG] ==REEPONS=============================");
+		System.out.println("[LOG] result.size() 	// " + result.size());
+		System.out.println("[LOG] ======================================");
+		
+		return result;
+	}
+	
+	// 아이템 상세 조회
+	@RequestMapping(value = "/ajax_detail_item", method = RequestMethod.POST)
+	@ResponseBody
+	public ItemVo ajaxdetailItem(
+			@RequestParam("itm_id") 		String itm_id
+	) {		
+		System.out.println("[LOG] ==REQUEST=============================");
+		System.out.println("[LOG] itm_id 	// " 	+ itm_id);
+		System.out.println("[LOG] ======================================");
+		
+		ItemVo result = itemService.getItem(itm_id);		
+		
+		System.out.println("[LOG] ==REEPONS=============================");
+		System.out.println("[LOG] result.getCdt_id() 	// " + result.getCdt_id());
+		System.out.println("[LOG] ======================================");
+		
+		return result;
+	}
 }

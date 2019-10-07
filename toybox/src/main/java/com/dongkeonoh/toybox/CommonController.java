@@ -23,8 +23,8 @@ public class CommonController {
 	private CommonService commonService;
 	
 	// 공통코드 추가 get
-	@RequestMapping(value = "/list_common", method = RequestMethod.GET)
-	public ModelAndView getListCommon(HttpServletRequest httpServletRequest) {		
+	@RequestMapping(value = "/admin_list_common", method = RequestMethod.GET)
+	public ModelAndView admin_list_common(HttpServletRequest httpServletRequest) {		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("common/list_common");
 		

@@ -62,8 +62,24 @@ public class ItemServiceImpl implements ItemService{
 		return result;		
 	}
 	
+	@Override
 	public int putItem(ItemVo item) {
 		int result = itemDao.putItem(item);
+		return result;
+	}
+	
+	// 아이템 리스트
+	@Override
+	public List<ItemVo> adminItem(HashMap<String, String> search){
+		List<ItemVo> result = itemDao.adminItem(search);
+		return result;
+	}
+	
+
+	// 아이템 상세 조회
+	@Override
+	public ItemVo getItem(String itm_id){
+		ItemVo result = itemDao.getItem(itm_id);
 		return result;
 	}
 }

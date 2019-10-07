@@ -7,7 +7,9 @@ public class ItemVo {
 	private String itm_owner;
 	private String itm_mainitem;	
 	private String itm_note;	
-	private String itm_image;	
+	private String itm_image;
+	private String itm_useyn;	
+    private String cnt;
 
 	private String cdt_id;         
 	private String cdt_condition;  
@@ -61,6 +63,18 @@ public class ItemVo {
 	}
 	public void setItm_image(String itm_image) {
 		this.itm_image = itm_image;
+	}
+	public String getItm_useyn() {
+		return itm_useyn;
+	}
+	public void setItm_useyn(String itm_useyn) {
+		this.itm_useyn = itm_useyn;
+	}
+	public String getCnt() {
+		return cnt;
+	}
+	public void setCnt(String cnt) {
+		this.cnt = cnt;
 	}
 	
 	public String getCdt_id() {

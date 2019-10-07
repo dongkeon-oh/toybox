@@ -28,4 +28,8 @@ public interface ItemService {
 
 	// 아이템 대여 신청
 	public int putItem(ItemVo item);
+	// 아이템 리스트
+	public List<ItemVo> adminItem(HashMap<String, String> search);
+	// 아이템 상세 조회
+	public ItemVo getItem(String itm_id);
 }
