@@ -66,4 +66,9 @@ public class ItemDao {
 		ItemVo result = sqlSession.selectOne("itemSql.getItem", itm_id);
 		return result;
 	}
+	
+	public List<ItemVo> mainItemList(HashMap<String, String> search) {
+		List<ItemVo> result = sqlSession.selectList("itemSql.mainItemList", search);
+		return result;
+	}
 }

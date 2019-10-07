@@ -82,4 +82,11 @@ public class ItemServiceImpl implements ItemService{
 		ItemVo result = itemDao.getItem(itm_id);
 		return result;
 	}
+	
+	// 아이템 리스트
+	@Override
+	public List<ItemVo> mainItemList(HashMap<String, String> search){
+		List<ItemVo> result = itemDao.mainItemList(search);
+		return result;
+	}
 }

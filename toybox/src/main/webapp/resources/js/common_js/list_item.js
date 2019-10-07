@@ -14,6 +14,11 @@ $(function() {
 
 		list_item(pagination_index, pagination_cnt, keyword_data);
 	});
+	
+	$(document).on("click",".item_sub_option",function(){
+		var id_type = $(this).attr("id");
+		sub_option(id_type, "");
+	});
 });
 
 function list_item(page_no, page_cnt, keyword) {
@@ -120,46 +125,48 @@ function item_info(itm_id) {
 	});
 }
 
-function mod_user_active() {
-	var id = $("#usr_id").val();
-	var active = $("#btn_active").val();
+//item_sub_option
+function sub_option(type, keyword) {
+	var sub_url = "ajax_item_type";
+	if(type == 'itm_owner'){
+		sub_url = "ajax_item_owner"
+	}else if(type == 'itm_mainitem'){
+		sub_url = "ajax_mainitem_list"
+	}else if(type == 'itm_useyn'){
+		sub_url = "ajax_item_useyn"
+	}
 	
 	$.ajax({
 		method : "POST",
-		url : "ajax_active_user",
+		url : sub_url,
 		data : {
-			"usr_id" : id,
-			"usr_active" :active
+			"keyword" : keyword
 		},
 		async : false,
 		success : function(response) {
+			$("#sub_option").html("");
+			
 			var result = response;
-			if(result > 0){
-				if(active == "N"){
-					$("#usr_active").val("비활성화");
-					$("#"+id).addClass("bg-danger");
-					$("#"+id+"_active").html("비활성화");
-					$("#btn_active").html("활성화");
-					$("#btn_active").val("Y");
-					$("#btn_active").addClass("btn-primary");
-					$("#btn_active").removeClass("btn-danger");
-				}else if(active == "Y"){
-					$("#usr_active").val("활성화");
-					$("#"+id).removeClass("bg-danger");
-					$("#"+id+"_active").html("활성화");
-					$("#btn_active").html("비활성화");
-					$("#btn_active").val("N");
-					$("#btn_active").addClass("btn-danger");
-					$("#btn_active").removeClass("btn-primary");
-				}				
-				mod_user_active_msg("success",active);
-			}else{
-				mod_user_active_msg("fail",active);
-			}
-			var user_active = "활성화";
-			if(result.usr_type == "N"){
-				user_active = "비활성화";
-			}
+			var append = "<option value='_NODATA_'>선택하세요</option>";
+			$.each(
+				result,
+				function(index, item) {
+					var id;
+					var name;
+					if(item.usr_id != null){
+						id = item.usr_id;
+						name = item.usr_name;
+					}else if(item.ccd_seq != null){
+						id = item.ccd_seq;
+						name = item.ccd_codename;
+					}else if(item.itm_id != null){
+						id = item.itm_id;
+						name = item.itm_name;
+					}
+					append = append + "<option value='" + id + "'>" + name + "</option>"
+				}
+			)
+			$("#sub_option").html(append);
 		},
 		error : function(request, status, error) {
 			mod_user_active_msg("fail",active);

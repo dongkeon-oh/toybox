@@ -281,5 +281,15 @@
 		   AND I.ITM_TYPE = C.CCD_SEQ
 		   AND I.ITM_OWNER = U.USR_ID
 	</select>
+	
+	<!-- 메인아이템 리스트 출력 -->
+	<select id="mainItemList" parameterType="HashMap" resultType="com.dongkeonoh.toybox.vo.ItemVo">
+		SELECT ITM_ID
+		     , ITM_NAME 
+		  FROM TB_ITEM
+		<if test='keyword != null and keyword != ""'>
+		 WHERE ITM_NAME LIKE '%'||#{keyword}||'%'
+		</if>
+	</select>
 </mapper>
 

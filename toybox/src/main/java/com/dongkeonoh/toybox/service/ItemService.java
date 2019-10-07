@@ -32,4 +32,7 @@ public interface ItemService {
 	public List<ItemVo> adminItem(HashMap<String, String> search);
 	// 아이템 상세 조회
 	public ItemVo getItem(String itm_id);
+
+	// 메인아이템 리스트 출력
+	public List<ItemVo> mainItemList(HashMap<String, String> search);
 }

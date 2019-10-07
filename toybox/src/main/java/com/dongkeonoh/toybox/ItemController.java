@@ -330,4 +330,26 @@ public class ItemController implements ToyboxGlobalNameSpace {
 		
 		return result;
 	}
+	
+	// 아이템 상세 조회
+	@RequestMapping(value = "/ajax_mainitem_list", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ItemVo> ajaxMainitemList(
+			@RequestParam("keyword") 		String keyword
+	) {		
+		HashMap<String, String> search = new HashMap<String, String>();
+		search.put("keyword", 		keyword);
+	
+		System.out.println("[LOG] ==REQUEST=============================");
+		System.out.println("[LOG] keyword 	// " 	+ keyword);
+		System.out.println("[LOG] ======================================");
+		
+		List<ItemVo> result = itemService.mainItemList(search);		
+		
+		System.out.println("[LOG] ==REEPONS=============================");
+		System.out.println("[LOG] result.size() 	// " + result.size());
+		System.out.println("[LOG] ======================================");
+		
+		return result;
+	}
 }

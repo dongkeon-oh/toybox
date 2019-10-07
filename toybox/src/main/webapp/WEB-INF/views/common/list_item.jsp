@@ -42,27 +42,27 @@
 					<div class="modal-body"  style="overflow:auto; height:450px;">
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">아이템</label>
-							<input type="text" class="form-control user_info" id="itm_name">
+							<input type="text" class="form-control" id="itm_name">
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">아이템 타입</label>
-							<input type="text" class="form-control user_info" id="itm_type">
+							<input type="text" class="form-control item_sub_option" id="itm_type">
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">소유자</label>
-							<input type="text" class="form-control user_info" id="itm_owner">
+							<input type="text" class="form-control item_sub_option" id="itm_owner">
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">이미지</label>
-							<input type="text" class="form-control user_info" id="itm_image" readonly="readonly" value="준비중입니다.">
+							<input type="text" class="form-control" id="itm_image" readonly="readonly" value="준비중입니다.">
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">메인 아이템</label>
-							<input type="text" class="form-control user_info" id="itm_mainitem">
+							<input type="text" class="form-control item_sub_option" id="itm_mainitem">
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">아아템 상태</label>
-							<input type="text" class="form-control user_info" id="itm_useyn">
+							<input type="text" class="form-control item_sub_option" id="itm_useyn">
 						</div>
 					    <div class="form-group">
 					      	<label for="itm_note">설명</label>
@@ -71,6 +71,35 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" id='btn_modify'>추가</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal" id="sub_modal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+					  	<h5 class="modal-title">검색</h5>
+					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    	<span aria-hidden="true">&times;</span>
+					  	</button>
+					</div>
+					<div class="modal-body"  style="overflow:auto; height:450px;">
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">검색</label>
+							<input type="text" class="form-control" id="sub_keyword">
+						</div>
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">아이템 타입</label>
+							<select class="custom-select" id="sub_option">
+					      		<option value="_NODATA_">선택하세요</option>
+					    	</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id='btn_apply'>선택</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>

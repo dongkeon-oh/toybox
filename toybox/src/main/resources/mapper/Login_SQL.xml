@@ -15,6 +15,7 @@
 		  FROM TB_USER
 		 WHERE USR_ID = #{usr_id}
 		   AND USR_PASSWORD = #{usr_password}
+		   AND USR_ACTIVE = 'Y'
 	</select>	
 </mapper>
 
