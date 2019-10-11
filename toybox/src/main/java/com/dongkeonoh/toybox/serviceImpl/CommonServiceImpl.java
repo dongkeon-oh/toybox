@@ -16,7 +16,19 @@ public class CommonServiceImpl implements CommonService{
 	@Resource(name="CommonDao")
 	private CommonDao commonDao;
 
-	@Override
+	@Override	// 공통코드 그룹 리스트 출력
+	public List<CommonVo> listCommonGroup(HashMap<String, String> map) {
+		List<CommonVo> result = commonDao.listCommonGroup(map);		
+		return result;
+	}
+
+	@Override	// 공통코드 그룹 조회
+	public CommonVo getCommonGroup(String cgr_group) {
+		CommonVo result = commonDao.getCommonGroup(cgr_group);
+		return result;
+	}
+
+	@Override	// 공통코드 그룹 추가
 	public int putCommonGroup(CommonVo commonVo) {
 		// checksum -1 : 실패
 		int checksum = 1;
@@ -24,32 +36,24 @@ public class CommonServiceImpl implements CommonService{
 		return checksum;
 	}
 
-	@Override
+	@Override	// 공통코드 그룹 수정
 	public int modifyCommonGroup(CommonVo commonVo) {
-		// checksum -1 : 실패
-		int checksum = 1;
+		int checksum = 1;	// checksum -1 : 실패
 		checksum = commonDao.modifyCommonGroup(commonVo);
 		return checksum;
 	}
 
-	@Override
-	public int deleteCommonGroup(CommonVo commonVo) {
-		// checksum -1 : 실패
-		int checksum = 1;
-		checksum = commonDao.deleteCommonGroup(commonVo);
-		return checksum;
-	}
-
-	@Override
+	@Override	// 공통코드 그룹명 중복확인
 	public int dupCommonGroup(CommonVo commonVo) {
 		int result = commonDao.dupeteCommonGroup(commonVo);
 		return result;
 	}
 
-	@Override
-	public List<CommonVo> listCommonGroup(HashMap<String, String> map) {
-		List<CommonVo> result = commonDao.listCommonGroup(map);		
-		return result;
+	@Override	// 공통코드 그룹 삭제
+	public int deleteCommonGroup(CommonVo commonVo) {
+		int checksum = 1;	// checksum -1 : 실패
+		checksum = commonDao.deleteCommonGroup(commonVo);
+		return checksum;
 	}
 	
 

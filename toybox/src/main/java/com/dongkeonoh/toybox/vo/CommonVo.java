@@ -7,8 +7,7 @@ public class CommonVo {
     private String cgr_note;
     private String cgr_useyn;
     private String cnt;
-	// 공통코드
-	private String ccd_seq;      
+	// 공통코드  
 	private String ccd_code;     
 	private String ccd_group;   
 	private String ccd_codename; 
@@ -16,8 +15,7 @@ public class CommonVo {
 	private String ccd_detail2;  
 	private String ccd_detail3;  
 	private String ccd_note;     
-	private String ccd_order;    
-	private String ccd_useyn;
+	private String ccd_order;  
 	
 	public String getCgr_group() {
 		return cgr_group;
@@ -48,12 +46,6 @@ public class CommonVo {
 	}
 	public void setCnt(String cnt) {
 		this.cnt = cnt;
-	}
-	public String getCcd_seq() {
-		return ccd_seq;
-	}
-	public void setCcd_seq(String ccd_seq) {
-		this.ccd_seq = ccd_seq;
 	}
 	public String getCcd_code() {
 		return ccd_code;
@@ -102,11 +94,5 @@ public class CommonVo {
 	}
 	public void setCcd_order(String ccd_order) {
 		this.ccd_order = ccd_order;
-	}
-	public String getCcd_useyn() {
-		return ccd_useyn;
-	}
-	public void setCcd_useyn(String ccd_useyn) {
-		this.ccd_useyn = ccd_useyn;
 	}
 }
