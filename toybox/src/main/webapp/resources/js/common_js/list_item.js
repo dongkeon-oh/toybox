@@ -1,7 +1,6 @@
 var pagination_index = 1;
-
-var keyword_data = "";
 var pagination_cnt = 10;
+var keyword_data = "";
 
 $(function() {
 	list_item(1, 10, "");
@@ -15,11 +14,66 @@ $(function() {
 		list_item(pagination_index, pagination_cnt, keyword_data);
 	});
 	
-	$(document).on("click",".item_sub_option",function(){
-		var id_type = $(this).attr("id");
-		sub_option(id_type, "");
+	$("#put_item").on("click",function(){
+		$("#item_modal_title").html("아이템 추가");
 	});
 });
+
+function put_item() {
+	var item_name = $("#itm_name").val();
+	var item_type = $("#itm_type").val();
+	var item_owner = $("#itm_owner").val();
+	var item_mainitem = $("#itm_mainitem").val();
+	var item_note = $("#itm_note").val();
+
+	$.ajax({
+		method : "POST",
+		url : "ajax_put_item",
+		data : {
+			"itm_name" : item_name,
+			"itm_type" : item_type,
+			"itm_owner" : item_owner,
+			"itm_mainitem" : item_mainitem,
+			"itm_note" : item_note
+		},
+		async : false,
+		success : function(response) {
+			if(response > 0){
+				alert("["+item_name+"] 아이템이 추가되었습니다.");
+			}else{
+				alert("["+item_name+"] 아이템 추가에 실패했습니다.");
+			}
+		},
+		error : function(request, status, error) {
+			console.log("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:" + error);
+		}
+	});
+}
+
+function get_common_code_search(type) {
+	var ccd_group = type;
+	var ccd_codename = $("#sub_keyword").val();
+
+	$.ajax({
+		method : "POST",
+		url : "ajax_commoncode_search",
+		data : {
+			"ccd_group" : ccd_group,
+			"ccd_codename" : ccd_codename
+		},
+		async : false,
+		success : function(response) {
+			var append_type = "";	//임시
+			$.each(response, function(index, item) {
+				append_type = append_type + "<option value='" + item.ccd_code + "'>" + item.ccd_codename + "</option>";
+			});	
+			$("#sub_option").html(append_type);
+		},
+		error : function(request, status, error) {
+			console.log("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:" + error);
+		}
+	});
+}
 
 function list_item(page_no, page_cnt, keyword) {
 
