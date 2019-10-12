@@ -58,7 +58,12 @@
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">메인 아이템</label>
-							<input type="text" class="form-control item_sub_option" id="itm_mainitem">
+							<div class="input-group">
+								<input type="text" class="form-control" id="itm_mainitem">
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary item_sub_option" id="btn_itm_mainitem" type="button" data-toggle='modal' data-target='#sub_modal'>수정</button>
+								</div>
+							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">아아템 상태</label>

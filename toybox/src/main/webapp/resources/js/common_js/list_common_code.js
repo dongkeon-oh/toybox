@@ -1,5 +1,6 @@
 var target_group;
 var target_code;
+var current_order;
 
 $(function() {
 	// 공통코드 버튼
@@ -7,11 +8,31 @@ $(function() {
 		var g_id = $(this).attr("id");
 		list_common_code(g_id);
 	});
+	
+	// 공통코드 추가 모달
+	$(document).on("click", ".code_new", function(){
+		add_code("_NEW_");
+	});
+
+	// 공통코드 수정 모달
+	$(document).on("click", ".code_modify", function(){
+		var g_id = $(this).attr("id");
+		add_code(g_id);
+	});
+
+	// 공통코드 추가 or 수정
+	$(document).on("click", "#code_modify_btn", function(){
+		modify_code();
+	});	
+
+	// 공통코드 삭제
+	$(document).on("click", ".code_delete", function(){
+		var g_id = $(this).attr("id");
+	});	
+	
 });
 
-
-var target_seq;
-
+// 공통 코드 그룹내 공통 코드 조회
 function list_common_code(group) {
 	target_group = group;
 	$("#code_title").text("[" + target_group + "]그룹 공통코드");
@@ -62,36 +83,57 @@ function list_common_code(group) {
 	});
 }
 
-function clear_code() {
+// 공통 코드 추가 전 모달 및 파라미터 세팅
+function add_code(code) {
 	$(".code_mod").val("");
-	$("#ccd_code").attr("readonly", false); // 공통코드 변경가능
-}
-
-function add_code(group, seq) {
-	target_code = group;
-	target_seq = seq;
-
-	clear_code();
-
-	if (seq != "_NEW_") {
-		view_common_code(seq);
-		$("#ccd_code").attr("readonly", true); // 공통코드 변경가능
+	target_code = code;
+	
+	if (target_code != "_NEW_") {
+		get_common_code(target_code);
 		$("#code_detail_title").text("공통코드 수정");
-		$("#modify_code").text("수정");
+		$("#code_modify_btn").text("수정");
 	}else{
+		current_order = "_NEW_";
 		$("#code_detail_title").text("공통코드 추가");
-		$("#modify_code").text("추가");
+		$("#code_modify_btn").text("추가");
 	}
 }
 
+// 모달 호출시 공통코드 세팅
+function get_common_code(code) {
+	$.ajax({
+		method : "POST",
+		url : "ajax_get_common_code",
+		data : {
+			"ccd_code" : code
+		},
+		async : false,
+		success : function(response) {
+			var result = response;
+			$("#ccd_code").val(result.ccd_code);
+			$("#ccd_codename").val(result.ccd_codename);
+			$("#ccd_order").val(result.ccd_order);
+			$("#ccd_detail1").val(result.ccd_detail1);
+			$("#ccd_detail2").val(result.ccd_detail2);
+			$("#ccd_detail3").val(result.ccd_detail3);
+			$("#ccd_note").val(result.ccd_note);
+			
+			current_order = result.ccd_order;
+		},
+		error : function(request, status, error) {
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	});
+}
+
+// 공통코드 수정 or 추가
 function modify_code() {
 	var msg = "수정";
 	var url = "ajax_modify_common_code";
-	if (target_seq == "_NEW_") {
+	if (target_code == "_NEW_") {
 		msg = "추가";
 		url = "ajax_put_common_code";
 	}
-	$("#modify_code").text(msg);
 	
 	var code = $("#ccd_code").val();
 	var name = $("#ccd_codename").val();
@@ -102,13 +144,16 @@ function modify_code() {
 	var note = $("#ccd_note").val();
 	var valid = true;
 
-	valid = valid_common_code(code, name, order, detail1, detail2, detail3, note);
-	if (!valid){
+	if (!confirm(target_group + "그룹에 공통코드  " + name + "코드를 " + msg + "하시겠습니까?")) {
+		return;
+	}
+
+	//공통코드 그룹 적합성 체크
+	if (!valid_common_code(name, order, detail1, detail2, detail3, note)){
 		return;
 	}
 		
-	valid = duplication_common_code(target_group, code, order, target_seq);
-	if (!valid){
+	if (!duplication_common_order_and_name(target_group, order, name)){
 		return;
 	}
 
@@ -116,7 +161,6 @@ function modify_code() {
 		method : "POST",
 		url : url,
 		data : {
-			"ccd_seq" : target_seq,
 			"ccd_code" : code,
 			"ccd_group" : target_group,
 			"ccd_codename" : name,
@@ -129,38 +173,23 @@ function modify_code() {
 		async : false,
 		success : function(response) {
 			if (response == '1') {
-				alert(target_group + "그룹에 " + code + "코드를 " + msg
-						+ "하였습니다.");
+				alert(target_group + "그룹에 " + name + "코드를 " + msg + "하였습니다.");
 			} else {
-				alert(target_group + "그룹에 " + code + "코드 " + msg
-						+ "에 실패하였습니다.");
+				alert(target_group + "그룹에 " + name + "코드 " + msg + "에 실패하였습니다.");
 			}
 			$("#detailModModal").modal("hide");
 			list_common_code(target_group);
 		},
 		error : function(request, status, error) {
-			console.log("code:" + request.status + "\n" + "message:"
-					+ request.responseText + "\n" + "error:" + error);
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 		}
 	});
 }
 
 // 적합성 체크
-function valid_common_code(code, name, order, detail1, detail2, detail3, note) {
+function valid_common_code(name, order, detail1, detail2, detail3, note) {
 	var validation = true;
-	var regexr_code = /[a-zA-Z0-9_\/]{1,100}$/;
 	var regexr_order = /[0-9]$/;
-
-	if (code.length == 0) {
-		alert('공통코드를 입력하시기 바랍니다.');
-		validation = false;
-		return validation;
-	}
-	if (!regexr_code.test(code)) {
-		alert('공통코드는 1자리 이상 100자리 이하의 영문과 숫자, 특수문자 "_" 만 사용이 가능합니다.');
-		validation = false;
-		return validation;
-	}
 
 	var byte_codename = get_byte_calc(name);
 
@@ -201,92 +230,60 @@ function valid_common_code(code, name, order, detail1, detail2, detail3, note) {
 	return validation;
 }
 
-function duplication_common_code(group, code, order, type) {
-	var dupCasvalidatione;
+// 공통 코드 중복 체크 
+function duplication_common_order_and_name(group, order, name) {
+	var validation = true;
 
 	$.ajax({
 		method : "POST",
-		url : "ajax_dup_common_code",
+		url : "ajax_dup_common_order_and_name",
 		data : {
 			"ccd_group" : group,
-			"ccd_code" : code,
-			"ccd_order" : order
+			"ccd_order" : order,
+			"ccd_codename" : name
 		},
 		async : false,
 		success : function(response) {
 			var result = response;
-			if (result.cnt > 0 && (type == "_NEW_")) { // 중복
-				alert(code + "는 사용할 수 없는 공통코드입니다.");
-				dupCase = false;
-			} else if (result.ccd_order > 0 && result.ccd_code != code) {
-				alert("정렬순서 " + order + "번는 이미 사용중입니다.");
-				dupCase = false;
+			if (result.ccd_order != '0') {
+				if(current_order == "_NEW_" || (current_order != "_NEW_" && current_order != order)){
+					alert("정렬순서 " + order + "번는 이미 사용중입니다.");
+					validation = false;
+				}
+			}else if (result.ccd_codename != '0' && target_code == "_NEW_") {
+				alert(name + " 코드는 이미 사용중입니다.");
+				validation = false;
 			}
 		},
 		error : function(request, status, error) {
-			console.log("code:" + request.status + "\n" + "message:"
-					+ request.responseText + "\n" + "error:" + error);
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 		}
 	});
 
-	return dupCase;
+	return validation;
 }
 
-function view_common_code(seq) {
-	$.ajax({
-		method : "POST",
-		url : "ajax_view_common_code",
-		data : {
-			"ccd_seq" : seq
-		},
-		async : false,
-		success : function(response) {
-			var result = response;
-			if (result.ccd_seq > 0) { // 중복
-				$("#ccd_code").val(result.ccd_code);
-				$("#ccd_codename").val(result.ccd_codename);
-				$("#ccd_order").val(result.ccd_order);
-				$("#ccd_detail1").val(result.ccd_detail1);
-				$("#ccd_detail2").val(result.ccd_detail2);
-				$("#ccd_detail3").val(result.ccd_detail3);
-				$("#ccd_note").val(result.ccd_note);
-
-				target_seq = result.ccd_seq;
-			} else {
-				alert("공통코드 조회에 실패하였습니다.");
-			}
-		},
-		error : function(request, status, error) {
-			console.log("code:" + request.status + "\n" + "message:"
-					+ request.responseText + "\n" + "error:" + error);
-		}
-	});
-}
-
-function delete_code(seq, code, group) {
-
-	var delConfirm = confirm("정말 " + code + "코드를 삭제하시겠습니까?");
-	if (delConfirm) {
-
+//공통 코드 중복 삭제
+function delete_code(code) {
+	if (confirm(code + "코드를 삭제하시겠습니까?")) {
 		$.ajax({
 			method : "POST",
 			url : "ajax_delete_common_code",
 			data : {
-				"ccd_seq" : seq
+				"ccd_code" : code
 			},
 			async : false,
 			success : function(response) {
 				var result = response;
 				if (result > 0) {
 					alert(code + "코드를 삭제하였습니다.");
-					list_common_code(group);
+					list_common_code(target_group);
 				} else {
 					alert(code + "코드 삭제를 실패하였습니다.");
 				}
 			},
 			error : function(request, status, error) {
-				console.log("code:" + request.status + "\n" + "message:"
-						+ request.responseText + "\n" + "error:" + error);
+				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			}
 		});
 	}

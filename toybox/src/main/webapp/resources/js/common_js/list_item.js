@@ -130,7 +130,7 @@ function sub_option(type, keyword) {
 	var sub_url = "ajax_item_type";
 	if(type == 'itm_owner'){
 		sub_url = "ajax_item_owner"
-	}else if(type == 'itm_mainitem'){
+	}else if(type == 'btn_itm_mainitem'){
 		sub_url = "ajax_mainitem_list"
 	}else if(type == 'itm_useyn'){
 		sub_url = "ajax_item_useyn"

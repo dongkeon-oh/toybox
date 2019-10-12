@@ -1,11 +1,10 @@
 var pagination_index = 1;
-
+var pagination_cnt = 10;
 var keyword_data = "";
 var keytype_data = "id";
-var pagination_cnt = 10;
 
 $(function() {
-	list_user(1, 10, "", "id");
+	list_user(pagination_index, pagination_cnt, keyword_data, keytype_data);
 	
 	$(document).on("click",".page-item",function(){
 		var class_set = $(this).attr("class");
@@ -15,10 +14,19 @@ $(function() {
 
 		list_user(pagination_index, pagination_cnt, keyword_data, keytype_data);
 	});
+	
+	$(document).on("click",".user_detail",function(){
+		var u_id = $(this).attr("id");
+		user_info(u_id);
+	});
+	
+	$(".btn_modify").on("click", function(){
+		var u_id = $(this).attr("id");
+		modify_user(u_id);
+	})
 });
 
 function list_user(page_no, page_cnt, keyword, keytype) {
-
 	var end_idx = page_cnt * page_no;
 	var start_idx = end_idx - page_cnt + 1;
 
@@ -43,13 +51,8 @@ function list_user(page_no, page_cnt, keyword, keytype) {
 				function(index, item) {
 					page_total = item.cnt;
 
-					var usr_active = "활성화";
 					var table_row_type = "";
-					if (item.usr_active == "N") {
-						usr_active = "비활성화";
-						table_row_type = "bg-danger";
-					}else if (item.usr_active == "D"){
-						usr_active = "탈퇴";
+					if (item.usr_active_code == "비활성화") {
 						table_row_type = "bg-danger";
 					}
 
@@ -57,11 +60,9 @@ function list_user(page_no, page_cnt, keyword, keytype) {
 					opt = opt + "	<td>" + (start_idx + index) + "</td>";
 					opt = opt + "	<td>" + item.usr_id + "</td>";
 					opt = opt + "	<td>" + item.usr_name + "</td>";
-					opt = opt + "	<td id='" + item.usr_id +"_active'>" + usr_active + "</td>";
+					opt = opt + "	<td>" + item.usr_active_code + "</td>";
 					opt = opt + "	<td>";
-					if(item.usr_active != "D"){
-						opt = opt + "		<button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#user_modal' onClick='user_info(\"" + item.usr_id + "\")' >상세보기</button>";
-					}
+					opt = opt + "		<button type='button' class='btn btn-success btn-sm user_detail' data-toggle='modal' data-target='#user_modal' id='" + item.usr_id + "' >상세보기</button>";
 					opt = opt + "	</td>";
 					opt = opt + "</tr>";
 				}
@@ -76,8 +77,105 @@ function list_user(page_no, page_cnt, keyword, keytype) {
 	});
 }
 
+function user_info(user_id) {
+	$.ajax({
+		method : "POST",
+		url : "ajax_get_user",
+		data : {
+			"userId" : user_id,
+			"userType" : "user_type",
+			"userActive" : "user_active"
+			
+		},
+		async : false,
+		success : function(response) {
+			var result = response;
+			var u_info = result.user_info;
+			var type_info = result.user_type;
+			var active_info = result.user_active;
+
+			$("#usr_id").val(u_info.usr_id);
+			$("#usr_name").val(u_info.usr_name);
+			
+			var append_type = "";
+			$.each(type_info, function(index, item) {
+				append_type = append_type + "<option value='" + item.ccd_code + "'";
+				if(u_info.usr_type == item.ccd_code){
+					append_type = append_type + " selected='selected'";
+				}
+				append_type = append_type + ">" + item.ccd_codename + "</option>";
+			});			
+			
+			$("#usr_type").html(append_type);		
+			$("#usr_email").val(u_info.usr_email);
+			$("#usr_sms").val(u_info.usr_sms);
+			$("#usr_kakao").val(u_info.usr_kakao);
+			
+			var append_active = "";
+			$.each(active_info, function(index, item) {
+				append_active = append_active + "<option value='" + item.ccd_code + "'";
+				if(u_info.usr_active == item.ccd_code){
+					append_active = append_active + " selected='selected'";
+				}
+				append_active = append_active + ">" + item.ccd_codename + "</option>";
+			});
+			
+			$("#usr_active").html(append_active);
+			$("#usr_question_code").val(u_info.usr_question_code);
+			$("#usr_question").val(u_info.usr_question);
+			$("#usr_answer").val(u_info.usr_answer);
+
+			$(".btn_modify").attr("id",user_id);
+		},
+		error : function(request, status, error) {
+			alert("유저 조회에 실패하였습니다.");
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	});
+}
+
+function modify_user(id) {
+	var refresh = false;
+	$.ajax({
+		method : "POST",
+		url : "ajax_modify_user",
+		data : {
+			"usr_id" : id,
+			"usr_active" : $("#usr_active").val(),
+			"usr_type" : $("#usr_type").val()
+		},
+		async : false,
+		success : function(response) {
+			var result = response;
+			if(result > 0){
+				refresh = true;
+				alert(id+" 사용자 정보를 수정하였습니다.");
+			}else{
+				alert(id+" 사용자 정보 수정에 실패했습니다.");
+			}
+		},
+		error : function(request, status, error) {
+			alert(id+" 사용자 정보 수정에 실패했습니다.");
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		},
+		complete : function(){
+			if(refresh){
+				list_user(pagination_index, pagination_cnt, keyword_data, keytype_data);
+			}
+		}
+	});
+}
+
 function change_page_count(page_cnt) {
 	pagination_cnt = page_cnt;
+	list_user("1", pagination_cnt, keyword_data, keytype_data);
+}
+
+//검색 버튼 클릭시 검색
+function search_keyword() {
+	var keyword_data = $("#keyword").val();
+	var keytype_data = $("#keytype").val();
+
 	list_user("1", pagination_cnt, keyword_data, keytype_data);
 }
 
@@ -85,109 +183,4 @@ function search_enter() {
 	if (event.keyCode == 13) {
 		list_user("1", pagination_cnt, keyword_data, keytype_data);
 	}
-}
-
-function user_info(user_id) {
-	$.ajax({
-		method : "POST",
-		url : "ajax_get_user",
-		data : {
-			"user_id" : user_id
-		},
-		async : false,
-		success : function(response) {
-			var result = response;
-			if(result.usr_active == "Y"){
-				var user_active = "활성화";
-				$("#btn_active").html("비활성화");
-				$("#btn_active").val("N");
-				$("#btn_active").addClass("btn-danger");
-				$("#btn_active").removeClass("btn-primary");
-			}else if(result.usr_active == "N"){
-				user_active = "비활성화";
-				$("#btn_active").html("활성화");
-				$("#btn_active").val("Y");
-				$("#btn_active").addClass("btn-primary");
-				$("#btn_active").removeClass("btn-danger");
-			}else{
-				user_active = "탈퇴";
-			}
-
-			$("#usr_id").val(result.usr_id);
-			$("#usr_name").val(result.usr_name);
-			$("#usr_type").val(result.usr_type);
-			$("#usr_sms").val(result.usr_sms);
-			$("#usr_kakao").val(result.usr_kakao);
-			$("#usr_active").val(user_active);
-			$("#usr_question").val(result.usr_question);
-			$("#usr_answer").val(result.usr_answer);
-
-		},
-		error : function(request, status, error) {
-			alert("유저 조회에 실패하였습니다.");
-			console.log("code:" + request.status + "\n" + "message:"
-					+ request.responseText + "\n" + "error:" + error);
-		}
-	});
-}
-
-function mod_user_active() {
-	var id = $("#usr_id").val();
-	var active = $("#btn_active").val();
-	
-	$.ajax({
-		method : "POST",
-		url : "ajax_active_user",
-		data : {
-			"usr_id" : id,
-			"usr_active" :active
-		},
-		async : false,
-		success : function(response) {
-			var result = response;
-			if(result > 0){
-				if(active == "N"){
-					$("#usr_active").val("비활성화");
-					$("#"+id).addClass("bg-danger");
-					$("#"+id+"_active").html("비활성화");
-					$("#btn_active").html("활성화");
-					$("#btn_active").val("Y");
-					$("#btn_active").addClass("btn-primary");
-					$("#btn_active").removeClass("btn-danger");
-				}else if(active == "Y"){
-					$("#usr_active").val("활성화");
-					$("#"+id).removeClass("bg-danger");
-					$("#"+id+"_active").html("활성화");
-					$("#btn_active").html("비활성화");
-					$("#btn_active").val("N");
-					$("#btn_active").addClass("btn-danger");
-					$("#btn_active").removeClass("btn-primary");
-				}				
-				mod_user_active_msg("success",active);
-			}else{
-				mod_user_active_msg("fail",active);
-			}
-			var user_active = "활성화";
-			if(result.usr_type == "N"){
-				user_active = "비활성화";
-			}
-		},
-		error : function(request, status, error) {
-			mod_user_active_msg("fail",active);
-			console.log("code:" + request.status + "\n" + "message:"
-					+ request.responseText + "\n" + "error:" + error);
-		}
-	});
-}
-
-function mod_user_active_msg(result, active){
-	var result_msg = "실패";
-	var active_type = "비활성화";
-	if(result == "success"){
-		result_msg = "성공";
-	}
-	if(active == "Y"){
-		active_type = "활성화";
-	}	
-	alert("유저 "+active_type+"에 "+result_msg+"했습니다.");
 }

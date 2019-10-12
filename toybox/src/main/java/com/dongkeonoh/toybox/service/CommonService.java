@@ -6,6 +6,7 @@ import java.util.List;
 import com.dongkeonoh.toybox.vo.CommonVo;
 
 public interface CommonService {
+	// 공통 코드 그룹
 	// 공통코드 그룹 리스트 출력
 	public List<CommonVo> listCommonGroup(HashMap<String, String> map);
 	
@@ -25,18 +26,22 @@ public interface CommonService {
 	public int deleteCommonGroup(CommonVo commonVo);
 	
 
-
-	public int putCommonCode(CommonVo commonVo);
+	// 공통 코드 
 	// 공통코드 리스트
-	public List<CommonVo> listCommonCode(CommonVo commonVo);
-	// 공통코드 삭제
-	public String dupCommonCode(CommonVo commonVo);
-	// 공통코드 삭제
-	public CommonVo dupCommonOrder(CommonVo commonVo);
-	// 공통코드 삭제
-	public CommonVo getCommonCodeDetail(CommonVo commonVo);
+	public List<CommonVo> listCommonCode(String cgr_group);
+
+	// 공통코드 조회
+	public CommonVo getCommonCode(String ccd_code);
+	
+	// 공통코드 추가
+	public int putCommonCode(CommonVo commonVo);
+
 	// 공통코드 수정
 	public int modifyCommonCode(CommonVo commonVo);	
+	
+	// 공통 코드 순번 확인
+	public CommonVo dupCommonOrderAndName(CommonVo commonVo);
+	
 	// 공통코드 삭제
 	public int deleteCommonCode(CommonVo commonVo);	
 }

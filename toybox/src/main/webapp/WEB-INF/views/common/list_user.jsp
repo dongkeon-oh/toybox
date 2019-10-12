@@ -10,14 +10,27 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link  href="${pageContext.request.contextPath}/css/common_css/common.css" rel="stylesheet">		
 		<script src="${pageContext.request.contextPath}/js/common_js/list_user.js"></script>
 		<script src="${pageContext.request.contextPath}/js/common_js/pagination.js"></script>
 		
-		<title>유저 관리</title>
+		<title>사용자 관리</title>
 	</head>
 	<body class="bg-light">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">유저 관리</a>
+			<div class="btn-group navbar-brand" role="group">
+			  <div class="btn-group" role="group">
+			    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			      	사용자 관리
+			    </button>
+			    <div class="dropdown-menu bg-dark">
+			      <a class="dropdown-item" href="/toybox/admin_list_common">공통코드 관리</a>
+			      <a class="dropdown-item" href="/toybox/admin_list_item">아이템 관리</a>
+			    </div>
+			  </div>
+			</div>			
+
+
 			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 		    	<span class="navbar-toggler-icon"></span>
 		  	</button>
@@ -31,7 +44,7 @@
 				    	</select>
 				  	</div>
 				  	<input class="form-control mr-sm-2" id="keyword" type="text" placeholder="검색어를 입력하세요" onkeyup="search_enter()">
-			      	<button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="search_keyword('onkey')">검색</button>
+			      	<button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="search_keyword()">검색</button>
 			    </form>
 		    </div>
 		</nav>
@@ -40,7 +53,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-					  	<h5 class="modal-title">유저 정보</h5>
+					  	<h5 class="modal-title">사용자 정보</h5>
 					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    	<span aria-hidden="true">&times;</span>
 					  	</button>
@@ -56,11 +69,17 @@
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">등급</label>
-							<input type="text" class="form-control user_info" id="usr_type" readonly="readonly">
+							<select class="form-control" id="usr_type">
+								
+							</select>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">프로필 사진</label>
 							<input type="text" class="form-control user_info" id="usr_image" readonly="readonly" value="준비중입니다.">
+						</div>
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">E-mail</label>
+							<input type="text" class="form-control user_info" id="usr_email" readonly="readonly">
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">SMS</label>
@@ -72,11 +91,14 @@
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">유저 상태</label>
-							<input type="text" class="form-control user_info" id="usr_active" readonly="readonly">
+							<select class="form-control" id="usr_active">
+								
+							</select>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">비밀번호 질문</label>
-							<input type="text" class="form-control user_info" id="usr_question" readonly="readonly">
+							<input type="text" class="form-control user_info" id="usr_question_code" readonly="readonly">
+							<input type="hidden" id="usr_question">
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">비밀번호 질문 답변</label>
@@ -84,7 +106,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id='btn_active' onClick="mod_user_active()" value="Y">활성화</button>
+						<button type="button" class="btn btn-primary btn_modify">수정</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
@@ -97,8 +119,8 @@
       <th scope="col">#</th>
       <th scope="col">아이디</th>
       <th scope="col">이름</th>
-      <th scope="col">유저 상태</th>
-      <th scope="col" class="th_btn_area"></th>
+      <th scope="col">사용자 상태</th>
+      <th scope="col" class="th_btn_area_user"></th>
     </tr>
   </thead>
   <tbody>

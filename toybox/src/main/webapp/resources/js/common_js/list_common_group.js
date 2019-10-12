@@ -173,6 +173,10 @@ function modify_common_group() {
 		url = "ajax_modify_common_group";
 	}
 
+	if (!confirm(cgr_group + "그룹을 " + msg + "하시겠습니까?")) {
+		return;
+	}
+
 	//공통코드 그룹 적합성 체크
 	if (!valid_common_group(cgr_group, cgr_group_name, cgr_note)) {
 		return;
@@ -182,10 +186,6 @@ function modify_common_group() {
 		if (!duplication_common_group(cgr_group)) {
 			return;
 		}
-	}
-
-	if (!confirm(cgr_group + "그룹을 " + msg + "하시겠습니까?")) {
-		return;
 	}
 
 	$.ajax({

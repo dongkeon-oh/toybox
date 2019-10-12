@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/* 공통 */
+.dropdown-item{
+	color : white;
+}
+
+/* code */
+.th_btn_area_code{
+	width : 200px;
+}
+
+.modify_common_group{
+	margin-right : 3px;
+}
+
+.delete_common_group{
+	margin-right : 3px;
+}

@@ -30,16 +30,13 @@ public class CommonServiceImpl implements CommonService{
 
 	@Override	// 공통코드 그룹 추가
 	public int putCommonGroup(CommonVo commonVo) {
-		// checksum -1 : 실패
-		int checksum = 1;
-		checksum = commonDao.putCommonGroup(commonVo);
+		int checksum = commonDao.putCommonGroup(commonVo);
 		return checksum;
 	}
 
 	@Override	// 공통코드 그룹 수정
 	public int modifyCommonGroup(CommonVo commonVo) {
-		int checksum = 1;	// checksum -1 : 실패
-		checksum = commonDao.modifyCommonGroup(commonVo);
+		int checksum = commonDao.modifyCommonGroup(commonVo);
 		return checksum;
 	}
 
@@ -51,58 +48,45 @@ public class CommonServiceImpl implements CommonService{
 
 	@Override	// 공통코드 그룹 삭제
 	public int deleteCommonGroup(CommonVo commonVo) {
-		int checksum = 1;	// checksum -1 : 실패
-		checksum = commonDao.deleteCommonGroup(commonVo);
+		int checksum = commonDao.deleteCommonGroup(commonVo);
 		return checksum;
 	}
 	
 
+
+	@Override	// 공통코드 리스트
+	public List<CommonVo> listCommonCode(String cgr_group) {
+		List<CommonVo> result = commonDao.listCommonCode(cgr_group);		
+		return result;
+	}
+
+	@Override	// 공통코드 조회
+	public CommonVo getCommonCode(String ccd_code) {
+		CommonVo result = commonDao.getCommonCode(ccd_code);
+		return result;
+	}
 	
-	@Override
+	@Override	// 공통코드 추가
 	public int putCommonCode(CommonVo commonVo) {
-		// checksum -1 : 실패
-		int checksum = 1;
-		checksum = commonDao.putCommonCode(commonVo);
+		int checksum = commonDao.putCommonCode(commonVo);
 		return checksum;
 	}
 
-	@Override
-	public List<CommonVo> listCommonCode(CommonVo commonVo) {
-		List<CommonVo> result = commonDao.listCommonCode(commonVo);		
-		return result;
-	}
-
-	@Override
-	public String dupCommonCode(CommonVo commonVo) {
-		String result = commonDao.dupCommonCode(commonVo);
-		return result;
-	}
-
-	@Override
-	public CommonVo dupCommonOrder(CommonVo commonVo) {
-		CommonVo result = commonDao.dupCommonOrder(commonVo);
-		return result;
-	}
-
-	@Override
-	public CommonVo getCommonCodeDetail(CommonVo commonVo) {
-		CommonVo result = commonDao.getCommonCodeDetail(commonVo);
-		return result;
-	}
-
-	@Override
+	@Override	// 공통코드 수정
 	public int modifyCommonCode(CommonVo commonVo) {
-		// checksum -1 : 실패
-		int checksum = 1;
-		checksum = commonDao.modifyCommonCode(commonVo);
+		int checksum = commonDao.modifyCommonCode(commonVo);
 		return checksum;
+	}
+
+	@Override	// 공통코드 순번 확인
+	public CommonVo dupCommonOrderAndName(CommonVo commonVo) {
+		CommonVo result = commonDao.dupCommonOrderAndName(commonVo);
+		return result;
 	}
 	
 	@Override
 	public int deleteCommonCode(CommonVo commonVo) {
-		// checksum -1 : 실패
-		int checksum = 1;
-		checksum = commonDao.deleteCommonCode(commonVo);
+		int checksum = commonDao.deleteCommonCode(commonVo);
 		return checksum;
 	}
 }

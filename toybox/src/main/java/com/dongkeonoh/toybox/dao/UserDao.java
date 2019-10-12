@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dongkeonoh.toybox.dto.CommonCodeDto;
+import com.dongkeonoh.toybox.dto.UserDto;
 import com.dongkeonoh.toybox.vo.UserVo;
 
 @Repository("UserDao")
@@ -33,22 +35,28 @@ public class UserDao {
 		return result;
 	}
 
-	// 유저 관리메뉴
-	// 유저 활성화 (active)
-	public int activeUser(UserVo userVo) {
-		int result = sqlSession.update("userSql.activeUser", userVo);
-		return result; 
+	// 유저 관리메뉴	
+	// 유저 목록 조회
+	public List<UserDto> listUser(HashMap<String, String> map) {
+		List<UserDto> result = sqlSession.selectList("userSql.listUser", map);
+		return result;
 	}
 	
 	// 유저 조회
-	public UserVo getUser(String userId) {
-		UserVo result = sqlSession.selectOne("userSql.getUser", userId);
+	public UserDto getUser(String userId) {
+		UserDto result = sqlSession.selectOne("userSql.getUser", userId);
 		return result;
 	}
 	
-	// 유저 목록 조회
-	public List<UserVo> listUser(HashMap<String, String> map) {
-		List<UserVo> result = sqlSession.selectList("userSql.listUser", map);
+	// 유저 조회 공통코드
+	public List<CommonCodeDto> getUserCommonCode(String ccd_group){
+		List<CommonCodeDto> result = sqlSession.selectList("userSql.getUserCommonCode", ccd_group);
 		return result;
+	}
+	
+	// 유저 활성화 (active)
+	public int modifyUserAdmin(UserDto userDto) {
+		int result = sqlSession.update("userSql.modifyUserAdmin", userDto);
+		return result; 
 	}
 }

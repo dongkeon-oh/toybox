@@ -263,7 +263,7 @@
 				 FROM ITEM, USR
             	WHERE ITEM.ITM_OWNER = USR.USR_ID
 			)
-			WHERE RN BETWEEN #{start_idx} AND #{end_idx}
+		WHERE RN BETWEEN #{start_idx} AND #{end_idx}
 	</select>
 
 	<!-- 아이템 관리 조회 -->

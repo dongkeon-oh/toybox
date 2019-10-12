@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dongkeonoh.toybox.dto.UserDto;
 import com.dongkeonoh.toybox.service.UserService;
 import com.dongkeonoh.toybox.vo.UserVo;
 
@@ -67,22 +68,6 @@ public class UserController {
 		modelAndView.addObject("checksum", checksum);			
 		return modelAndView;
 	}
-	
-	// 유저 active
-	@RequestMapping(value = "/ajax_active_user", method = RequestMethod.POST)
-	@ResponseBody
-	public int ajax_active_user(HttpServletRequest httpServletRequest, UserVo userVo) {
-		int result = userService.activeUser(userVo);		
-		return result;
-	}
-	
-	// 유저 조회
-	@RequestMapping(value = "/ajax_get_user", method = RequestMethod.POST)
-	@ResponseBody
-	public UserVo ajax_get_user(HttpServletRequest httpServletRequest, String user_id) {
-		UserVo result = userService.getUser(user_id);
-		return result;
-	}	
 
 	// 유저 리스트
 	@RequestMapping(value = "/admin_list_user", method = RequestMethod.GET)
@@ -95,7 +80,7 @@ public class UserController {
 	// 유저 리스트 보기
 	@RequestMapping(value = "/ajax_list_user", method = RequestMethod.POST)
 	@ResponseBody
-	public List<UserVo> ajax_list_user(HttpServletRequest httpServletRequest
+	public List<UserDto> ajax_list_user(HttpServletRequest httpServletRequest
 			, @RequestParam("keyword") 		String keyword
 			, @RequestParam("keytype") 		String keytype
 			, @RequestParam("start_idx") 	String start_idx
@@ -107,7 +92,28 @@ public class UserController {
 		map.put("start_idx", start_idx);
 		map.put("end_idx", end_idx);
 		
-		List<UserVo> result = userService.listUser(map);		
+		List<UserDto> result = userService.listUser(map);		
+		return result;
+	}
+	
+	// 유저 조회
+	@RequestMapping(value = "/ajax_get_user", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> ajax_get_user(HttpServletRequest httpServletRequest, String userId, String userType, String userActive) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("userType", userType);
+		map.put("userActive", userActive);
+		
+		HashMap<String, Object> result = userService.getUser(map);
+		return result;
+	}	
+	
+	// 유저 active
+	@RequestMapping(value = "/ajax_modify_user", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajax_modify_user(HttpServletRequest httpServletRequest, UserDto userDto) {
+		int result = userService.modifyUserAdmin(userDto);		
 		return result;
 	}
 }

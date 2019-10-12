@@ -53,40 +53,39 @@ public class CommonDao {
 		
 
 	
+
+	// 공통코드 리스트
+	public List<CommonVo> listCommonCode(String cgr_group) {
+		List<CommonVo> result = sqlSession.selectList("commonCodeSql.listCommonCode", cgr_group);
+		return result;
+	} 
 	
+	// 공통 코드 조회
+	public CommonVo getCommonCode(String ccd_code) {
+		CommonVo result = sqlSession.selectOne("commonCodeSql.getCommonCode", ccd_code);		
+		return result;
+	}
+
+	// 공통 코드 추가
 	public int putCommonCode(CommonVo commonVo) {
 		int result = sqlSession.insert("commonCodeSql.putCommonCode", commonVo);		
 		return result;
 	}
-	
-	public List<CommonVo> listCommonCode(CommonVo commonVo) {
-		List<CommonVo> result = sqlSession.selectList("commonCodeSql.listCommonCode", commonVo);
-		
-		return result;
-	} 
-	
-	public String dupCommonCode(CommonVo commonVo) {
-		String result = sqlSession.selectOne("commonCodeSql.dupCommonCode", commonVo);		
-		return result;
-	}
-	
-	public CommonVo dupCommonOrder(CommonVo commonVo) {
-		CommonVo result = sqlSession.selectOne("commonCodeSql.dupCommonOrder", commonVo);		
-		return result;
-	}
-	
-	public CommonVo getCommonCodeDetail(CommonVo commonVo) {
-		CommonVo result = sqlSession.selectOne("commonCodeSql.getCommonCodeDetail", commonVo);		
-		return result;
-	}
 
+	// 공통 코드 수정
 	public int modifyCommonCode(CommonVo commonVo) {
 		int result = sqlSession.update("commonCodeSql.modifyCommonCode", commonVo);		
 		return result;
 	}
+
+	// 공통 코드 순번 확인
+	public CommonVo dupCommonOrderAndName(CommonVo commonVo) {
+		CommonVo result = sqlSession.selectOne("commonCodeSql.dupCommonOrderAndName", commonVo);		
+		return result;
+	}
 	
 	public int deleteCommonCode(CommonVo commonVo) {
-		int result = sqlSession.update("commonCodeSql.deleteCommonCode", commonVo);	
+		int result = sqlSession.delete("commonCodeSql.deleteCommonCode", commonVo);	
 		return result;
 	}	
 }
