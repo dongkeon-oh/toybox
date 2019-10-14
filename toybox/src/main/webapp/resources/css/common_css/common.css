@@ -17,3 +17,8 @@
 .delete_common_group{
 	margin-right : 3px;
 }
+
+/* item */
+.sub_modal_height {
+	height : 370px;
+}

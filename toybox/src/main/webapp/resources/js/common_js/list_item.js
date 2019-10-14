@@ -2,6 +2,9 @@ var pagination_index = 1;
 var pagination_cnt = 10;
 var keyword_data = "";
 
+var code_group;
+var search_type;
+
 $(function() {
 	list_item(1, 10, "");
 	
@@ -17,6 +20,35 @@ $(function() {
 	$("#put_item").on("click",function(){
 		$("#item_modal_title").html("아이템 추가");
 	});
+	
+	$(".item_sub_option").on("click",function(){
+		search_type = $(this).attr("id");	
+		search_init("init");
+	});
+	
+	$("#sub_search_btn").on("click",function(){
+		if(search_type == "sub_itm_useyn"){
+			get_common_code_search("item_useyn");
+		}else if(search_type == "sub_itm_type"){
+			get_common_code_search("item_type");
+		}else if(search_type == "sub_itm_mainitem"){
+			get_item_search();
+		}else if(search_type == "sub_itm_owner"){
+			get_user_search();
+		}
+	});
+	
+	$("#btn_apply").on("click",function(){
+		if(search_type == "sub_itm_useyn"){
+			search_value("itm_useyn", "_code");
+		}else if(search_type == "sub_itm_type"){
+			search_value("itm_type", "_code");
+		}else if(search_type == "sub_itm_mainitem"){
+			search_value("itm_mainitem", "_name");
+		}else if(search_type == "sub_itm_owner"){
+			search_value("itm_owner", "_name");
+		}
+	});	
 });
 
 function put_item() {
@@ -50,29 +82,118 @@ function put_item() {
 	});
 }
 
-function get_common_code_search(type) {
-	var ccd_group = type;
+function get_common_code_search(c_group) {
+	code_group = c_group;
 	var ccd_codename = $("#sub_keyword").val();
 
 	$.ajax({
 		method : "POST",
 		url : "ajax_commoncode_search",
 		data : {
-			"ccd_group" : ccd_group,
-			"ccd_codename" : ccd_codename
+			"ccd_group" : code_group,
+			"ccd_codename" : ccd_codename,
+			"search_type" : "_SIMPLE_"
 		},
 		async : false,
 		success : function(response) {
-			var append_type = "";	//임시
-			$.each(response, function(index, item) {
-				append_type = append_type + "<option value='" + item.ccd_code + "'>" + item.ccd_codename + "</option>";
-			});	
-			$("#sub_option").html(append_type);
+			if(response.length == 0){
+				search_init("no_data");
+			}else{
+				var append_data = "";	//임시
+				$.each(response, function(index, item) {
+					append_data = append_data + "<option value='" + item.ccd_code + "'>" + item.ccd_codename + "</option>";
+				});	
+				$("#sub_option").html(append_data);
+			}
 		},
 		error : function(request, status, error) {
 			console.log("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:" + error);
 		}
 	});
+}
+
+function get_user_search() {
+	var usr_name = $("#sub_keyword").val();
+
+	$.ajax({
+		method : "POST",
+		url : "ajax_user_search",
+		data : {
+			"usr_name" : usr_name,
+			"search_type" : "_SIMPLE_"
+		},
+		async : false,
+		success : function(response) {
+			if(response.length == 0){
+				search_init("no_data");
+			}else{
+				var append_data = "";	//임시
+				$.each(response, function(index, item) {
+					append_data = append_data + "<option value='" + item.usr_id + "'>" + item.usr_name + "</option>";
+				});	
+				$("#sub_option").html(append_data);
+			}
+		},
+		error : function(request, status, error) {
+			console.log("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:" + error);
+		}
+	});
+}
+
+function get_item_search() {
+	var itm_name = $("#sub_keyword").val();
+
+	$.ajax({
+		method : "POST",
+		url : "ajax_item_search",
+		data : {
+			"itm_name" : itm_name,
+			"search_type" : "_SIMPLE_"
+		},
+		async : false,
+		success : function(response) {
+			if(response.length == 0){
+				search_init("no_data");
+			}else{
+				var append_data = "";	//임시
+				$.each(response, function(index, item) {
+					append_data = append_data + "<option value='" + item.itm_id + "'>" + item.itm_name + "</option>";
+				});	
+				$("#sub_option").html(append_data);
+			}
+		},
+		error : function(request, status, error) {
+			console.log("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:" + error);
+		}
+	});
+}
+
+function search_init(init_type){
+	var title_text;
+	
+	if(search_type == "sub_itm_useyn") 			title_text = "아이템 상태";
+	else if(search_type == "sub_itm_type") 		title_text = "아이템 종류";
+	else if(search_type == "sub_itm_mainitem") 	title_text = "메인 아이템";
+	else if(search_type == "sub_itm_owner")		title_text = "소유자";
+
+	$(".label_text").text(title_text);
+	$(".title_text").text(title_text+" 검색");
+	
+	if(init_type == "init"){
+		$("#sub_keyword").val("");
+	}
+	$("#sub_option").html('<option value="_NODATA_">검색결과 없음</option>');
+}
+
+function search_value(value_type, value_tail){
+	if($("#sub_option").val() == "_NODATA_"){
+		alert($(".label_text").text()+"을(를) 확인해주십시오.");
+		return;
+	}
+	$("#"+value_type).val($("#sub_option").val());
+	$("#"+value_type+value_tail).val($("#sub_option option:selected").text());
+	
+	$('#sub_modal').modal("hide");
 }
 
 function list_item(page_no, page_cnt, keyword) {

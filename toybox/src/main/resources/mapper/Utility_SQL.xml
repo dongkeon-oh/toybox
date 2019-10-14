@@ -33,5 +33,95 @@
 		WHERE USR_TYPE IN (CCD_DETAIL1, CCD_DETAIL2, CCD_DETAIL3)
 		ORDER BY CCD_ORDER ASC
 	</select>	
+	
+	<!-- 공통코드 호출 기본  -->
+	<select id="getCommonCode" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto" parameterType="String">
+		SELECT CCD_CODE
+		     , CCD_CODENAME
+		  FROM TB_COMMON_CODE
+		 WHERE CCD_GROUP = #{ccd_group}
+		 ORDER BY CCD_ORDER
+	</select>
+	
+	<!-- 공통코드 호출 기본  -->
+	<select id="getCommonCodeSearch" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto" parameterType="HashMap">
+		SELECT CCD_CODE
+		     , CCD_CODENAME
+		<if test="search_type.equals('_FULL_')">
+		     , CCD_GROUP		
+			 , CCD_DETAIL1
+			 , CCD_DETAIL2
+			 , CCD_DETAIL3
+			 , CCD_NOTE	
+			 , CCD_ORDER
+		</if>
+		  FROM TB_COMMON_CODE
+		 WHERE CCD_GROUP = #{ccd.ccd_group}
+		   AND CCD_CODENAME LIKE '%'||#{ccd.ccd_codename}||'%'
+		 ORDER BY CCD_ORDER
+	</select>
+	
+	<!-- 유저 호출 기본  -->
+	<select id="getUserSearch" resultType="com.dongkeonoh.toybox.dto.UserDto" parameterType="HashMap">
+		SELECT U.USR_ID
+		  	 , U.USR_NAME
+		<if test="search_type.equals('_FULL_')">
+		     , U.USR_IMAGE
+		     , U.USR_EMAIL
+		     , U.USR_SMS
+		     , U.USR_KAKAO
+		     , U.USR_ACTIVE
+       		 , CC2.CCD_CODENAME AS USR_ACTIVE_CODE
+             , U.USR_QUESTION
+       		 , CC.CCD_CODENAME AS USR_QUESTION_CODE
+       		 , U.USR_ANSWER
+       		 , U.USR_TYPE
+       		 , CC3.CCD_CODENAME AS USR_TYPE_CODE
+		</if>
+		  FROM TB_USER U		
+		<if test="search_type.equals('_FULL_')">
+		  	 , TB_COMMON_CODE CC
+		  	 , TB_COMMON_CODE CC2
+		  	 , TB_COMMON_CODE CC3
+		</if>
+		 WHERE U.USR_NAME LIKE '%'||#{usr_name}||'%'
+		<if test="search_type.equals('_FULL_')">
+           AND U.USR_QUESTION = CC.CCD_CODE
+           AND U.USR_ACTIVE = CC2.CCD_CODE
+           AND U.USR_TYPE = CC3.CCD_CODE
+		</if>
+	</select>
+	
+	<!-- 유저 호출 기본  -->
+	<select id="getItemSearch" resultType="com.dongkeonoh.toybox.dto.ItemDto" parameterType="HashMap">
+		SELECT I.ITM_ID
+		  	 , I.ITM_NAME
+		<if test="search_type.equals('_FULL_')">
+			 , I.ITM_TYPE
+			 , CC.CCD_CODENAME AS ITM_TYPE_CODE
+			 , I.ITM_OWNER
+			 , U.USR_NAME AS ITM_OWNER_NAME
+			 , I.ITM_MAINITEM	
+			 , SUB_I.ITM_NAME AS ITM_MAINITEM_NAME	
+			 , I.ITM_NOTE	
+			 , I.ITM_IMAGE
+			 , I.ITM_USEYN
+			 , CC2.CCD_CODENAME AS ITM_USEYN_CODE		
+		</if>
+		  FROM TB_ITEM I
+		<if test="search_type.equals('_FULL_')">
+		  	 , TB_COMMON_CODE CC
+		  	 , TB_COMMON_CODE CC2
+		  	 , TB_USER U
+		  	 , TB_ITEM SUB_I	
+		</if>
+		 WHERE I.ITM_NAME LIKE '%'||#{itm_name}||'%'
+		<if test="search_type.equals('_FULL_')">
+           AND I.ITM_TYPE = CC.CCD_CODENAME
+           AND U.ITM_OWNER = U.USR_ID
+           AND U.ITM_USEYN = CC2.CCD_CODENAME
+           AND I.ITM_ID = SUB_I.ITM_ID	
+		</if>
+	</select>
 </mapper>
 
