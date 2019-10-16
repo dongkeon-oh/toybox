@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.dongkeonoh.toybox.dto.CommonCodeDto;
 import com.dongkeonoh.toybox.dto.UserDto;
 import com.dongkeonoh.toybox.vo.UserVo;
 
@@ -48,13 +47,7 @@ public class UserDao {
 		return result;
 	}
 	
-	// 유저 조회 공통코드
-	public List<CommonCodeDto> getUserCommonCode(String ccd_group){
-		List<CommonCodeDto> result = sqlSession.selectList("userSql.getUserCommonCode", ccd_group);
-		return result;
-	}
-	
-	// 유저 활성화 (active)
+	// 유저 수정
 	public int modifyUserAdmin(UserDto userDto) {
 		int result = sqlSession.update("userSql.modifyUserAdmin", userDto);
 		return result; 

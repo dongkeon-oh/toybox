@@ -3,6 +3,9 @@ package com.dongkeonoh.toybox.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.dongkeonoh.toybox.dto.CommonCodeDto;
+import com.dongkeonoh.toybox.dto.ItemDto;
+import com.dongkeonoh.toybox.dto.UserDto;
 import com.dongkeonoh.toybox.vo.ItemVo;
 import com.dongkeonoh.toybox.vo.UserVo;
 
@@ -24,15 +27,4 @@ public interface ItemService {
 	
 	// 요청 내역 확인
 	public List<ItemVo> responseItem(String user_id);
-	
-
-	// 아이템 대여 신청
-	public int putItem(ItemVo item);
-	// 아이템 리스트
-	public List<ItemVo> adminItem(HashMap<String, String> search);
-	// 아이템 상세 조회
-	public ItemVo getItem(String itm_id);
-
-	// 메인아이템 리스트 출력
-	public List<ItemVo> mainItemList(HashMap<String, String> search);
 }

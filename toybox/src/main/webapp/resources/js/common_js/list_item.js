@@ -37,15 +37,7 @@ $(function() {
 	});
 	
 	$("#sub_search_btn").on("click",function(){
-		if(search_type == "sub_itm_useyn"){
-			get_common_code_search("item_useyn");
-		}else if(search_type == "sub_itm_type"){
-			get_common_code_search("item_type");
-		}else if(search_type == "sub_itm_mainitem"){
-			get_item_search();
-		}else if(search_type == "sub_itm_owner"){
-			get_user_search();
-		}
+		search_sub('click');
 	});
 	
 	$("#btn_apply").on("click",function(){
@@ -125,6 +117,7 @@ function put_item() {
 			if(response > 0){
 				alert("["+item_name+"] 아이템이 추가되었습니다.");
 				list_item(pagination_index, pagination_cnt, keyword_data);
+				$('#item_modal').modal("hide");
 			}else{
 				alert("["+item_name+"] 아이템 추가에 실패했습니다.");
 			}
@@ -298,6 +291,7 @@ function list_item(page_no, page_cnt, keyword) {
 					opt = opt + "	<td>" + item.itm_owner_name + "</td>";
 					opt = opt + "	<td>";
 					opt = opt + "		<button type='button' class='btn btn-success btn-sm detail_item' data-toggle='modal' data-target='#item_modal' id='" + item.itm_id + "' >상세보기</button>";
+					opt = opt + "		<button type='button' class='btn btn-secondary btn-sm' data-toggle='modal' data-target='#' disabled='disabled' id='log_" + item.itm_id + "' >이력보기(미구현)</button>";
 					opt = opt + "	</td>";
 					opt = opt + "</tr>";
 				}
@@ -321,6 +315,20 @@ function search_enter(type) {
 	if ((type == 'onkey' && event.keyCode == 13) || type == 'click') {
 		keyword_data = $("#keyword").val();
 		list_item("1", pagination_cnt, keyword_data);
+	}
+}
+
+function search_sub(type) {
+	if ((type == 'onkey' && event.keyCode == 13) || type == 'click') {
+		if(search_type == "sub_itm_useyn"){
+			get_common_code_search("item_useyn");
+		}else if(search_type == "sub_itm_type"){
+			get_common_code_search("item_type");
+		}else if(search_type == "sub_itm_mainitem"){
+			get_item_search();
+		}else if(search_type == "sub_itm_owner"){
+			get_user_search();
+		}
 	}
 }
 

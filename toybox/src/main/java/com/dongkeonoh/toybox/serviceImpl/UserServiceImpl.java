@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.dongkeonoh.toybox.dao.UserDao;
+import com.dongkeonoh.toybox.dao.UtilityDao;
 import com.dongkeonoh.toybox.dto.CommonCodeDto;
 import com.dongkeonoh.toybox.dto.UserDto;
 import com.dongkeonoh.toybox.service.UserService;
@@ -18,6 +19,9 @@ public class UserServiceImpl implements UserService{
 
 	@Resource(name="UserDao")
 	private UserDao userDao;
+
+	@Resource(name="UtilityDao")
+	private UtilityDao utilityDao;
 	
 	// 유저 추가
 	@Override
@@ -52,8 +56,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public HashMap<String, Object> getUser(HashMap<String, String> map) {
 		UserDto user_info = userDao.getUser(map.get("userId"));
-		List<CommonCodeDto> user_type = userDao.getUserCommonCode(map.get("userType"));
-		List<CommonCodeDto> user_active = userDao.getUserCommonCode(map.get("userActive"));
+		List<CommonCodeDto> user_type = utilityDao.getCommonCode(map.get("userType"));
+		List<CommonCodeDto> user_active = utilityDao.getCommonCode(map.get("userActive"));
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("user_info", user_info);

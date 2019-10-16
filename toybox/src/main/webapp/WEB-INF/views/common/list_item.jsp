@@ -11,6 +11,7 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link  href="${pageContext.request.contextPath}/css/common_css/common.css" rel="stylesheet">
+		<script src="${pageContext.request.contextPath}/js/common_util.js"></script>
 		<script src="${pageContext.request.contextPath}/js/common_js/list_item.js"></script>
 		<script src="${pageContext.request.contextPath}/js/common_js/pagination.js"></script>
 		
@@ -44,12 +45,13 @@
 					<div class="modal-body"  style="overflow:auto; height:450px;">
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">아이템 이름</label>
-							<input type="text" class="form-control" id="itm_name">
+							<input type="text" class="form-control" id="itm_name" placeholder="아이템 이름">
+							<input type="hidden" id="itm_id">
 						</div>
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">아이템 타입</label>
 							<div class="input-group">
-								<input type="text" class="form-control" id="itm_type_code" readonly="readonly">
+								<input type="text" class="form-control" id="itm_type_code" readonly="readonly" placeholder="아이템 타입">
 								<div class="input-group-append">
 									<button class="btn btn-outline-secondary item_sub_option" id="sub_itm_type" type="button" data-toggle='modal' data-target='#sub_modal'>변경</button>
 								</div>
@@ -59,7 +61,7 @@
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">소유자</label>
 							<div class="input-group">
-								<input type="text" class="form-control" id="itm_owner_name" readonly="readonly">
+								<input type="text" class="form-control" id="itm_owner_name" readonly="readonly" placeholder="소유자">
 								<div class="input-group-append">
 									<button class="btn btn-outline-secondary item_sub_option" id="sub_itm_owner" type="button" data-toggle='modal' data-target='#sub_modal'>변경</button>
 								</div>
@@ -73,7 +75,7 @@
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">메인 아이템</label>
 							<div class="input-group">
-								<input type="text" class="form-control" id="itm_mainitem_name" readonly="readonly">
+								<input type="text" class="form-control" id="itm_mainitem_name" readonly="readonly" placeholder="메인 아이템">
 								<div class="input-group-append">
 									<button class="btn btn-outline-secondary item_sub_option" id="sub_itm_mainitem" type="button" data-toggle='modal' data-target='#sub_modal'>변경</button>
 								</div>
@@ -83,7 +85,7 @@
 						<div class="form-group">
 							<label class="col-form-label" for="inputDefault">아아템 상태</label>
 							<div class="input-group">
-								<input type="text" class="form-control" id="itm_useyn_code" readonly="readonly">
+								<input type="text" class="form-control" id="itm_useyn_code" readonly="readonly" placeholder="아이템 상태">
 								<div class="input-group-append">
 									<button class="btn btn-outline-secondary item_sub_option" id="sub_itm_useyn" type="button" data-toggle='modal' data-target='#sub_modal'>변경</button>
 								</div>
@@ -116,7 +118,7 @@
 						<div class="form-group">
 							<label class="col-form-label title_text" for="inputDefault">검색</label>
 							<div class="input-group">
-								<input type="text" class="form-control" id="sub_keyword">
+								<input type="text" class="form-control" id="sub_keyword" placeholder="검색어를 입력하세요." onkeyup="search_sub('onkey')">
 								<div class="input-group-append">
 									<button class="btn btn-outline-secondary" id="sub_search_btn" type="button">검색</button>
 								</div>

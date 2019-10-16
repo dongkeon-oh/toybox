@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="itemAdminSql">
+
+	<!-- 아이템 추가 -->
+	<insert id="putItem" parameterType="com.dongkeonoh.toybox.dto.ItemDto">	
+     	INSERT INTO TB_ITEM 
+        VALUES 
+        	 (
+       		   SEQ_ITEM_ID.NEXTVAL,
+       		   #{itm_name},
+       		   #{itm_type},
+       		   #{itm_owner},
+       		   #{itm_mainitem},
+       		   #{itm_note},
+       		   DEFAULT,
+       		   #{itm_useyn}
+     		 )
+		<selectKey keyProperty="cdt_item" resultType="String" order="AFTER">
+			SELECT SEQ_ITEM_ID.CURRVAL AS ITM_ID FROM DUAL
+		</selectKey>
+	</insert>
+	
+		<!-- 아이템 조회 -->
+	<select id="listItem" parameterType="HashMap" resultType="com.dongkeonoh.toybox.dto.ItemDto">
+		SELECT ITM_ID
+			 , ITM_NAME
+			 , ITM_TYPE_CODE
+			 , ITM_OWNER_NAME
+			 , CNT
+		  FROM
+			 (
+			   SELECT I.ITM_ID
+					, I.ITM_NAME
+					, C.CCD_CODENAME AS ITM_TYPE_CODE
+					, U.USR_NAME AS ITM_OWNER_NAME
+					, COUNT(I.ITM_ID) OVER() AS CNT 
+					, ROWNUM AS RN
+				 FROM TB_ITEM I
+					, TB_COMMON_CODE C
+					, TB_USER U
+				WHERE I.ITM_TYPE = C.CCD_CODE
+				  AND U.USR_ID = I.ITM_OWNER
+				  AND I.ITM_NAME LIKE '%'||#{keyword}||'%'
+			 )
+		 WHERE RN BETWEEN #{start_idx} AND #{end_idx}
+	</select>
+	
+	<select id="detailItem" parameterType="String" resultType="com.dongkeonoh.toybox.dto.ItemDto">
+		SELECT I.ITM_ID      
+			 , I.ITM_NAME     
+			 , I.ITM_TYPE    
+			 , C1.CCD_CODENAME AS ITM_TYPE_CODE   
+			 , I.ITM_OWNER  
+			 , U.USR_NAME AS ITM_OWNER_NAME
+			 , I.ITM_MAINITEM    
+			 , I2.ITM_NAME AS ITM_MAINITEM_NAME        
+			 , I.ITM_NOTE          
+			 , I.ITM_IMAGE    
+			 , I.ITM_USEYN    
+			 , C2.CCD_CODENAME AS ITM_USEYN_CODE 
+		 FROM TB_ITEM I
+			, TB_ITEM I2
+			, TB_COMMON_CODE C1
+			, TB_COMMON_CODE C2
+			, TB_USER U
+		WHERE I.ITM_ID = #{itm_id}
+		  AND I.ITM_TYPE = C1.CCD_CODE  
+		  AND I.ITM_USEYN = C2.CCD_CODE  
+		  AND I.ITM_MAINITEM = I2.ITM_ID(+)
+		  AND I.ITM_OWNER = U.USR_ID
+	</select>
+	
+	<update id="updateItem" parameterType="com.dongkeonoh.toybox.dto.ItemDto">
+	UPDATE TB_ITEM 
+       SET ITM_NAME 	= #{itm_name}
+	     , ITM_TYPE 	= #{itm_type}   
+	     , ITM_OWNER 	= #{itm_owner}
+	     , ITM_MAINITEM = #{itm_mainitem}         
+	     , ITM_NOTE 	= #{itm_note}       
+<!-- 	     , ITM_IMAGE = #{itm_image}  -->
+	     , ITM_USEYN 	= #{itm_useyn}
+     WHERE ITM_ID 		= #{itm_id}
+	</update>
+</mapper>
+

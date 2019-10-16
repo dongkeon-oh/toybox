@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ConditionSql">
+
+	<!-- CONDITION 추가 -->
+	<insert id="putCondition" parameterType="com.dongkeonoh.toybox.dto.ItemDto">
+     	INSERT INTO TB_CONDITION 
+        VALUES 
+        	 (
+       		   #{cdt_condition},
+       		   #{cdt_item},
+       		   #{cdt_user},
+       		   #{cdt_location},
+       		   #{cdt_return},
+       		   #{cdt_note},
+       		   #{cdt_fromdate},
+       		   #{cdt_todate},
+			   SYSDATE,
+		<choose>
+			<when test="cdt_condition.equals('rentable')">
+			   SEQ_CONDITION_PROCESS.NEXTVAL
+			</when>
+			<otherwise>
+       		   #{cdt_process}			      
+			</otherwise>
+		</choose>
+     		 )
+	</insert>
+</mapper>
+

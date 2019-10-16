@@ -115,23 +115,12 @@
            AND U.USR_TYPE = CC3.CCD_CODE
 	</select>
 	
-	<!-- 유저 보기 옵션 -->
-	<select id="getUserCommonCode" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto" parameterType="String">
-		SELECT CCD_CODE
-		     , CCD_CODENAME
-		  FROM TB_COMMON_CODE
-		 WHERE CCD_GROUP = #{ccd_group}
-		 ORDER BY CCD_ORDER
-	</select>
-	
-	<!-- 유저 active -->
+	<!-- 유저 수정 -->
 	<update id='modifyUserAdmin' parameterType="com.dongkeonoh.toybox.dto.UserDto">
 		UPDATE TB_USER 
 		   SET USR_ACTIVE = #{usr_active}
 		     , USR_TYPE = #{usr_type}
     	 WHERE USR_ID = #{usr_id}
 	</update>	
-	
-
 </mapper>
 

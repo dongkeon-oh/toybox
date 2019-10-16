@@ -7,7 +7,13 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.dongkeonoh.toybox.dao.CommonDao;
 import com.dongkeonoh.toybox.dao.ItemDao;
+import com.dongkeonoh.toybox.dao.UserDao;
+import com.dongkeonoh.toybox.dao.UtilityDao;
+import com.dongkeonoh.toybox.dto.CommonCodeDto;
+import com.dongkeonoh.toybox.dto.ItemDto;
+import com.dongkeonoh.toybox.dto.UserDto;
 import com.dongkeonoh.toybox.service.ItemService;
 import com.dongkeonoh.toybox.vo.ItemVo;
 import com.dongkeonoh.toybox.vo.UserVo;
@@ -15,9 +21,11 @@ import com.dongkeonoh.toybox.vo.UserVo;
 @Service("ItemServiceImpl")
 public class ItemServiceImpl implements ItemService{
 
-
 	@Resource(name="ItemDao")
 	private ItemDao itemDao;
+
+	@Resource(name="UtilityDao")
+	private UtilityDao utilityDao;
 
 	@Override
 	public List<ItemVo> listItem(HashMap<String, String> search) {
@@ -60,33 +68,5 @@ public class ItemServiceImpl implements ItemService{
 	public List<ItemVo> responseItem(String user_id){
 		List<ItemVo> result = itemDao.responseItem(user_id);
 		return result;		
-	}
-	
-	@Override
-	public int putItem(ItemVo item) {
-		int result = itemDao.putItem(item);
-		return result;
-	}
-	
-	// 아이템 리스트
-	@Override
-	public List<ItemVo> adminItem(HashMap<String, String> search){
-		List<ItemVo> result = itemDao.adminItem(search);
-		return result;
-	}
-	
-
-	// 아이템 상세 조회
-	@Override
-	public ItemVo getItem(String itm_id){
-		ItemVo result = itemDao.getItem(itm_id);
-		return result;
-	}
-	
-	// 아이템 리스트
-	@Override
-	public List<ItemVo> mainItemList(HashMap<String, String> search){
-		List<ItemVo> result = itemDao.mainItemList(search);
-		return result;
 	}
 }
