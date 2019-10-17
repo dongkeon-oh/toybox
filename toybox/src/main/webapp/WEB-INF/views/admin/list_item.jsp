@@ -10,19 +10,27 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link  href="${pageContext.request.contextPath}/css/common_css/common.css" rel="stylesheet">
+		<link  href="${pageContext.request.contextPath}/css/admin_css/admin.css" rel="stylesheet">
 		<script src="${pageContext.request.contextPath}/js/common_util.js"></script>
-		<script src="${pageContext.request.contextPath}/js/common_js/list_item.js"></script>
-		<script src="${pageContext.request.contextPath}/js/common_js/pagination.js"></script>
+		<script src="${pageContext.request.contextPath}/js/admin_js/list_item.js"></script>
+		<script src="${pageContext.request.contextPath}/js/admin_js/pagination.js"></script>
 		
 		<title>아이템 관리</title>
 	</head>
 	<body class="bg-light">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">아이템 관리</a>
-			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-		    	<span class="navbar-toggler-icon"></span>
-		  	</button>
+			<div class="btn-group navbar-brand" role="group">
+			  <div class="btn-group" role="group">
+			    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			      	아이템 관리
+			    </button>
+			    <div class="dropdown-menu bg-dark">
+			      <a class="dropdown-item" href="/toybox/admin_list_common">공통코드 관리</a>
+			      <a class="dropdown-item" href="/toybox/admin_list_user">사용자 관리</a>
+			    </div>
+			  </div>
+			</div>	
+			
 		  	<div class="navbar-collapse collapse" id="navbarColor02" style="">
 		  		<ul class="navbar-nav mr-auto"></ul>
 		  		<button type="button" class="btn btn-outline-success" id="put_item" data-toggle="modal" data-target="#item_modal" style="margin-right: 8px;">아이템 추가</button>

@@ -35,7 +35,7 @@ public class ItemAdminController implements ToyboxGlobalNameSpace {
 	// 아이템 조회
 	@RequestMapping(value = "/admin_list_item", method = RequestMethod.GET)
 	public ModelAndView adminListItem(ModelAndView modelAndView) {
-		modelAndView.setViewName("common/list_item");				
+		modelAndView.setViewName("admin/list_item");				
 		return modelAndView;
 	}
 	

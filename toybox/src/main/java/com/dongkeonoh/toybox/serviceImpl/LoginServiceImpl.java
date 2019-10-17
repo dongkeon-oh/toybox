@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.dongkeonoh.toybox.dao.LoginDao;
 import com.dongkeonoh.toybox.service.LoginService;
-import com.dongkeonoh.toybox.vo.UserVo;
+import com.dongkeonoh.toybox.dto.UserDto;
 
 @Service("LoginServiceImpl")
 public class LoginServiceImpl implements LoginService{
@@ -16,8 +16,8 @@ public class LoginServiceImpl implements LoginService{
 
 	// 유저 조회
 	@Override
-	public UserVo getLogin(UserVo userVo) {
-		UserVo result = loginDao.getLogin(userVo);
+	public UserDto getLogin(UserDto userDto) {
+		UserDto result = loginDao.getLogin(userDto);
 		return result;
 	}
 }

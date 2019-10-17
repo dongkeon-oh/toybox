@@ -5,7 +5,7 @@
 
 <mapper namespace="utilitySql">
 	<!-- 로그인 -->
-	<select id="getMenu" resultType="com.dongkeonoh.toybox.vo.CommonVo" parameterType="com.dongkeonoh.toybox.vo.UserVo">
+	<select id="getMenu" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto" parameterType="com.dongkeonoh.toybox.dto.UserDto">
 		WITH USR AS (
 		    SELECT USR_ID
 		    	 , USR_TYPE
@@ -33,15 +33,6 @@
 		WHERE USR_TYPE IN (CCD_DETAIL1, CCD_DETAIL2, CCD_DETAIL3)
 		ORDER BY CCD_ORDER ASC
 	</select>	
-	
-	<!-- 공통코드 호출 기본  -->
-	<select id="getCommonCode" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto" parameterType="String">
-		SELECT CCD_CODE
-		     , CCD_CODENAME
-		  FROM TB_COMMON_CODE
-		 WHERE CCD_GROUP = #{ccd_group}
-		 ORDER BY CCD_ORDER
-	</select>
 	
 	<!-- 공통코드 호출 기본  -->
 	<select id="getCommonCodeSearch" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto" parameterType="HashMap">

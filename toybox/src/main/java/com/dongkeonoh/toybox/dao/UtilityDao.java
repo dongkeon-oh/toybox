@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.dongkeonoh.toybox.dto.CommonCodeDto;
 import com.dongkeonoh.toybox.dto.ItemDto;
 import com.dongkeonoh.toybox.dto.UserDto;
-import com.dongkeonoh.toybox.vo.CommonVo;
-import com.dongkeonoh.toybox.vo.UserVo;
 
 @Repository("UtilityDao")
 public class UtilityDao {
@@ -20,14 +18,8 @@ public class UtilityDao {
 	private SqlSession sqlSession;
 	
 	// 유저에 따른 메뉴 조회
-	public List<CommonVo> getMenu(UserVo userVo) {
-		List<CommonVo> result = sqlSession.selectList("utilitySql.getMenu", userVo);
-		return result;
-	}
-	
-	// 공통코드 출력 기본
-	public List<CommonCodeDto> getCommonCode(String ccd_group) {
-		List<CommonCodeDto> result = sqlSession.selectList("utilitySql.getCommonCode", ccd_group);
+	public List<CommonCodeDto> getMenu(UserDto userDto) {
+		List<CommonCodeDto> result = sqlSession.selectList("utilitySql.getMenu", userDto);
 		return result;
 	}
 	

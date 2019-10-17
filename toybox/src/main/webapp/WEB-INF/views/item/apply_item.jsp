@@ -77,24 +77,24 @@
 			    </tr>
 		  	</thead>
 		  <tbody id="item_tbody">
-		  		<c:forEach var="itemVo" items="${result}" varStatus="status">
+		  		<c:forEach var="item_location" items="${item_location}" varStatus="status">
 			  		<tr class=''>  
-						<td>${itemVo.itm_name}</td>
+						<td>${item_location.itm_name}</td>
 						<td>
-							<c:forEach var="userVo" items="${retun_point}">
-								<c:if test="${itemVo.cdt_location == userVo.usr_id}">
-									<input type="text" readonly="readonly" class="form-control form-control-sm" value="${userVo.usr_name }">
-									<input type="hidden" name="cdt_location" value="${userVo.usr_id}">
+							<c:forEach var="user_list" items="${user_list}">
+								<c:if test="${item_location.cdt_location == user_list.usr_id}">
+									<input type="text" readonly="readonly" class="form-control form-control-sm" value="${user_list.usr_name }">
+									<input type="hidden" name="cdt_location" value="${user_list.usr_id}">
 								</c:if>
 							</c:forEach>
 						</td>
 						<td class="return_point_set">
 							<select class="form-control form-control-sm" name="cdt_return">
-								<c:forEach var="userVo" items="${retun_point}">
-									<option value="${userVo.usr_id }">${userVo.usr_name }</option>
+								<c:forEach var="user_list" items="${user_list}">
+									<option value="${user_list.usr_id }">${user_list.usr_name }</option>
 								</c:forEach>							
 							</select>
-							<input type="hidden" name="cdt_item" value="${itemVo.itm_id}">							
+							<input type="hidden" name="cdt_item" value="${item_location.itm_id}">							
 						</td>
 					</tr>                            
 		  		</c:forEach>	

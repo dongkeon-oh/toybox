@@ -7,16 +7,13 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.dongkeonoh.toybox.dao.CommonDao;
+import com.dongkeonoh.toybox.dao.ConditionDao;
 import com.dongkeonoh.toybox.dao.ItemDao;
-import com.dongkeonoh.toybox.dao.UserDao;
 import com.dongkeonoh.toybox.dao.UtilityDao;
-import com.dongkeonoh.toybox.dto.CommonCodeDto;
 import com.dongkeonoh.toybox.dto.ItemDto;
 import com.dongkeonoh.toybox.dto.UserDto;
 import com.dongkeonoh.toybox.service.ItemService;
 import com.dongkeonoh.toybox.vo.ItemVo;
-import com.dongkeonoh.toybox.vo.UserVo;
 
 @Service("ItemServiceImpl")
 public class ItemServiceImpl implements ItemService{
@@ -27,39 +24,44 @@ public class ItemServiceImpl implements ItemService{
 	@Resource(name="UtilityDao")
 	private UtilityDao utilityDao;
 
+	@Resource(name="ConditionDao")
+	private ConditionDao conditionDao;
+
 	@Override
-	public List<ItemVo> listItem(HashMap<String, String> search) {
-		List<ItemVo> result = itemDao.listItem(search);
+	public List<ItemDto> listItem(HashMap<String, String> search) {
+		List<ItemDto> result = itemDao.listItem(search);
 		return result;
 	}
 	
 	@Override
-	public List<ItemVo> listItemBeforeApply(List<String> rent_item_list){
-		List<ItemVo> result = itemDao.listItemBeforeApply(rent_item_list);
-		return result;		
+	public HashMap<String, Object> listItemBeforeApply(List<String> rent_item_list){
+		HashMap<String , String> paramUser = new HashMap<String, String>();
+		paramUser.put("search_type", "_SIMPLE_");
+		paramUser.put("usr_name", "");
+
+		List<UserDto> userList = utilityDao.getUserSearch(paramUser);	//반납 위치 선택
+		List<ItemDto> itemLocation = itemDao.listItemBeforeApply(rent_item_list); //아이템 현재 위치 확인
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("userList", userList);
+		map.put("itemLocation", itemLocation);
+		return map;		
+	}
+	
+	@Override
+	public int rentItem(List<ItemDto> rent_item_list) {
+		int result= 0;
+		for(int i = 0; rent_item_list.size() > i; i++) {
+			rent_item_list.get(i).setCdt_condition("rent_requested");
+			result = result + conditionDao.putCondition(rent_item_list.get(i));
+		}
+		if(rent_item_list.size() != result) result = 0;
+		return result;
 	}
 
 	@Override
-	public List<UserVo> listItemReturnPoint(){
-		List<UserVo> result = itemDao.listItemReturnPoint();
-		return result;
-	}
-	
-	@Override
-	public List<ItemVo> listItemBeforeRent(HashMap<String, Object> search){
-		List<ItemVo> result = itemDao.listItemBeforeRent(search);
-		return result;		
-	}
-	
-	@Override
-	public int rentItem(List<ItemVo> rent_item_list) {
-		int result = itemDao.rentItem(rent_item_list);
-		return result;
-	}
-
-	@Override
-	public List<ItemVo> requestItem(HashMap<String, String> search) {
-		List<ItemVo> result = itemDao.requestItem(search);
+	public List<ItemDto> requestItem(HashMap<String, String> search) {
+		List<ItemDto> result = itemDao.requestItem(search);
 		return result;
 	}
 

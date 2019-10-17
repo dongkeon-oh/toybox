@@ -29,7 +29,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter implements Toybo
 			ModelAndView modelAndView) throws Exception {
 
 		HttpSession httpSession = request.getSession();		
-		Object user = modelAndView.getModelMap().get("userVo");
+		Object user = modelAndView.getModelMap().get("userDto");
 		if(user != null) {
 			httpSession.setAttribute(USER, user);
 			

@@ -10,10 +10,10 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link  href="${pageContext.request.contextPath}/css/common_css/common.css" rel="stylesheet">
-		<script src="${pageContext.request.contextPath}/js/common_js/list_common_group.js"></script>
-		<script src="${pageContext.request.contextPath}/js/common_js/list_common_code.js"></script>
-		<script src="${pageContext.request.contextPath}/js/common_js/pagination.js"></script>
+		<link  href="${pageContext.request.contextPath}/css/admin_css/admin.css" rel="stylesheet">
+		<script src="${pageContext.request.contextPath}/js/admin_js/list_common_group.js"></script>
+		<script src="${pageContext.request.contextPath}/js/admin_js/list_common_code.js"></script>
+		<script src="${pageContext.request.contextPath}/js/admin_js/pagination.js"></script>
 		
 		<title>공통코드 관리</title>
 	</head>
@@ -36,7 +36,7 @@
 		  	</button>
 		  	<div class="navbar-collapse collapse" id="navbarColor02" style="">
 		  		<ul class="navbar-nav mr-auto"></ul>
-			    <form class="form-inline my-2 my-lg-0">
+			    <div class="form-inline my-2 my-lg-0">
 				    <button type="button" class="btn btn-outline-success modify_common_group" id="putGrpBtn" data-toggle="modal" data-target="#grpModModal" style="margin-right: 8px;">공통코드 그룹생성</button>
 			      	<div class="form-group" style="margin-right: 8px;">
 				    	<select class="custom-select" id="keytype">
@@ -46,7 +46,7 @@
 				  	</div>
 				  	<input class="form-control mr-sm-2" id="keyword" type="text" placeholder="검색어를 입력하세요" onkeyup="search_enter()">
 			      	<button class="btn btn-secondary my-2 my-sm-0" type="button" id="grpSrchBtn" onclick="search_keyword()">검색</button>
-			    </form>
+			    </div>
 		    </div>
 		</nav>
 		

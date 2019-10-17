@@ -1,8 +1,8 @@
 package com.dongkeonoh.toybox.service;
 
-import com.dongkeonoh.toybox.vo.UserVo;
+import com.dongkeonoh.toybox.dto.UserDto;
 
 public interface LoginService {
 	// 유저 조회
-	public UserVo getLogin(UserVo userVo);
+	public UserDto getLogin(UserDto userDto);
 }

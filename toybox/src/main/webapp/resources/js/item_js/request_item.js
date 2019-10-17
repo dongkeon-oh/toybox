@@ -49,8 +49,9 @@ function request_item(event_type) {
 		success : function(response) {
 			var result = response;
 			var opt = ""
-			
+
 			start_idx = start_idx + end_idx;
+			end_idx = end_idx + 10;
 			
 			$.each(
 				result,
@@ -79,6 +80,8 @@ function request_item(event_type) {
 			if(!result.length > 0){
 				end_of_search = true;
 				opt = "<tr><td colspan='3'>" + end_of_msg + "검색결과가 없습니다.</td></tr>";
+			}else if(event_type == 'search_event' && result.length < (end_idx - start_idx)){
+				
 			}			
 			if(event_type == 'search_event'){
 				$("#cdt_tbody").html(opt);

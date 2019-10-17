@@ -24,7 +24,7 @@
 			   SEQ_CONDITION_PROCESS.NEXTVAL
 			</when>
 			<otherwise>
-       		   #{cdt_process}			      
+       		   (SELECT MAX(CDT_PROCESS) FROM TB_CONDITION WHERE CDT_ITEM = #{cdt_item})	      
 			</otherwise>
 		</choose>
      		 )

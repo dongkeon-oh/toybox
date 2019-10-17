@@ -74,6 +74,9 @@ function list_common_group(page_no, page_cnt, keyword, keytype) {
 					page_total = item.cnt;
 
 					var note = item.cgr_note;
+					if(note.length > 20){
+						note = note.substring(0, 20) + "...";
+					}
 					var table_row_type = "";// =
 											// "table-secondary";
 					var use_yn = "사용";

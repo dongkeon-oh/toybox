@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dongkeonoh.toybox.dto.ItemDto;
+import com.dongkeonoh.toybox.dto.UserDto;
 import com.dongkeonoh.toybox.service.ItemService;
 import com.dongkeonoh.toybox.vo.UserVo;
 import com.dongkeonoh.toybox.vo.ItemVo;
@@ -30,9 +32,7 @@ public class ItemController implements ToyboxGlobalNameSpace {
 
 	// 아이템 조회
 	@RequestMapping(value = "/list_item", method = RequestMethod.GET)
-	public ModelAndView getListItem(ModelAndView modelAndView, HttpServletRequest httpServletRequest
-//			, @RequestParam("keyword") 		String keyword
-	) {
+	public ModelAndView getListItem(ModelAndView modelAndView, HttpServletRequest httpServletRequest) {
 		modelAndView.addObject("mapping_name", "아이템 대여");
 		modelAndView.addObject("mapping_menu", "list_item");
 		modelAndView.setViewName("item/list_item");		
@@ -44,7 +44,7 @@ public class ItemController implements ToyboxGlobalNameSpace {
 	// 아이템 리스트 출력
 	@RequestMapping(value = "/ajax_list_item", method = RequestMethod.POST)
 	@ResponseBody
-	public List<ItemVo> ajaxListItem(HttpServletRequest httpServletRequest
+	public List<ItemDto> ajaxListItem(HttpServletRequest httpServletRequest
 			, @RequestParam("keyword") 		String keyword
 			, @RequestParam("start_idx") 	String start_idx
 			, @RequestParam("end_idx") 		String end_idx
@@ -66,7 +66,7 @@ public class ItemController implements ToyboxGlobalNameSpace {
 		System.out.println("[LOG] return_date // " 	+ return_date);
 		System.out.println("[LOG] ======================================");
 		
-		List<ItemVo> result = itemService.listItem(map);		
+		List<ItemDto> result = itemService.listItem(map);		
 		
 		System.out.println("[LOG] ==REEPONS=============================");
 		System.out.println("[LOG] result.size() 	// " + result.size());
@@ -92,13 +92,12 @@ public class ItemController implements ToyboxGlobalNameSpace {
 			List<String> rent_item_list = (List<String>)jObject.get("item_list");
 
 			// AOP 이동
-			List<ItemVo> result = itemService.listItemBeforeApply(rent_item_list);	
-			List<UserVo> return_point = itemService.listItemReturnPoint();	
+			HashMap<String, Object> result = itemService.listItemBeforeApply(rent_item_list);	
 			
 			modelAndView.addObject("rent_date", jObject.get("rent_date"));
 			modelAndView.addObject("return_date",  jObject.get("return_date"));
-			modelAndView.addObject("result",  result);
-			modelAndView.addObject("retun_point",  return_point);
+			modelAndView.addObject("user_list",  (List<UserDto>)result.get("userList"));	// 반납 위치 선택
+			modelAndView.addObject("item_location",  (List<ItemDto>)result.get("itemLocation"));	// 아이템 위치
 
 			modelAndView.addObject("mapping_name", "아이템 대여");
 			modelAndView.addObject("mapping_menu", "list_item");
@@ -128,7 +127,7 @@ public class ItemController implements ToyboxGlobalNameSpace {
 		
 		try {
 			// 세션내 사용자 아이디 추출
-			UserVo rent_user = (UserVo)httpServletRequest.getSession().getAttribute(USER);
+			UserDto rent_user = (UserDto)httpServletRequest.getSession().getAttribute(USER);
 			
 			// 파라미터 파싱
 			JSONParser jParser = new JSONParser();
@@ -136,10 +135,10 @@ public class ItemController implements ToyboxGlobalNameSpace {
 			List<HashMap<String, String>> result_data = (List<HashMap<String, String>>)jObject.get("result");
 			
 			// 데이터 세팅
-			List<ItemVo> list = new ArrayList<ItemVo>();
+			List<ItemDto> list = new ArrayList<ItemDto>();
 			
 			for(HashMap<String, String> item : result_data) {
-				ItemVo item_info = new ItemVo();
+				ItemDto item_info = new ItemDto();
 					
 				item_info.setCdt_item(item.get("cdt_item"));
 				item_info.setCdt_user(rent_user.getUsr_id());
@@ -158,7 +157,7 @@ public class ItemController implements ToyboxGlobalNameSpace {
 				rent_result = itemService.rentItem(list);
 
 				// 대여신청 실패시
-				if(rent_result == 0) {
+				if(rent_result == -1) {
 					//리다이렉트
 				}
 			}			
@@ -195,14 +194,14 @@ public class ItemController implements ToyboxGlobalNameSpace {
 	// 요청 아이템 리스트 출력
 	@RequestMapping(value = "/ajax_request_item", method = RequestMethod.POST)
 	@ResponseBody
-	public List<ItemVo> ajaxRequestItem(HttpServletRequest httpServletRequest
+	public List<ItemDto> ajaxRequestItem(HttpServletRequest httpServletRequest
 			, @RequestParam("keyword") 		String keyword
 			, @RequestParam("start_idx") 	String start_idx
 			, @RequestParam("end_idx") 		String end_idx
 			, @RequestParam("search_date") 	String search_date
 	) {	
 		// 세션 구하기
-		UserVo rent_user = (UserVo)httpServletRequest.getSession().getAttribute(USER);
+		UserDto rent_user = (UserDto)httpServletRequest.getSession().getAttribute(USER);
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("keyword", 		keyword);
@@ -218,7 +217,7 @@ public class ItemController implements ToyboxGlobalNameSpace {
 		System.out.println("[LOG] search_date // " 	+ search_date);
 		System.out.println("[LOG] ======================================");
 		
-		List<ItemVo> result = itemService.requestItem(map);		
+		List<ItemDto> result = itemService.requestItem(map);		
 		
 		System.out.println("[LOG] ==REEPONS=============================");
 		System.out.println("[LOG] result.size() 	// " + result.size());

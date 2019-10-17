@@ -82,9 +82,7 @@ function user_info(user_id) {
 		method : "POST",
 		url : "ajax_get_user",
 		data : {
-			"userId" : user_id,
-			"userType" : "user_type",
-			"userActive" : "user_active"
+			"userId" : user_id
 			
 		},
 		async : false,
@@ -150,6 +148,7 @@ function modify_user(id) {
 			if(result > 0){
 				refresh = true;
 				alert(id+" 사용자 정보를 수정하였습니다.");
+				$("#user_modal").modal("hide");
 			}else{
 				alert(id+" 사용자 정보 수정에 실패했습니다.");
 			}
@@ -172,15 +171,11 @@ function change_page_count(page_cnt) {
 }
 
 //검색 버튼 클릭시 검색
-function search_keyword() {
-	var keyword_data = $("#keyword").val();
-	var keytype_data = $("#keytype").val();
-
-	list_user("1", pagination_cnt, keyword_data, keytype_data);
-}
-
-function search_enter() {
-	if (event.keyCode == 13) {
+function search_keyword(type) {
+	if ((type == "enter" && event.keyCode == 13) || type == "click") {
+		var keyword_data = $("#keyword").val();
+		var keytype_data = $("#keytype").val();
+	
 		list_user("1", pagination_cnt, keyword_data, keytype_data);
 	}
 }

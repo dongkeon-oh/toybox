@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dongkeonoh.toybox.service.LoginService;
-import com.dongkeonoh.toybox.vo.UserVo;
+import com.dongkeonoh.toybox.dto.UserDto;
 
 
 /**
@@ -22,17 +22,16 @@ public class LoginController {
 	private LoginService loginService;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(HttpServletRequest httpServletRequest) {		
-		ModelAndView modelAndView = new ModelAndView();
+	public ModelAndView login(ModelAndView modelAndView) {	
 		modelAndView.setViewName("login");		
 		return modelAndView;
 	}	
 	
 	@RequestMapping(value = "/login_prog", method = RequestMethod.POST)
-	public ModelAndView login_prog(UserVo user_info, ModelAndView modelAndView) {
-		UserVo userVo = loginService.getLogin(user_info);
-		if(userVo != null) {
-			modelAndView.addObject("userVo", userVo);
+	public ModelAndView login_prog(UserDto user_info, ModelAndView modelAndView) {
+		UserDto userDto = loginService.getLogin(user_info);
+		if(userDto != null) {
+			modelAndView.addObject("userDto", userDto);
 			modelAndView.setViewName("item/list_item");	
 		}else {
 			modelAndView.addObject("login_fail", "login_fail");

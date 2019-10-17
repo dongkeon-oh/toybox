@@ -7,7 +7,7 @@
 
 	<!-- 공통 코드 그룹-->
 	<!-- 공통코드 그룹 목록 조회 -->
-	<select id="listCommonGroup" parameterType="HashMap" resultType="com.dongkeonoh.toybox.vo.CommonVo">
+	<select id="listCommonGroup" parameterType="HashMap" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 		SELECT CGR_GROUP
 			 , CGR_GROUP_NAME
 		     , CGR_NOTE 
@@ -42,7 +42,7 @@
 	</select>
 	
 	<!-- 공통코드 그룹 조회 -->
-	<select id="getCommonGroup" parameterType="String" resultType="com.dongkeonoh.toybox.vo.CommonVo">
+	<select id="getCommonGroup" parameterType="String" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 		SELECT CGR_GROUP
 			 , CGR_GROUP_NAME
 		     , CGR_NOTE 
@@ -51,7 +51,7 @@
 	</select>
 		
 	<!-- 공통코드 그룹 추가 -->
-	<insert id="putCommonGroup" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+	<insert id="putCommonGroup" parameterType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 		INSERT INTO TB_COMMON_GROUP
 			 (
 			   CGR_GROUP,
@@ -69,7 +69,7 @@
 	</insert>
 
 	<!-- 공통코드 그룹 수정 -->
-	<update id="modifyCommonGroup" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+	<update id="modifyCommonGroup" parameterType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 		UPDATE TB_COMMON_GROUP
 		   SET CGR_GROUP_NAME = #{cgr_group_name},
 			   CGR_NOTE = #{cgr_note}
@@ -77,7 +77,7 @@
 	</update>
 	
 	<!-- 공통코드 그룹 중복확인 -->
-	<select id="dupCommonGroup" parameterType="com.dongkeonoh.toybox.vo.CommonVo" resultType="int">
+	<select id="dupCommonGroup" parameterType="com.dongkeonoh.toybox.dto.CommonCodeDto" resultType="int">
 		SELECT COUNT(CGR_GROUP) AS CGR_GROUP
 		  FROM TB_COMMON_GROUP
 		 WHERE 1=1
@@ -85,7 +85,7 @@
 	</select>
 	
 	<!-- 공통코드 그룹 삭제 -->
-	<update id="deleteCommonGroup" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+	<update id="deleteCommonGroup" parameterType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 		UPDATE TB_COMMON_GROUP
 		   SET CGR_USEYN = 'N'
 		 WHERE CGR_GROUP = #{cgr_group}
@@ -95,7 +95,7 @@
 	
 	<!-- 공통 코드 -->		
 	<!-- 공통 코드 리스트 조회 -->
-	<select id="listCommonCode" parameterType="String" resultType="com.dongkeonoh.toybox.vo.CommonVo">
+	<select id="listCommonCode" parameterType="String" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 		SELECT CCD_CODE
 		     , CCD_GROUP
 		     , CCD_CODENAME
@@ -110,7 +110,7 @@
 	</select>
 	
 	<!-- 공통 코드 조회 -->
-	<select id="getCommonCode" parameterType="String" resultType="com.dongkeonoh.toybox.vo.CommonVo">
+	<select id="getCommonCode" parameterType="String" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 		SELECT CCD_CODE
 		     , CCD_GROUP
 		     , CCD_CODENAME
@@ -124,7 +124,7 @@
 	</select>
 		
 	<!-- 공통코드 그룹 추가 -->
-	<insert id="putCommonCode" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+	<insert id="putCommonCode" parameterType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 		INSERT INTO TB_COMMON_CODE
 			 (    
 			   CCD_CODE,     
@@ -150,7 +150,7 @@
 	</insert>   
 	
 	<!-- 공통코드 수정 -->
-	<update id="modifyCommonCode" parameterType="com.dongkeonoh.toybox.vo.CommonVo">
+	<update id="modifyCommonCode" parameterType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 		UPDATE TB_COMMON_CODE
 		   SET CCD_CODENAME = #{ccd_codename},
 			   CCD_DETAIL1 = #{ccd_detail1},
@@ -162,7 +162,7 @@
 	</update>
 	
 	<!-- 공통코드 정렬 순서 조회 -->
-	<select id="dupCommonOrderAndName" parameterType="com.dongkeonoh.toybox.vo.CommonVo" resultType="com.dongkeonoh.toybox.vo.CommonVo">
+	<select id="dupCommonOrderAndName" parameterType="com.dongkeonoh.toybox.dto.CommonCodeDto" resultType="com.dongkeonoh.toybox.dto.CommonCodeDto">
 	    SELECT A.CCD_ORDER
 	    	 , B.CCD_CODENAME
 	   	  FROM (

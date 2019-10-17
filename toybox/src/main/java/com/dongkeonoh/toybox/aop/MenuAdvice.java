@@ -14,8 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dongkeonoh.toybox.ToyboxGlobalNameSpace;
 import com.dongkeonoh.toybox.service.UtilityService;
-import com.dongkeonoh.toybox.vo.CommonVo;
-import com.dongkeonoh.toybox.vo.UserVo;
+import com.dongkeonoh.toybox.dto.CommonCodeDto;
+import com.dongkeonoh.toybox.dto.UserDto;
 
 @Aspect
 public class MenuAdvice implements ToyboxGlobalNameSpace{
@@ -27,14 +27,14 @@ public class MenuAdvice implements ToyboxGlobalNameSpace{
 	public void aopMenuList(JoinPoint joinPoint, ModelAndView modelAndView){
 		try {
 			HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-			UserVo sessionUser = (UserVo)request.getSession().getAttribute(USER);
+			UserDto sessionUser = (UserDto)request.getSession().getAttribute(USER);
 			
 			Object[] object = joinPoint.getArgs();
 			for(Object search : object) {
 				if(search instanceof ModelAndView) {
-					UserVo userVo = new UserVo();
-					userVo.setUsr_id(sessionUser.getUsr_id());
-					List<CommonVo> result = utilityService.getMenu(userVo);
+					UserDto userDto = new UserDto();
+					userDto.setUsr_id(sessionUser.getUsr_id());
+					List<CommonCodeDto> result = utilityService.getMenu(userDto);
 					((ModelAndView) search).addObject("menu_list",result);
 				}
 			}
