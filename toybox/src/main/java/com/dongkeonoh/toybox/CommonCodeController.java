@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dongkeonoh.toybox.dto.CommonCodeDto;
 import com.dongkeonoh.toybox.service.CommonService;
-import com.dongkeonoh.toybox.vo.CommonVo;
 
 @Controller
 public class CommonCodeController {
@@ -25,7 +25,7 @@ public class CommonCodeController {
 	// 공통코드 관리자 화면
 	@RequestMapping(value = "/admin_list_common", method = RequestMethod.GET)
 	public ModelAndView admin_list_common(HttpServletRequest httpServletRequest, ModelAndView modelAndView) {
-		modelAndView.setViewName("common/list_common_code");		
+		modelAndView.setViewName("admin/list_common_code");		
 		return modelAndView;
 	}
 
@@ -33,7 +33,7 @@ public class CommonCodeController {
 	// 공통코드 그룹 리스트 출력
 	@RequestMapping(value = "/ajax_list_common_group", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommonVo> ajaxListCommonGroup(HttpServletRequest httpServletRequest
+	public List<CommonCodeDto> ajaxListCommonGroup(HttpServletRequest httpServletRequest
 			, @RequestParam("keyword") 		String keyword
 			, @RequestParam("keytype") 		String keytype
 			, @RequestParam("start_idx") 	String start_idx
@@ -52,7 +52,7 @@ public class CommonCodeController {
 		System.out.println("[LOG] end_idx 	// " + end_idx);
 		System.out.println("[LOG] ======================================");
 		
-		List<CommonVo> result = commonService.listCommonGroup(map);		
+		List<CommonCodeDto> result = commonService.listCommonGroup(map);		
 		
 		System.out.println("[LOG] ==REEPONS=============================");
 		System.out.println("[LOG] result.size() 	// " + result.size());
@@ -64,14 +64,14 @@ public class CommonCodeController {
 	// 공통코드 그룹 조회
 	@RequestMapping(value = "/ajax_get_common_group", method = RequestMethod.POST)
 	@ResponseBody
-	public CommonVo ajaxGetCommonGroup(HttpServletRequest httpServletRequest
+	public CommonCodeDto ajaxGetCommonGroup(HttpServletRequest httpServletRequest
 			, @RequestParam("cgr_group") 	String cgr_group
 	) {		
 		System.out.println("[LOG] ==REQUEST=============================");
 		System.out.println("[LOG] cgr_group 	// " + cgr_group);
 		System.out.println("[LOG] ======================================");
 		
-		CommonVo result = commonService.getCommonGroup(cgr_group);		
+		CommonCodeDto result = commonService.getCommonGroup(cgr_group);		
 		
 		System.out.println("[LOG] ==REEPONS=============================");
 		System.out.println("[LOG] result.getCgr_group() 		// " + result.getCgr_group());
@@ -84,32 +84,32 @@ public class CommonCodeController {
 	// 공통코드 그룹 생성
 	@RequestMapping(value = "/ajax_put_common_group", method = RequestMethod.POST)
 	@ResponseBody
-	public int ajaxPutCommonGroup(HttpServletRequest httpServletRequest, CommonVo commonVo) {
-		int result = commonService.putCommonGroup(commonVo);		
+	public int ajaxPutCommonGroup(HttpServletRequest httpServletRequest, CommonCodeDto commonCodeDto) {
+		int result = commonService.putCommonGroup(commonCodeDto);		
 		return result;
 	}
 	
 	// 공통코드 그룹 수정
 	@RequestMapping(value = "/ajax_modify_common_group", method = RequestMethod.POST)
 	@ResponseBody
-	public int ajaxModifyCommonGroup(HttpServletRequest httpServletRequest, CommonVo commonVo) {
-		int result = commonService.modifyCommonGroup(commonVo);		
+	public int ajaxModifyCommonGroup(HttpServletRequest httpServletRequest, CommonCodeDto commonCodeDto) {
+		int result = commonService.modifyCommonGroup(commonCodeDto);		
 		return result;
 	}
 	
 	// 공통코드 그룹명 중복 확인
 	@RequestMapping(value = "/ajax_dup_common_group", method = RequestMethod.POST)
 	@ResponseBody
-	public int ajaxDupCommonGroup(HttpServletRequest httpServletRequest, CommonVo commonVo) {
-		int result = commonService.dupCommonGroup(commonVo);		
+	public int ajaxDupCommonGroup(HttpServletRequest httpServletRequest, CommonCodeDto commonCodeDto) {
+		int result = commonService.dupCommonGroup(commonCodeDto);		
 		return result;
 	}
 	
 	// 공통코드 그룹 삭제
 	@RequestMapping(value = "/ajax_delete_common_group", method = RequestMethod.POST)
 	@ResponseBody
-	public int ajaxDeleteCommonGroup(HttpServletRequest httpServletRequest, CommonVo commonVo) {
-		int result = commonService.deleteCommonGroup(commonVo);		
+	public int ajaxDeleteCommonGroup(HttpServletRequest httpServletRequest, CommonCodeDto commonCodeDto) {
+		int result = commonService.deleteCommonGroup(commonCodeDto);		
 		return result;
 	}
 	
@@ -119,14 +119,14 @@ public class CommonCodeController {
 	// 공통코드 추가 get
 	@RequestMapping(value = "/ajax_list_common_code", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommonVo> ajaxListCommonCode(HttpServletRequest httpServletRequest
+	public List<CommonCodeDto> ajaxListCommonCode(HttpServletRequest httpServletRequest
 			, @RequestParam("cgr_group") 	String cgr_group
 	) {		
 		System.out.println("[LOG] ==REQUEST=============================");
 		System.out.println("[LOG] cgr_group 	// " + cgr_group);
 		System.out.println("[LOG] ======================================");
 		
-		List<CommonVo> result = commonService.listCommonCode(cgr_group);		
+		List<CommonCodeDto> result = commonService.listCommonCode(cgr_group);		
 		
 		System.out.println("[LOG] ==REEPONS=============================");
 		System.out.println("[LOG] result.size() 	// " + result.size());
@@ -137,14 +137,14 @@ public class CommonCodeController {
 	// 공통코드 추가 get
 	@RequestMapping(value = "/ajax_get_common_code", method = RequestMethod.POST)
 	@ResponseBody
-	public CommonVo ajaxViewCommonCodeDetail(HttpServletRequest httpServletRequest
+	public CommonCodeDto ajaxViewCommonCodeDetail(HttpServletRequest httpServletRequest
 			, @RequestParam("ccd_code") 	String ccd_code
 	) {		
 		System.out.println("[LOG] ==REQUEST=============================");
 		System.out.println("[LOG] ccd_code 	// " + ccd_code);
 		System.out.println("[LOG] ======================================");
 		
-		CommonVo result = commonService.getCommonCode(ccd_code);		
+		CommonCodeDto result = commonService.getCommonCode(ccd_code);		
 		
 		System.out.println("[LOG] ==REEPONS=============================");
 		System.out.println("[LOG] result.getCcd_code() 		// " + result.getCcd_code());
@@ -161,34 +161,34 @@ public class CommonCodeController {
 	// 공통코드 추가 get
 	@RequestMapping(value = "/ajax_put_common_code", method = RequestMethod.POST)
 	@ResponseBody
-	public int ajaxPutCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
-		int result = commonService.putCommonCode(commonVo);		
+	public int ajaxPutCommonCode(HttpServletRequest httpServletRequest, CommonCodeDto commonCodeDto) {		
+		int result = commonService.putCommonCode(commonCodeDto);		
 		return result;
 	}
 	
 	// 공통코드 저장
 	@RequestMapping(value = "/ajax_dup_common_order_and_name", method = RequestMethod.POST)
 	@ResponseBody
-	public CommonVo ajaxDupCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {
-		CommonVo result = commonService.dupCommonOrderAndName(commonVo);			
+	public CommonCodeDto ajaxDupCommonCode(HttpServletRequest httpServletRequest, CommonCodeDto commonCodeDto) {
+		CommonCodeDto result = commonService.dupCommonOrderAndName(commonCodeDto);			
 		return result;
 	}
 
 	// 공통코드 추가 get
 	@RequestMapping(value = "/ajax_modify_common_code", method = RequestMethod.POST)
 	@ResponseBody
-	public int ajaxModifyCommonCodeDetail(HttpServletRequest httpServletRequest, CommonVo commonVo) {		
+	public int ajaxModifyCommonCodeDetail(HttpServletRequest httpServletRequest, CommonCodeDto commonCodeDto) {		
 		System.out.println("[LOG] ==REQUEST=============================");
-		System.out.println("[LOG] getCcd_code 		// " + commonVo.getCcd_code());
-		System.out.println("[LOG] getCcd_codename 	// " + commonVo.getCcd_codename());
-		System.out.println("[LOG] getCcd_order 		// " + commonVo.getCcd_order());
-		System.out.println("[LOG] getCcd_detail1 	// " + commonVo.getCcd_detail1());
-		System.out.println("[LOG] getCcd_detail2 	// " + commonVo.getCcd_detail2());
-		System.out.println("[LOG] getCcd_detail3 	// " + commonVo.getCcd_detail3());
-		System.out.println("[LOG] getCcd_note 		// " + commonVo.getCcd_note());
+		System.out.println("[LOG] getCcd_code 		// " + commonCodeDto.getCcd_code());
+		System.out.println("[LOG] getCcd_codename 	// " + commonCodeDto.getCcd_codename());
+		System.out.println("[LOG] getCcd_order 		// " + commonCodeDto.getCcd_order());
+		System.out.println("[LOG] getCcd_detail1 	// " + commonCodeDto.getCcd_detail1());
+		System.out.println("[LOG] getCcd_detail2 	// " + commonCodeDto.getCcd_detail2());
+		System.out.println("[LOG] getCcd_detail3 	// " + commonCodeDto.getCcd_detail3());
+		System.out.println("[LOG] getCcd_note 		// " + commonCodeDto.getCcd_note());
 		System.out.println("[LOG] ======================================");
 		
-		int result = commonService.modifyCommonCode(commonVo);		
+		int result = commonService.modifyCommonCode(commonCodeDto);		
 		
 		System.out.println("[LOG] ==REEPONS=============================");
 		System.out.println("[LOG] result : " + result);
@@ -199,8 +199,8 @@ public class CommonCodeController {
 	// 공통코드 저장
 	@RequestMapping(value = "/ajax_delete_common_code", method = RequestMethod.POST)
 	@ResponseBody
-	public int ajaxDeleteCommonCode(HttpServletRequest httpServletRequest, CommonVo commonVo) {
-		int result = commonService.deleteCommonCode(commonVo);		
+	public int ajaxDeleteCommonCode(HttpServletRequest httpServletRequest, CommonCodeDto commonCodeDto) {
+		int result = commonService.deleteCommonCode(commonCodeDto);		
 		return result;
 	}
 }
