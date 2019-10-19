@@ -20,4 +20,10 @@ public class ConditionDao {
 		int result = sqlSession.insert("ConditionSql.putCondition", itemDto);
 		return result;
 	}
+	
+	// 최근 상태 확인
+	public ItemDto getCurrentCondition(String item_id) {
+		ItemDto result = sqlSession.selectOne("ConditionSql.getCurrentCondition", item_id);
+		return result;
+	}
 }

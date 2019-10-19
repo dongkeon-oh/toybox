@@ -15,9 +15,12 @@ public interface ItemService {
 
 	// 아이템 대여 신청
 	public int rentItem(List<ItemDto> rent_item_list);
-	
+
 	// 요청 리스트
 	public List<ItemDto> requestItem(HashMap<String, String> search);
+
+	// 요청 취소
+	public int requestCancel(String item_id);
 	
 	// 요청 내역 확인
 	public List<ItemVo> responseItem(String user_id);

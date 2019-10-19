@@ -226,6 +226,25 @@ public class ItemController implements ToyboxGlobalNameSpace {
 		return result;
 	}
 	
+	// 아이템 요청 사항 조회로 이동
+	// 요청 아이템 리스트 출력
+	@RequestMapping(value = "/ajax_request_cancel", method = RequestMethod.POST)
+	@ResponseBody
+	public int ajaxRequestCancel(String item_id) {	
+
+		System.out.println("[LOG] ==REQUEST=============================");
+		System.out.println("[LOG] item_id 	// " 	+ item_id);
+		System.out.println("[LOG] ======================================");
+		
+		int result = itemService.requestCancel(item_id);		
+		
+		System.out.println("[LOG] ==REEPONS=============================");
+		System.out.println("[LOG] result 	// " + result);
+		System.out.println("[LOG] ======================================");
+		
+		return result;
+	}
+	
 	// 요청 내역 확인
 	@RequestMapping(value = "/response_item", method = RequestMethod.GET)
 	@ResponseBody

@@ -29,5 +29,27 @@
 		</choose>
      		 )
 	</insert>
+	
+	<select id="getCurrentCondition" resultType="com.dongkeonoh.toybox.dto.ItemDto" parameterType="String">
+	SELECT *
+	  FROM 
+	  	 (
+		   SELECT CDT_CONDITION
+				, CDT_USER
+				, CDT_LOCATION
+				, CDT_RETURN
+				, CDT_NOTE
+				, CDT_FROMDATE
+				, CDT_TODATE
+				, CDT_CREATEDATE
+				, CDT_PROCESS
+				, ROWNUM AS RM
+			 FROM TB_CONDITION
+			WHERE CDT_ITEM = #{cdt_user}
+			  AND CDT_PROCESS = (SELECT MAX(CDT_PROCESS) FROM TB_CONDITION)
+			ORDER BY CDT_CREATEDATE DESC
+		 )
+	 WHERE RM = 1
+	</select>
 </mapper>
 

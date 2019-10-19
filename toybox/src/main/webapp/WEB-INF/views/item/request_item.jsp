@@ -96,6 +96,7 @@
 		      <th scope="col">아이템</th>
 		      <th scope="col">상태</th>
 		      <th scope="col">기간</th>
+		      <th scope="col"></th>
 		    </tr>
 		  </thead>
 		  <tbody id="cdt_tbody">

@@ -58,6 +58,26 @@ public class ItemServiceImpl implements ItemService{
 		if(rent_item_list.size() != result) result = 0;
 		return result;
 	}
+	
+	// 요청 취소
+	public int requestCancel(String item_id) {
+		ItemDto item = conditionDao.getCurrentCondition(item_id);
+		item.setCdt_condition("request_cancel");
+		item.setCdt_note("대여 취소");
+
+		int result = 0;
+		int result_cancel = conditionDao.putCondition(item);
+
+		String init_loc = item.getCdt_location();
+		item.setCdt_condition("rentable");
+		item.setCdt_user(init_loc);
+		item.setCdt_return(init_loc);
+		item.setCdt_note(null);
+		item.setCdt_fromdate("2100/12/31");
+		item.setCdt_todate("");
+		int result_rentable = conditionDao.putCondition(item);
+		return result;
+	}
 
 	@Override
 	public List<ItemDto> requestItem(HashMap<String, String> search) {
