@@ -61,22 +61,26 @@ public class ItemServiceImpl implements ItemService{
 	
 	// 요청 취소
 	public int requestCancel(String item_id) {
+		// 아이템 요청 최소
 		ItemDto item = conditionDao.getCurrentCondition(item_id);
 		item.setCdt_condition("request_cancel");
+		item.setCdt_item(item_id);
 		item.setCdt_note("대여 취소");
-
-		int result = 0;
 		int result_cancel = conditionDao.putCondition(item);
 
+		// 새로운 상태 등록 > 현재 프로세스 마무리
+		ItemDto put_item =  new ItemDto();
 		String init_loc = item.getCdt_location();
-		item.setCdt_condition("rentable");
-		item.setCdt_user(init_loc);
-		item.setCdt_return(init_loc);
-		item.setCdt_note(null);
-		item.setCdt_fromdate("2100/12/31");
-		item.setCdt_todate("");
-		int result_rentable = conditionDao.putCondition(item);
-		return result;
+		put_item.setCdt_condition("rentable");
+		put_item.setCdt_item(item_id);
+		put_item.setCdt_user(init_loc);
+		put_item.setCdt_location(init_loc);
+		put_item.setCdt_return(init_loc);
+		put_item.setCdt_fromdate("2100/12/31");
+		put_item.setCdt_todate("1989/06/07");
+		int result_rentable = conditionDao.putCondition(put_item);
+
+		return result_cancel + result_rentable;
 	}
 
 	@Override
