@@ -71,11 +71,13 @@ public class ItemServiceImpl implements ItemService{
 		// 새로운 상태 등록 > 현재 프로세스 마무리
 		ItemDto put_item =  new ItemDto();
 		String init_loc = item.getCdt_location();
+		String cancal_user = item.getCdt_user();
 		put_item.setCdt_condition("rentable");
 		put_item.setCdt_item(item_id);
 		put_item.setCdt_user(init_loc);
 		put_item.setCdt_location(init_loc);
 		put_item.setCdt_return(init_loc);
+		put_item.setCdt_note(cancal_user+"사용자 요청으로 대출 취소");
 		put_item.setCdt_fromdate("2100/12/31");
 		put_item.setCdt_todate("1989/06/07");
 		int result_rentable = conditionDao.putCondition(put_item);
