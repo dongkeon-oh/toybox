@@ -6,7 +6,7 @@
 <mapper namespace="userSql">
 
 	<!-- 유저 추가 -->
-	<insert id="putUser" parameterType="com.dongkeonoh.toybox.vo.UserVo">
+	<insert id="putUser" parameterType="com.dongkeonoh.toybox.dto.UserDto">
 		INSERT INTO TB_USER 
         VALUES 
      		 (
@@ -21,11 +21,27 @@
 				DEFAULT,
 			</otherwise>
 		</choose>
+       		   #{usr_email},
+		<choose>
+			<when test='usr_sms != null and usr_sms != ""'>
        		   #{usr_sms},
+			</when>
+			<otherwise>
+				null,
+			</otherwise>
+		</choose>
+		<choose>
+			<when test='usr_kakao != null and usr_kakao != ""'>
        		   #{usr_kakao},
-       		   'N',
+			</when>
+			<otherwise>
+				null,
+			</otherwise>
+		</choose>
+       		   '4',
        		   #{usr_question},
-       		   #{usr_answer}
+       		   #{usr_answer},
+       		   '8'
      		 )
 	</insert>
 	

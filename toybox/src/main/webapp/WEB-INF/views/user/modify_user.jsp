@@ -19,7 +19,7 @@
     <link rel="icon" href="http://getbootstrap.com/favicon.ico">
     <c:set var="action_type" value="put_user"></c:set>
     <c:choose>
-    	<c:when test="${userVo.usr_id != null}">
+    	<c:when test="${userDto.usr_id != null}">
     		<title>회원정보 수정</title>
     		<c:set var="action_type" value="modify_user"></c:set>
     	</c:when>
@@ -43,8 +43,8 @@
             <div class="mb-3">
               <label for="usr_id">아이디</label>
 	         <c:choose>
-		    	<c:when test="${userVo.usr_id != null}">
-		    		<input type="text" class="form-control" id="usr_id" name="usr_id" readonly="readonly" value="${userVo.usr_id}" maxlength="20">
+		    	<c:when test="${userDto.usr_id != null}">
+		    		<input type="text" class="form-control" id="usr_id" name="usr_id" readonly="readonly" value="${userDto.usr_id}" maxlength="20">
 		    	</c:when>
 		    	<c:otherwise>
 		    		<input type="text" class="form-control" id="usr_id" name="usr_id" placeholder="아이디를 입력하세요." maxlength="20">
@@ -64,17 +64,22 @@
 
             <div class="mb-3">
 				<label for="usr_name">이름</label>
-				<input type="text" class="form-control" name="usr_name" id="usr_name" placeholder="이름" value="${userVo.usr_name}">
+				<input type="text" class="form-control" name="usr_name" id="usr_name" placeholder="이름" value="${userDto.usr_name}">
+            </div>
+
+            <div class="mb-3">
+				<label for="usr_email">E-mail</label>
+				<input type="email" class="form-control" name="usr_email" id="usr_email">
             </div>
 
             <div class="mb-3">
 				<label for="usr_sms">전화번호</label>
-				<input type="text" class="form-control" name="usr_sms" id="usr_sms" placeholder="'-(하이픈)을 제외한 숫자만 입력해주시기 바랍니다.'" value="${userVo.usr_sms}">
+				<input type="text" class="form-control" name="usr_sms" id="usr_sms" placeholder="'-(하이픈)을 제외한 숫자만 입력해주시기 바랍니다.'" value="${userDto.usr_sms}">
             </div>
 
             <div class="mb-3">
 				<label for="usr_kakao">카카오톡</label>
-				<input type="text" class="form-control" name="usr_kakao" id="usr_kakao" placeholder="카카오톡" value="${userVo.usr_kakao}">
+				<input type="text" class="form-control" name="usr_kakao" id="usr_kakao" placeholder="카카오톡" value="${userDto.usr_kakao}">
             </div>
 
             <div class="mb-3">
@@ -82,13 +87,13 @@
 				
 				<select class="custom-select d-block w-100" name="usr_question" id="usr_question">
 				<option value="sel">선택하세요</option>
-				<c:forEach var="com_code" items="${com_list}">
+				<c:forEach var="result" items="${result}">
 					<c:choose>
-					  <c:when test="${userVo.usr_question==com_code.ccd_seq}">
-						  <option value="${com_code.ccd_seq }" selected="selected">${com_code.ccd_codename }</option>
+					  <c:when test="${userDto.usr_question==result.ccd_code}">
+						  <option value="${result.ccd_code }" selected="selected">${result.ccd_codename }</option>
 					  </c:when>
 					  <c:otherwise>
-						  <option value="${com_code.ccd_seq }">${com_code.ccd_codename }</option>
+						  <option value="${result.ccd_code }">${result.ccd_codename }</option>
 					  </c:otherwise>
 					</c:choose> 
 				</c:forEach>
@@ -97,7 +102,7 @@
 
             <div class="mb-3">
 				<label for="usr_answer">비밀번호 질문 답변</label>
-				<input type="text" class="form-control" name="usr_answer" id="usr_answer" placeholder="답변" value="${userVo.usr_answer}">
+				<input type="text" class="form-control" name="usr_answer" id="usr_answer" placeholder="답변" value="${userDto.usr_answer}">
             </div>
 
 <!--             <div class="mb-3"> -->

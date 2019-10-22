@@ -17,8 +17,8 @@ public class UserDao {
 	private SqlSession sqlSession;
 
 	// 유저 추가
-	public int putUser(UserVo userVo) {
-		int result = sqlSession.insert("userSql.putUser", userVo);
+	public int putUser(UserDto userDto) {
+		int result = sqlSession.insert("userSql.putUser", userDto);
 		return result;
 	}
 

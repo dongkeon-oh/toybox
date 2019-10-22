@@ -61,17 +61,20 @@ function request_item(event_type) {
 			$.each(
 				result,
 				function(index, item) {
-					var request_class = "bg-danger";
-					var request_state = "대여 거절"
-					if(item.cdt_condition == "rent_requested"){
-						request_class = "bg-success";
-						request_state = "대여신청";
-					}else if(item.cdt_condition == "rented"){
-						request_class = "";
+					var request_class = "";
+					var request_state = "";
+					if(item.cdt_condition == "rented"){
 						request_state = "대여중";
 					}else if(item.cdt_condition == "returned"){
-						request_class = "";
 						request_state = "반납";
+					}else if(item.cdt_condition == "request_cancel"){
+						request_state = "대여 취소";
+					}else if(item.cdt_condition == "rent_requested"){
+						request_class = "bg-success";
+						request_state = "대여 신청";
+					}else if(item.cdt_condition == "return_denied"){
+						request_class = "bg-danger";
+						request_state = "대여 거절";
 					}
 					
 					opt = opt + "<tr class='" + request_class + "'>";

@@ -13,8 +13,7 @@
 		     WHERE USR_ID = #{usr_id}
 		),
 		CCD AS (
-		SELECT CCD_SEQ
-		     , CCD_CODE
+		SELECT CCD_CODE
 		     , CCD_GROUP
 		     , CCD_CODENAME
 		     , CCD_DETAIL1
@@ -22,7 +21,6 @@
 		     , CCD_DETAIL3
 		     , CCD_NOTE
 		     , CCD_ORDER
-		     , CCD_USEYN
 		  FROM TB_COMMON_CODE
 		 WHERE CCD_GROUP = 'menu_permission'
 		)
